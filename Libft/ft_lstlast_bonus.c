@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/18 22:04:50 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/18 22:10:44 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+t_list	*ft_lstlast(t_list *lst)
 {
-	char	**args;
-
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
-	{
-		builtin_pwd();
-	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }

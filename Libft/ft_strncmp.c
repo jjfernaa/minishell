@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/05 19:54:03 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/17 22:17:52 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	**args;
-
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	if (n == 0)
+		return (0);
+	while (n > 0 && (*s1 || *s2))
 	{
-		builtin_pwd();
+		if (*s1 != *s2)
+			return ((unsigned char)*s1 - (unsigned char)*s2);
+		s1++;
+		s2++;
+		n--;
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	return (0);
 }
+
+/* int	main(void)
+{
+	char	*str1 = "holas";
+	char	*str2 = "hola";
+	char	result;
+	
+	result = ft_strncmp(str1, str2, 6);
+	printf("%d\n", result);
+	return (0);
+} */

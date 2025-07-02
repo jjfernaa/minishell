@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/18 22:18:51 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/18 23:36:34 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	char	**args;
-
-	args = split_input(input);
-	if (!args)
+	if (!lst)
 		return ;
-	if (strcmp(input, "pwd") == 0)
-	{
-		builtin_pwd();
-	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	(*del)(lst->content);
+	free (lst);
 }

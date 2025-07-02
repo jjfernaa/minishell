@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/10 21:47:28 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/16 19:28:07 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	**args;
-
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	while (*s)
 	{
-		builtin_pwd();
+		write (fd, s, 1);
+		s++;
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
 }
+
+/* int	main(void)
+{
+	char *str= "Hola Malaga 42";
+	
+	ft_putstr_fd(str, 1);
+	write (1, "\n", 1);
+	return (0);
+} */

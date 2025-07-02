@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/08 20:49:14 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/09 18:44:33 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	char	**args;
+	size_t	i;
+	char	*str;
 
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	i = 0;
+	str = b;
+	while (i < len)
 	{
-		builtin_pwd();
+		str[i] = c;
+		i++;
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	return (b);
 }
+
+/* int	main(void)
+{
+	char	buffer[8];
+	
+	ft_memset(buffer, 'N', 3);
+	printf("%s\n", buffer);
+	return (0);
+} */

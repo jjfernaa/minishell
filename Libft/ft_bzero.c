@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/09 01:32:16 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/17 14:05:30 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+void	ft_bzero(void *s, size_t n)
 {
-	char	**args;
+	size_t	i;
+	char	*str;
 
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	str = s;
+	i = 0;
+	while (i < n)
 	{
-		builtin_pwd();
+		str[i] = 0;
+		i++;
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
 }
+/*
+int	main(void)
+{
+	char str[10];
+	ft_bzero(str, 5);
+	printf("%s\n", str);
+	return (0);
+}*/

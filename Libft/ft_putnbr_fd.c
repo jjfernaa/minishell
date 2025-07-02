@@ -1,35 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/10 21:49:16 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/17 02:02:33 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	**args;
-
-	args = split_input(input);
-	if (!args)
+	if (n == -2147483648)
+	{
+		write (fd, "-2147483648", 11);
 		return ;
-	if (strcmp(input, "pwd") == 0)
-	{
-		builtin_pwd();
 	}
-	else if (strcmp(args[0], "echo") == 0)
+	if (n < 0)
 	{
-		builtin_echo(args);
+		write(fd, "-", 1);
+		n *= -1;
+	}
+	if (n > 9)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd((n % 10) + '0', fd);
 	}
 	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+		ft_putchar_fd(n + '0', fd);
 }
+/* 
+int	main(void)
+{
+	int	n;
+	
+	n = 214748;
+	
+	ft_putnbr_fd(n, 1);
+	write (1, "\n", 1);
+	return (0);
+} */

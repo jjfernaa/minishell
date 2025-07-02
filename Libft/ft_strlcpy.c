@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/05 20:26:57 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/09 18:51:31 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	char	**args;
+	size_t	i;
 
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	i = 0;
+	if (size != 0)
 	{
-		builtin_pwd();
+		while (src[i] != '\0' && i < size -1)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	return (ft_strlen(src));
 }
+/* int	main(void)
+{
+	char	src[6]="hello";
+	char	dst[20];
+	printf("%zu\n",ft_strlcpy(dst, src, 5));
+	printf("El valor de destino es %s\n", dst);
+	return (0);
+} */

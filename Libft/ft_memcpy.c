@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/09 15:35:12 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/17 16:10:54 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char	**args;
+	size_t	i;
 
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	i = 0;
+	if (!dst && !src)
+		return (NULL);
+	if (dst != src)
 	{
-		builtin_pwd();
+		while (i < n)
+		{
+			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+			i++;
+		}
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	return (dst);
 }
+
+/* int main(void)
+{
+	unsigned char	dest[]="hola";
+	unsigned char	src[]="malaga";
+
+	ft_memcpy(dest, src, 6);
+	printf("%s\n", dest);
+	return (0);
+} */

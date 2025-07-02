@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/18 22:03:53 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/18 22:17:20 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	char	**args;
-
-	args = split_input(input);
-	if (!args)
+	if (!lst || !new)
 		return ;
-	if (strcmp(input, "pwd") == 0)
-	{
-		builtin_pwd();
-	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
+	if (*lst)
+		ft_lstlast(*lst)->next = new;
 	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+		*lst = new;
 }

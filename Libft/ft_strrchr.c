@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/05 12:59:36 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/17 22:23:36 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+char	*ft_strrchr(const char *s, int c)
 {
-	char	**args;
+	int	i;
 
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	while (i >= 0)
 	{
-		builtin_pwd();
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i--;
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	return (0);
 }
+
+/* int	main(void)
+{
+	char	*str = "holamalaga";
+	int	c;
+	
+	c = 'm';
+	printf("%s\n", ft_strrchr(str, c));
+	return (0);
+} */

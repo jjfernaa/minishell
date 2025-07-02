@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:40:28 by juan-jof         ###   ########.fr       */
+/*   Created: 2024/12/09 17:52:55 by juan-jof          #+#    #+#             */
+/*   Updated: 2024/12/09 18:29:37 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	process_command(char *input)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	**args;
+	size_t	i;
 
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	i = 0;
+	while (i < n)
 	{
-		builtin_pwd();
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return (((unsigned char *)s) + i);
+		i++;
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	return (NULL);
 }
+/* 
+int	main(void) 
+{
+    const char str[] = "Comprobando encontrar a";
+    const char ch = 'a';
+   	char *result;
+
+    result = ft_memchr(str, ch, 11);
+
+    printf("%s\n", result);
+	return(0);
+} */
