@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:01:42 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 02:33:47 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/07/03 01:52:53 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,20 @@
 # include <readline/history.h>
 # include "../Libft/libft.h"
 
+// Structures
+typedef struct s_shell
+{
+	char	**envp;
+	int		exit_status;
+}	t_shell;
+
 // Main functions
-void	process_command(char *input);
+void	process_command(char *input, t_shell *shell);
 
 // Builtin functions
 int		builtin_pwd(void);
 int		builtin_echo(char **args);
+int		builtin_env(t_shell *shell);
 
 // Parsing functions
 char	**split_input(char *input);

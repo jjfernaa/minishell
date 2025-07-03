@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/03 01:36:17 by juan-jof         ###   ########.fr       */
+/*   Created: 2025/07/03 01:26:09 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/07/03 01:49:11 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	process_command(char *input, t_shell *shell)
+int	builtin_env(t_shell *shell)
 {
-	char	**args;
+	int	i;
 
-	args = split_input(input);
-	if (!args)
-		return ;
-	if (strcmp(input, "pwd") == 0)
+	if (!shell || !shell->envp)
+		return (1);
+	i = 0;
+	while (shell->envp[i])
 	{
-		builtin_pwd();
+		printf("%s\n", shell->envp[i]);
+		i++;
 	}
-	else if (strcmp(args[0], "echo") == 0)
-	{
-		builtin_echo(args);
-	}
-	else if (strcmp(args[0], "env") == 0)
-	{
-		builtin_env(shell);
-	}
-	else
-	{
-		printf("Has escrito: '%s'\n", input);
-	}
-	free_args(args);
+	return (0);
 }
