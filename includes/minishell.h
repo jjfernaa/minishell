@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:01:42 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/03 01:52:53 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/07/05 01:05:43 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	process_command(char *input, t_shell *shell);
 int		builtin_pwd(void);
 int		builtin_echo(char **args);
 int		builtin_env(t_shell *shell);
+int		builtin_cd(char **args);
+int		builtin_exit(char **args, t_shell *shell);
 
 // Parsing functions
 char	**split_input(char *input);

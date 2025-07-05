@@ -10,6 +10,8 @@ SRCS = srcs/main.c \
 	srcs/builtins/pwd.c \
 	srcs/builtins/echo.c \
 	srcs/builtins/env.c \
+	srcs/builtins/cd.c \
+	srcs/builtins/exit.c \
 	srcs/parsing/split.c
 	
 

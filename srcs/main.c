@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:37:34 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/03 01:46:44 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/07/05 01:59:10 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ static void	init_shell(t_shell *shell, char **envp)
 {
 	shell->envp = envp;
 	shell->exit_status = 0;
-}
-
-static int	should_exit(char *input)
-{
-	return (strcmp(input, "exit") == 0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -41,11 +36,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input)
 			add_history(input);
-		if (should_exit(input))
-		{
-			free(input);
-			break ;
-		}
 		process_command(input, &shell);
 		free(input);
 	}
