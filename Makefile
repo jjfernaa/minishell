@@ -12,6 +12,7 @@ SRCS = srcs/main.c \
 	srcs/builtins/env.c \
 	srcs/builtins/cd.c \
 	srcs/builtins/exit.c \
+	srcs/builtins/export.c \
 	srcs/parsing/split.c
 	
 
