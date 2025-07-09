@@ -1,30 +1,54 @@
 #include "lexer.h"
 
-static t_token	*new_token(t_token_type type, const char *value)
+static int	is_symbol(char c)
 {
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = type;
-	token->value = value; // posiblemente tenga que hacer un strdup de value
-	token->next = NULL;
-	return (token);
+	if (c == '|' || c == '<' || c == '>')
+		return (1);
+	return (0);
 }
 
-static void	token_add_back(t_token **list, t_token *new)
+static void	add_token(t_token **list, t_token_type type, const char *value)
 {
-	t_token	*tmp;
 
-	if (!*list)
+}
+
+static char	*read_word(const char *input, int *i)
+{
+	int	start;
+	int	len;
+
+	start = *i;
+	len = 0;
+
+	while (str[i])
 	{
-		*list = new;
-		return ;
+
 	}
-	tmp = *list;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
+	return (word);
 }
 
+t_token	*lexer(const char *input)
+{
+	t_token	*tokens = NULL;
+	char	*word;
+	int		i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == ' ')
+			i++;
+		else if (input[i] == '|')
+		{
+			add_token(&tokens, T_PIPE, "|");
+			i++;
+		}
+		else
+		{
+			word = read_word(input, &i);
+			add_token(&tokens, T_WORD, word);
+			free(word);
+		}
+	}
+	return (tokens);
+}
