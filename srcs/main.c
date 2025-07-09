@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 static void	init_shell(t_shell *shell, char **envp)
