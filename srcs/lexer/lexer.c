@@ -1,54 +1,102 @@
 #include "lexer.h"
 
-static int	is_symbol(char c)
+static void	handle_redirection(t_token **list, const char *input, int *i)
 {
-	if (c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
+	if (input[*i] == '>' && input[*i + 1] == '>')
+	{
+		add_token(list, T_APPEND, ">>");
+		*i += 2;
+	}
+	else if (input[*i] == '<' && input[*i + 1] == '<')
+	{
+		add_token(list, T_HEREDOC, "<<");
+		*i += 2;
+	}
+	else if (input[*i] == '>')
+	{
+		add_token(list, T_REDIR_OUT, ">");
+		(*i)++;
+	}
+	else if (input[*i] == '<')
+	{
+		add_token(list, T_REDIR_IN, "<");
+		(*i)++;
+	}
 }
 
-static void	add_token(t_token **list, t_token_type type, const char *value)
+static void	handle_quotes(t_token **list, const char *input, int *i)
 {
+	char	quote;
+	char	*word;
+	int		start;
+	int		len;
+	t_token	*token;
 
+	quote = input[*i];
+	start = ++(*i);
+	while (input[*i] && input[*i] != quote)
+		(*i)++;
+	if (input[*i] != quote)
+	{
+		printf("Syntax error: missing closing quote\n");
+		return ;
+	}
+	len = *i - start;
+	word = ft_substr(input, start, len);
+	token = add_token(list, T_WORD, word);
+	if (quote == '\'')
+		token->single_quotes = 1;
+	else if (quote == '"')
+		token->double_quotes = 1;
+	free(word);
+	(*i)++;
 }
 
 static char	*read_word(const char *input, int *i)
 {
-	int	start;
-	int	len;
+	char	*word;
+	int		start;
+	int		len;
 
 	start = *i;
-	len = 0;
-
-	while (str[i])
-	{
-
-	}
+	while (input[*i] && !ft_isspace(input[*i]) && !is_symbol(input[*i]))
+		(*i)++;
+	len = *i - start;
+	word = ft_substr(input, start, len);
 	return (word);
+}
+
+static void	handle_word(t_token **list, const char *input, int *i)
+{
+	char	*word;
+
+	word = read_word(input, i);
+	add_token(list, T_WORD, word);
+	free(word);
 }
 
 t_token	*lexer(const char *input)
 {
-	t_token	*tokens = NULL;
-	char	*word;
+	t_token	*tokens;
 	int		i;
 
+	tokens = NULL;
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == ' ')
+		if (ft_isspace(input[i]))
 			i++;
 		else if (input[i] == '|')
 		{
 			add_token(&tokens, T_PIPE, "|");
 			i++;
 		}
+		else if (input[i] == '<' || input[i] == '>')
+			handle_redirection(&tokens, input, &i);
+		else if (input[i] == '\'' || input[i] == '\"')
+			handle_quotes(&tokens, input, &i);
 		else
-		{
-			word = read_word(input, &i);
-			add_token(&tokens, T_WORD, word);
-			free(word);
-		}
+			handle_word(&tokens, input, &i);
 	}
 	return (tokens);
 }
