@@ -19,6 +19,7 @@ typedef struct s_shell
 {
 	char	**envp;
 	int		exit_status;
+	t_token	*tokens;
 }	t_shell;
 
 // Main functions
