@@ -11,13 +11,15 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
+# include "libft.h"
+# include "lexer.h"
 
 // Structures
 typedef struct s_shell
 {
 	char	**envp;
 	int		exit_status;
+	t_token	*tokens;
 }	t_shell;
 
 // Main functions
