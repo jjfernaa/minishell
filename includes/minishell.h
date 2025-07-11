@@ -22,6 +22,7 @@ typedef struct s_shell
 	int		exit_status;
 	t_token	*tokens;
 	t_env	*env;
+	t_cmd	*cmd;
 }	t_shell;
 
 // Main functions

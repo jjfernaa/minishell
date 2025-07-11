@@ -1,8 +1,8 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# include <stdlib.h>
 # include "lexer.h"
-//# include "minishell.h"
 
 typedef struct s_cmd
 {
