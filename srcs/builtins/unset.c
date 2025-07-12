@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 01:59:12 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/09 02:20:36 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/07/12 02:51:16 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	is_valid_identifier(char *str)
 int	builtin_unset(char **args, t_shell *shell)
 {
 	int	i;
-	
+
 	(void)shell;
 	if (!args[1])
 		return (0);

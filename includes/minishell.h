@@ -1,4 +1,3 @@
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -37,5 +36,10 @@ int		builtin_unset(char **args, t_shell *shell);
 // Parsing functions
 char	**split_input(char *input);
 void	free_args(char **args);
+
+// Signals functions
+extern volatile sig_atomic_t	g_signal_received;
+void	setup_signals(void);
+void	handle_sigint(int sig);
 
 #endif
