@@ -12,6 +12,7 @@
 # include <readline/history.h>
 # include "libft.h"
 # include "lexer.h"
+# include "env.h"
 
 // Structures
 typedef struct s_shell
@@ -19,6 +20,7 @@ typedef struct s_shell
 	char	**envp;
 	int		exit_status;
 	t_token	*tokens;
+	t_env	*env;
 }	t_shell;
 
 // Main functions
