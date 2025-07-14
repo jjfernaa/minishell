@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include <stdio.h>
 
 void print_token_type(t_token_type type)
 {
@@ -34,12 +33,57 @@ void print_tokens(t_token *tokens)
     }
 }
 
+void	free_cmds(t_cmd *cmds)
+{
+	int	i;
+
+	while (cmds)
+	{
+		t_cmd *tmp = cmds;
+		i = 0;
+		if (cmds->argv)
+		{
+			while (cmds->argv[i])
+			{
+				free(cmds->argv[i]);
+				i++;
+			}
+			free(cmds->argv);
+		}
+		if (cmds->infile)
+			free(cmds->infile);
+		if (cmds->outfile)
+			free(cmds->outfile);
+		cmds = cmds->next;
+		free(tmp);
+	}
+}
+
 int main(void)
 {
-    const char *input = "echo 'hola $USER' | cat << fin >> out.txt \"adios mundo\"";
-    t_token *tokens = lexer(input);
+	const char	*input = "cat < input.txt | grep hola >> salida.txt";
+	t_token 	*tokens = lexer(input);
+	t_cmd 		*cmds;
 
-    print_tokens(tokens);
-    free_tokens(tokens);
-    return 0;
+	if (!tokens)
+	{
+		printf("Error: lexer fall\n");
+		return (1);
+	}
+	cmds = parse_tokens(tokens);
+	if (!cmds)
+	{
+		printf("Error: parser fall\n");
+		free_tokens(tokens);
+		return (1);
+	}
+	printf("==== TOKENS ====");
+	print_tokens(tokens); // esta función debe estar en tu lexer
+
+	printf("==== COMANDOS PARSEADOS ====");
+	print_cmds(cmds);
+
+	free_tokens(tokens);
+	free_cmds(cmds);
+	return (0);
 }
