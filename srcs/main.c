@@ -14,6 +14,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_shell(&shell, envp);
+	setup_signals();
 	while (1)
 	{
 		input = readline("minishell$ ");

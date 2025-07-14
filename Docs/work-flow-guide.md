@@ -277,12 +277,15 @@ git reset --hard origin/main  # Volver exactamente a main remoto
 
 ---
 
+<!-- Cambiar estas líneas en el documento: -->
+
 ## 📋 CHECKLIST DIARIO
 
 ### 🔲 Al empezar:
-- [ ] `git checkout signals`
-- [ ] `git pull origin main`  
-- [ ] `git merge main`
+- [ ] `git checkout main`        # Ir a main primero
+- [ ] `git pull origin main`     # Actualizar main local
+- [ ] `git checkout signals`     # Ir a tu rama
+- [ ] `git merge main`           # Traer cambios limpios
 
 ### 🔲 Durante trabajo:
 - [ ] Commits frecuentes

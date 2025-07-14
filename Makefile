@@ -22,7 +22,9 @@ SRCS =  \
 	srcs/builtins/exit.c \
 	srcs/builtins/export.c \
 	srcs/builtins/unset.c \
-	srcs/parsing/split.c
+	srcs/parsing/split.c \
+	srcs/signals/signals.c \
+	srcs/signals/signal_handlers.c
 	
 OBJS = $(SRC_MAIN:.c=.o) $(SRCS:.c=.o)
 OBJS_TESTER = $(SRC_TESTER:.c=.o) $(SRCS:.c=.o)
