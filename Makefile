@@ -1,5 +1,5 @@
 NAME = minishell
-TEST = tester
+TEST = testeo
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra

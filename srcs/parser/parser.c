@@ -93,6 +93,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			if (!tokens->next || tokens->next->type != T_WORD)
 				return (NULL);
 			handle_redirection(tokens, current);
+			tokens = tokens->next; // Avanzo dos veces, para no añadir infile o outfile a argv.
 		}
 		tokens = tokens->next;
 	}
