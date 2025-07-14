@@ -33,6 +33,33 @@ void print_tokens(t_token *tokens)
     }
 }
 
+void	print_cmds(t_cmd *cmds)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (cmds)
+	{
+		printf("---- Command %d ----\n", i);
+		j = 0;
+		if (cmds->argv)
+		{
+			while (cmds->argv[j])
+			{
+				printf("argv[%d]: %s\n", j, cmds->argv[j]);
+				j++;
+			}
+		}
+		if (cmds->infile)
+			printf("infile: %s%s\n", cmds->infile, cmds->heredoc ? " (HEREDOC)" : " (REDIR_IN)");
+		if (cmds->outfile)
+			printf("outfile: %s%s\n", cmds->outfile, cmds->append ? " (APPEND)" : " (REDIR_OUT)");
+		cmds = cmds->next;
+		i++;
+	}
+}
+
 void	free_cmds(t_cmd *cmds)
 {
 	int	i;
@@ -61,7 +88,7 @@ void	free_cmds(t_cmd *cmds)
 
 int main(void)
 {
-	const char	*input = "cat < input.txt | grep hola >> salida.txt";
+	const char	*input = "cat < input.txt | grep hola >> > salida.txt";
 	t_token 	*tokens = lexer(input);
 	t_cmd 		*cmds;
 
@@ -77,10 +104,10 @@ int main(void)
 		free_tokens(tokens);
 		return (1);
 	}
-	printf("==== TOKENS ====");
+	printf("==== TOKENS ====\n");
 	print_tokens(tokens); // esta función debe estar en tu lexer
 
-	printf("==== COMANDOS PARSEADOS ====");
+	printf("==== COMANDOS PARSEADOS ====\n");
 	print_cmds(cmds);
 
 	free_tokens(tokens);
