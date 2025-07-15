@@ -1,7 +1,7 @@
 #ifndef ENV_H
 # define ENV_H
 
-#include "stdlib.h"
+#include <stdlib.h>
 #include "libft.h"
 
 typedef struct s_env

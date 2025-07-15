@@ -14,11 +14,11 @@ int main(int argc, char **argv, char **envp)
 {
 	t_env *env = init_env(envp);
 
-	argc = 0;
-	argv = NULL;
+	(void)argc;
+	(void)argv;
 	if (!env)
 		return (1);
-	print_env(env); // ✅ Verifica que la lista se construyó bien
+	print_env(env);
 	free_env(env);
 	return (0);
 }
