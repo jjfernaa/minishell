@@ -13,6 +13,7 @@
 # include "libft.h"
 # include "lexer.h"
 # include "parser.h"
+# include "env.h"
 
 // Structures
 typedef struct s_shell
@@ -21,6 +22,7 @@ typedef struct s_shell
 	int		exit_status;
 	t_token	*tokens;
 	t_cmd	*cmd;
+	t_env	*env;
 }	t_shell;
 
 // Main functions
