@@ -13,6 +13,9 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+int		validate_tokens(t_token *token);
 t_cmd	*parse_tokens(t_token *tokens);
+
+int		is_redirection(t_token *token);
 
 #endif
