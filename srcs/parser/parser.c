@@ -73,26 +73,26 @@ static void	handle_redirection(t_token *tokens, t_cmd *current)
 
 static char	**add_to_argv(char **argv, char *word)
 {
-	char	**new;
+	char	**new_argv;
 	int		i;
 	int		len;
 
 	len = 0;
 	while (argv && argv[len])
 		len++;
-	new = malloc(sizeof(char *) * (len + 2));
-	if (!new)
+	new_argv = malloc(sizeof(char *) * (len + 2));
+	if (!new_argv)
 		return (NULL);
 	i = 0;
 	while (i < len)
 	{
-		new[i] = argv[i];
+		new_argv[i] = argv[i];
 		i++;
 	}
-	new[i++] = ft_strdup(word);
-	new[i] = NULL;
+	new_argv[i++] = ft_strdup(word);
+	new_argv[i] = NULL;
 	free(argv);
-	return (new);
+	return (new_argv);
 }
 
 static void	handle_redirection(t_token *tokens, t_cmd *current)
@@ -127,7 +127,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 			cmd_add_back(&cmds, current_cmd);
 			current_cmd = new_cmd();
 		}
-		else if (is_redir(tokens))
+		else if (is_redirection(tokens))
 		{
 			handle_redirection(tokens, current_cmd);
 			tokens = tokens->next; // Avanzo dos veces, para no añadir infile o outfile a argv.

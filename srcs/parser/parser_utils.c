@@ -1,6 +1,6 @@
-#include "../includes/minishell.h"
+#include "parser.h"
 
-int	is_redir(t_token *token)
+int	is_redirection(t_token *token)
 {
 	if (!token)
 		return (0);
