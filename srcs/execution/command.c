@@ -6,23 +6,13 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/09 02:12:42 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/07/17 02:45:38 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-static int	execute_builtin(char **args, t_shell *shell)
+int	execute_builtin(char **args, t_shell *shell)
 {
 	if (ft_strcmp(args[0], "pwd") == 0)
 		return (builtin_pwd());
@@ -51,6 +41,12 @@ void	process_command(char *input, t_shell *shell)
 		return ;
 	builtin_result = execute_builtin(args, shell);
 	if (builtin_result == -1)
-		printf("Has escrito: '%s'\n", input);
+	{
+		shell->exit_status = execute_external(args, shell);
+	}
+	else
+	{
+		shell->exit_status = builtin_result;
+	}
 	free_args(args);
 }

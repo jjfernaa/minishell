@@ -19,6 +19,10 @@ SRCS = \
 	$(PARSER_DIR)/parser.c \
 	$(ENV_DIR)/env.c \
 	srcs/execution/command.c \
+	srcs/execution/execute.c \
+	srcs/execution/external_commands.c \
+	srcs/execution/path_utils.c \
+	srcs/utils/string_utils.c \
 	srcs/builtins/pwd.c \
 	srcs/builtins/echo.c \
 	srcs/builtins/env.c \
