@@ -1,31 +1,81 @@
 #include "parser.h"
 
-void	print_syntax_error(t_token *token)
+static void	print_syntax_error(t_token *token)
 {
-	
+	write(STDOUT_FILENO, "minishell: syntax error near unexpected token `", 47);
+	if (!token)
+		write(STDOUT_FILENO, "newline", 7);
+	else if (token->type == T_PIPE)
+		write(STDOUT_FILENO, "|", 1);
+	else if (token->type == T_REDIR_IN)
+		write(STDOUT_FILENO, "<", 1);
+	else if (token->type == T_REDIR_OUT)
+		write(STDOUT_FILENO, ">", 1);
+	else if (token->type == T_HEREDOC)
+		write(STDOUT_FILENO, "<<", 2);
+	else if (token->type == T_APPEND)
+		write(STDOUT_FILENO, ">>", 2);
+	else if (token->value)
+		write(STDOUT_FILENO, token->value, ft_strlen(token->value));
+	else
+		write(STDOUT_FILENO, "?", 1);
+	write(STDOUT_FILENO, "'\n", 2);
+}
+
+static int	is_pipe_first_token(t_token *token)
+{
+	if (token->type == T_PIPE)
+	{
+		print_syntax_error(token);
+		return (1);
+	}
+	return (0);
+}
+
+static int	is_pipe_error(t_token *token)
+{
+	if (token->next->type == T_PIPE)
+	{
+		print_syntax_error(token);
+		return (1);
+	}
+	else if (!token->next || token->next->type != T_WORD)
+	{
+		print_syntax_error(NULL);
+		return (1);
+	}
+	return (0);
+}
+
+static int	is_redir_error(t_token *token)
+{
+	if (!token->next || token->next->type != T_WORD)
+	{
+		print_syntax_error(token);
+		return (1);
+	}
+	return (0);
 }
 
 int	validate_tokens(t_token *token)
 {
-	t_token	*prev_token;
-
-	prev_token = NULL;
-	if (!token || token->type == T_PIPE) //Primer token es pipe
+	if (!token)
+		return (0);
+	if (is_pipe_first_token(token))
 		return (0);
 	while (token)
 	{
-		if (token->type == T_PIPE) //Tengo dos pipes seguidos ||
+		if (token->type == T_PIPE)
 		{
-			if (!token->next || token->next->type != T_WORD)
+			if (is_pipe_error(token))
 				return (0);
 		}
-		if (is_redirection(token) // Redirección 
-			&& (!token->next || token->next->type != T_WORD))
+		else if (is_redir(token))
+		{
+			if (is_redir_error(token))
 			return (0);
-		prev_token = token;
+		}
 		token = token->next;
 	}
-	if (prev_token && prev_token->type == T_PIPE) //Ultimo token es pipe
-		return (0);
 	return (1);
 }

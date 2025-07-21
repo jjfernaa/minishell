@@ -18,11 +18,14 @@
 // Structures
 typedef struct s_shell
 {
-	char	**envp;
-	int		exit_status;
+	char	*input;
+	//char	**envp;
+	t_env	*env;
 	t_token	*tokens;
 	t_cmd	*cmd;
-	t_env	*env;
+	int		infile_fd;
+	int		outfile_fd;
+	int		exit_status;
 }	t_shell;
 
 // Main functions
@@ -55,5 +58,8 @@ int		is_builtin(char *command);
 
 // Utils functions
 int		ft_strcmp(const char *s1, const char *s2);
+void	exit_error_cleanup(t_shell *shell, char *message, int code);
+void	exit_cleanup(t_shell *shell, int code);
+void	cleanup_shell(t_shell *shell);
 
 #endif
