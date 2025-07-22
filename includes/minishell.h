@@ -47,11 +47,15 @@ void	handle_sigint(int sig);
 // Execution functions
 int		execute_builtin(char **args, t_shell *shell);
 int		execute_command(char **args, t_shell *shell);
-char	*find_executable(char *command);
+char	*find_executable(char *command, char **envp);
+char	*get_env_value(char *key, char **envp);
+char	*check_direct_path(char *command);
+char	*search_in_dirs(char **dirs, char *command);
 int		execute_external(char **args, t_shell *shell);
 int		is_builtin(char *command);
 
 // Utils functions
 int		ft_strcmp(const char *s1, const char *s2);
+void	free_array(char **array);
 
 #endif

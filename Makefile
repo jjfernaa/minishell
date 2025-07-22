@@ -18,6 +18,7 @@ SRCS = \
 	srcs/execution/execute.c \
 	srcs/execution/external_commands.c \
 	srcs/execution/path_utils.c \
+	srcs/execution/path_helpers.c \
 	srcs/utils/string_utils.c \
 	srcs/builtins/pwd.c \
 	srcs/builtins/echo.c \
