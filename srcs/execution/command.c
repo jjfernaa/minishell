@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/17 02:45:38 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/07/29 03:25:38 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,24 @@ int	execute_builtin(char **args, t_shell *shell)
 
 void	process_command(char *input, t_shell *shell)
 {
+	t_token	*tokens;
 	char	**args;
 	int		builtin_result;
 
-	args = split_input(input);
-	if (!args)
+	tokens = lexer(input);
+	if (!tokens)
 		return ;
+	args = tokens_to_args(tokens);
+	if (!args)
+	{
+		free_tokens(tokens);
+		return ;
+	}
 	builtin_result = execute_builtin(args, shell);
 	if (builtin_result == -1)
-	{
 		shell->exit_status = execute_external(args, shell);
-	}
 	else
-	{
 		shell->exit_status = builtin_result;
-	}
+	free_tokens(tokens);
 	free_args(args);
 }

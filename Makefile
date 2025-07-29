@@ -13,6 +13,7 @@ SRC_TESTER_ENV = tester/main_env.c
 SRCS = \
 	$(LEXER_DIR)/lexer.c \
 	$(LEXER_DIR)/lexer_utils.c \
+	$(LEXER_DIR)/lexer_conversion.c \
 	$(ENV_DIR)/env.c \
 	srcs/execution/command.c \
 	srcs/execution/execute.c \
@@ -27,7 +28,6 @@ SRCS = \
 	srcs/builtins/exit.c \
 	srcs/builtins/export.c \
 	srcs/builtins/unset.c \
-	srcs/parsing/split.c \
 	srcs/signals/signals.c \
 	srcs/signals/signal_handlers.c
 	
