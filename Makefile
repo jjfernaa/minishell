@@ -7,6 +7,7 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 INCLUDES = -I includes -I libft
 LEXER_DIR = srcs/lexer
+PARSER_DIR = srcs/parser
 ENV_DIR = srcs/env
 SRC_MAIN = srcs/main.c
 SRC_TESTER_ENV = tester/main_env.c
@@ -14,12 +15,18 @@ SRCS = \
 	$(LEXER_DIR)/lexer.c \
 	$(LEXER_DIR)/lexer_utils.c \
 	$(LEXER_DIR)/lexer_conversion.c \
+	$(PARSER_DIR)/parser.c \
+	$(PARSER_DIR)/parser_utils.c \
+	$(PARSER_DIR)/syntax_check.c \
 	$(ENV_DIR)/env.c \
+	$(ENV_DIR)/env_operations.c \
+	$(ENV_DIR)/env_utils.c \
 	srcs/execution/command.c \
 	srcs/execution/execute.c \
 	srcs/execution/external_commands.c \
 	srcs/execution/path_utils.c \
 	srcs/execution/path_helpers.c \
+	srcs/execution/pipeline.c \
 	srcs/utils/string_utils.c \
 	srcs/builtins/pwd.c \
 	srcs/builtins/echo.c \

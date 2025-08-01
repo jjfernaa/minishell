@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 01:59:12 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/12 02:51:16 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/01 02:42:43 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ static int	is_valid_identifier(char *str)
 int	builtin_unset(char **args, t_shell *shell)
 {
 	int	i;
-
-	(void)shell;
+	int	error_status;
+	
 	if (!args[1])
 		return (0);
 	i = 1;
+	error_status = 0;
 	while (args[i])
 	{
 		if (!is_valid_identifier(args[i]))
@@ -47,8 +48,12 @@ int	builtin_unset(char **args, t_shell *shell)
 			ft_putstr_fd("': not a valid identifier\n", 2);
 			return (1);
 		}
-		printf("unset: %s (pendiente de implementar)\n", args[i]);
+		else
+		{
+			remove_env_var(&shell->env, args[i]);
+		}
 		i++;
 	}
-	return (0);
+	return (error_status);
 }
+

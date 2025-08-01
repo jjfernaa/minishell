@@ -4,6 +4,12 @@ static void	init_shell(t_shell *shell, char **envp)
 {
 	shell->envp = envp;
 	shell->exit_status = 0;
+	shell->env = init_env(envp);
+	if (!shell->env)
+	{
+		printf("Error: Could not initialize environment\n");
+		exit(1);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)

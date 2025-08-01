@@ -13,6 +13,7 @@
 # include "libft.h"
 # include "lexer.h"
 # include "env.h"
+# include "parser.h"
 
 // Structures
 typedef struct s_shell
@@ -57,5 +58,9 @@ int		is_builtin(char *command);
 // Utils functions
 int		ft_strcmp(const char *s1, const char *s2);
 void	free_array(char **array);
+
+// Pipeline functions
+int		has_pipes_or_redirects(t_token *tokens);
+void	execute_pipeline(t_cmd *cmds, t_shell *shell);
 
 #endif
