@@ -18,10 +18,14 @@
 // Structures
 typedef struct s_shell
 {
+	char	*input;
 	char	**envp;
-	int		exit_status;
-	t_token	*tokens;
 	t_env	*env;
+	t_token	*tokens;
+	t_cmd	*cmd;
+	int		infile_fd;
+	int		outfile_fd;
+	int		exit_status;
 }	t_shell;
 
 // Main functions
@@ -62,5 +66,10 @@ void	free_array(char **array);
 // Pipeline functions
 int		has_pipes_or_redirects(t_token *tokens);
 void	execute_pipeline(t_cmd *cmds, t_shell *shell);
+
+// Error and clean functions
+void	exit_error_cleanup(t_shell *shell, char *message, int code);
+void	cleanup_loop(t_shell *shell);
+void	cleanup_shell(t_shell *shell);
 
 #endif

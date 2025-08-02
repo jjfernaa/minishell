@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "parser.h"
 
 int	is_redir(t_token *token)
 {
@@ -9,6 +9,22 @@ int	is_redir(t_token *token)
 		return (1);
 	return (0);
 }
+
+void	free_array(char **array)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -19,6 +35,10 @@ void	free_cmds(t_cmd *cmd)
 		cmd = cmd->next;
 		if (tmp->argv)
 			free_array(tmp->argv);
+		if (tmp->infile)
+			free(tmp->infile);
+		if (tmp->outfile)
+			free(tmp->outfile);
 		free(tmp);
 	}
 }

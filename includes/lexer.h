@@ -8,7 +8,7 @@
 
 typedef enum e_token_type
 {
-	T_WORD,			// Palabra
+	T_WORD,			// Word
 	T_PIPE,			// |
 	T_REDIR_IN,		// <
 	T_REDIR_OUT,	// >

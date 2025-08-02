@@ -2,7 +2,6 @@
 # define PARSER_H
 
 # include "lexer.h"
-//# include "minishell.h"
 
 typedef struct s_cmd
 {
