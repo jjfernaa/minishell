@@ -19,7 +19,7 @@
 typedef struct s_shell
 {
 	char	*input;
-	//char	**envp;
+	char	**envp;
 	t_env	*env;
 	t_token	*tokens;
 	t_cmd	*cmd;
@@ -66,8 +66,10 @@ void	free_array(char **array);
 // Pipeline functions
 int		has_pipes_or_redirects(t_token *tokens);
 void	execute_pipeline(t_cmd *cmds, t_shell *shell);
+
+// Error and clean functions
 void	exit_error_cleanup(t_shell *shell, char *message, int code);
-void	exit_cleanup(t_shell *shell, int code);
+void	cleanup_loop(t_shell *shell);
 void	cleanup_shell(t_shell *shell);
 
 #endif

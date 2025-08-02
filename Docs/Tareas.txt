@@ -1,5 +1,0 @@
-LEXER
--------
-
-1. Revisar función handle_quotes() -> si no hay comillas de cierre, imprimo un error únicamente,
-pero debemos gestionarlo de otra forma, imprimiendo el error y limpiando todo.

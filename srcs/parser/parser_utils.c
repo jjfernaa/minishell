@@ -35,6 +35,10 @@ void	free_cmds(t_cmd *cmd)
 		cmd = cmd->next;
 		if (tmp->argv)
 			free_array(tmp->argv);
+		if (tmp->infile)
+			free(tmp->infile);
+		if (tmp->outfile)
+			free(tmp->outfile);
 		free(tmp);
 	}
 }

@@ -152,8 +152,34 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 
 	✅ Función free_array() -> ♻️ libera un char**
 
-	✅ Función free_cmds -> ♻️ libera los nodos t_cmd
+	✅ Función free_cmds -> ♻️ libera la lista enlazada t_cmd
+		|-> ♻️ libera char **argv. La lista de comandos
+		|-> ♻️ libera infile. Fue reservado con ft_strdup
+		|-> ♻️ libera outfile. Fue reservado con ft_strdup
 
+
+# 🎯 LIMPIEZA (📁 utils)
+
+📋 Creación de funciones para centralizar la limpieza
+
+#### 📁 cleanup_utils.c
+	✅ Función cleanup_loop() -> Limpieza del bucle while(1) cada vez que lanzamos un prompt
+		|-> ♻️ libera el input
+		|-> ♻️ libera t_tokens
+		|-> ♻️ libera t_cmd
+		|-> Resetea punteros a NULL (recomendable)
+
+	❌ Función close_fd() -> Cierre de filedescriptors
+
+	✅ Función cleanup_shell() -> Limpieza final del programa
+		|-> ♻️ cleanup_loop()
+		|-> ♻️ libera t_env
+
+#### 📁 error_utils.c
+⚠️Pendiente de revisión
+	❌ Función exit_error_cleanup() -> Exit, imprime ⛔ error y ♻️ libera
+
+	❌ Función exit_cleanup() -> Exit y ♻️ libera
 
 ✅
 ⚠️
