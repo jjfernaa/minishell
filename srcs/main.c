@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 		process_command(input, &shell);
 		free(input);
-		//cleanup_loop(shell);
+		cleanup_loop(&shell);
 	}
 	rl_clear_history();
 	cleanup_shell(&shell);

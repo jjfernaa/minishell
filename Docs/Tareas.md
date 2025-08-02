@@ -33,6 +33,6 @@ pero debemos gestionarlo de otra forma, imprimiendo el error y limpiando todo.
 
 1. Tenemos dos funciones free_array(). Una en parser_utils.c y otra en string_utils.char
 	Nos debemos quedar sólo con una, la que tenemos en parser_utils. **HECHO**
-
 2. Eliminar de minishell.h split_input()
 3. Eliminar de t_shell char	**envp
+4. Eliminar free(input) del main e incorporar input a la estructura t_shell, así centralizamos la limpieza de la memoria.

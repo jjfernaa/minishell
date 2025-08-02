@@ -88,19 +88,19 @@ void	free_cmds(t_cmd *cmds)
 
 int main(void)
 {
-	const char	*input = "cat < input.txt | grep hola >> > salida.txt";
+	const char	*input = "cat < input.txt | grep hola >> salida.txt";
 	t_token 	*tokens = lexer(input);
 	t_cmd 		*cmds;
 
 	if (!tokens)
 	{
-		printf("Error: lexer fall\n");
+		printf("Error: lexer failed\n");
 		return (1);
 	}
 	cmds = parse_tokens(tokens);
 	if (!cmds)
 	{
-		printf("Error: parser fall\n");
+		printf("Error: parser failed\n");
 		free_tokens(tokens);
 		return (1);
 	}
