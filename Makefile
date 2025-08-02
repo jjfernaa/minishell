@@ -9,6 +9,7 @@ INCLUDES = -I includes -I libft
 LEXER_DIR = srcs/lexer
 PARSER_DIR = srcs/parser
 ENV_DIR = srcs/env
+UTILS_DIR = srcs/utils
 SRC_MAIN = srcs/main.c
 SRC_TESTER_ENV = tester/main_env.c
 SRCS = \
@@ -36,8 +37,10 @@ SRCS = \
 	srcs/builtins/export.c \
 	srcs/builtins/unset.c \
 	srcs/signals/signals.c \
-	srcs/signals/signal_handlers.c
-	
+	srcs/signals/signal_handlers.c \
+	$(UTILS_DIR)/cleanup_utils.c \
+	$(UTILS_DIR)/error_utils.c
+
 OBJS = $(SRC_MAIN:.c=.o) $(SRCS:.c=.o)
 OBJS_TEST_ENV = $(SRC_TESTER_ENV:.c=.o) $(SRCS:.c=.o)
 
