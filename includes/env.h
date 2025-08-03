@@ -1,8 +1,9 @@
 #ifndef ENV_H
 # define ENV_H
 
-#include <stdlib.h>
-#include "libft.h"
+# include <stdlib.h>
+# include "libft.h"
+# include "utils.h"
 
 typedef struct s_env
 {

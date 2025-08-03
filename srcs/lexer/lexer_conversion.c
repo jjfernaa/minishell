@@ -28,17 +28,3 @@ char	**tokens_to_args(t_token *tokens)
 	args[i] = NULL;
 	return (args);
 }
-void	free_args(char **args)
-{
-	int	i;
-
-	if (!args)
-		return ;
-	i = 0;
-	while (args[i])
-	{
-		free(args[i]);
-		i++;
-	}
-	free(args);
-}

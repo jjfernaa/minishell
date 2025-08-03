@@ -17,7 +17,6 @@ int		validate_tokens(t_token *token);
 t_cmd	*parse_tokens(t_token *tokens);
 
 int		is_redir(t_token *token);
-void	free_array(char **array);
 void	free_cmds(t_cmd *cmd);
 
 #endif

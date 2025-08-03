@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/31 22:30:56 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/03 20:23:12 by dponce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	execute_parser_command(t_token *tokens, t_shell *shell)
 			shell->exit_status = execute_external(args, shell);
 		else
 			shell->exit_status = builtin_result;
-		free_args(args);
+		free_array(args);
 	}
 }
 

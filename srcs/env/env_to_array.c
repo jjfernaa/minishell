@@ -1,19 +1,4 @@
 #include "env.h"
-// Eliminar y quedarnos solo con un free_array. Por ejemplo, crear un utils.h
-static void	free_array_envp(char **array)
-{
-	int	i;
-
-	if (!array)
-		return ;
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 static int	env_size(t_env *env)
 {
@@ -37,14 +22,14 @@ static char	*create_envp_line(t_env *env, char **envp)
 	joined_key_equal = ft_strjoin(env->key, "=");
 	if (!joined_key_equal)
 	{
-		free_array_envp(envp);
+		free_array(envp);
 		return (NULL);
 	}
 	envp_line = ft_strjoin(joined_key_equal, env->value);
 	if (!envp_line)
 	{
 		free(joined_key_equal);
-		free_array_envp(envp);
+		free_array(envp);
 		return (NULL);
 	}
 	free(joined_key_equal);

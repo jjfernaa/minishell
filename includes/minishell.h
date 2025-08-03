@@ -14,6 +14,7 @@
 # include "lexer.h"
 # include "env.h"
 # include "parser.h"
+# include "utils.h"
 
 // Structures
 typedef struct s_shell
@@ -40,10 +41,6 @@ int		builtin_exit(char **args, t_shell *shell);
 int		builtin_export(char **args, t_shell *shell);
 int		builtin_unset(char **args, t_shell *shell);
 
-// Parsing functions
-char	**split_input(char *input);
-void	free_args(char **args);
-
 // Signals functions
 extern volatile sig_atomic_t	g_signal_received;
 void	setup_signals(void);
@@ -61,7 +58,6 @@ int		is_builtin(char *command);
 
 // Utils functions
 int		ft_strcmp(const char *s1, const char *s2);
-void	free_array(char **array);
 
 // Pipeline functions
 int		has_pipes_or_redirects(t_token *tokens);

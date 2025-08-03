@@ -24,6 +24,7 @@ SRCS = \
 	$(ENV_DIR)/env.c \
 	$(ENV_DIR)/env_operations.c \
 	$(ENV_DIR)/env_utils.c \
+	$(ENV_DIR)/env_to_array.c \
 	srcs/execution/command.c \
 	srcs/execution/execute.c \
 	srcs/execution/external_commands.c \
@@ -41,7 +42,8 @@ SRCS = \
 	srcs/signals/signals.c \
 	srcs/signals/signal_handlers.c \
 	$(UTILS_DIR)/cleanup_utils.c \
-	$(UTILS_DIR)/error_utils.c
+	$(UTILS_DIR)/error_utils.c \
+	$(UTILS_DIR)/utils.c
 
 OBJS = $(SRC_MAIN:.c=.o) $(SRCS:.c=.o)
 OBJS_TEST_ENV = $(SRC_TESTER_ENV:.c=.o) $(SRCS:.c=.o)
