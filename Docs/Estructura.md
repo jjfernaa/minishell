@@ -29,6 +29,22 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 
 ### 🚨 Este estructura hay que volver a transformarla a un char** para pasarla como parámetro a la función execve()
 
+###	✅ Creación de char** para pasarlo a execve
+
+📋 La función del sistema execve sólo toma como parámetro un char**, no una estructura o lista, por tanto debemos transformar t_env a un char** justo antes de llamar a execve, y liberar si execve falla. No necesitamos guardar este char**, se generará cada vez que se llame a execve para reflejar cualquier modificación que se haga en las variables de entorno.
+
+	✅ Función env_size() -> Calcula el tamaño de la lista enlazada t_env
+
+	✅ Función env_to_array() -> Recorre la lista t_env para crear un char**
+		|-> Calculamos el tamaño de la lista para la reserva de memoria
+		|-> 🧠 Reservamos memoria para el char**
+		|-> Manejamos el flujo de creación del char**
+
+	✅ Función create_envp_line() -> Crea cada línea del char**
+		|-> 🧠 Unimos "KEY" con "=" con ft_strjoin. Resultado "KEY="
+		|-> 🧠 Unimos lo anterior con "VALUE" con ft_strjoin. Resultado "KEY=VALUE"
+		|-> ♻️ liberamos el primer ft_strjoin, ya no lo necesitamos
+
 
 # 🎯 TOKENIZACION (📁 lexer)
 
@@ -150,8 +166,6 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 #### 📁 parser_utils.c
 	✅ Función is_redir() -> Verifica si se trata de una redirección < << > >>
 
-	✅ Función free_array() -> ♻️ libera un char**
-
 	✅ Función free_cmds -> ♻️ libera la lista enlazada t_cmd
 		|-> ♻️ libera char **argv. La lista de comandos
 		|-> ♻️ libera infile. Fue reservado con ft_strdup
@@ -180,6 +194,10 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 	❌ Función exit_error_cleanup() -> Exit, imprime ⛔ error y ♻️ libera
 
 	❌ Función exit_cleanup() -> Exit y ♻️ libera
+
+#### 📁 utils.c
+	✅ Función free_array() -> ♻️ libera un char**
+
 
 ✅
 ⚠️
