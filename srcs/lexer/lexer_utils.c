@@ -16,8 +16,7 @@ static t_token	*new_token(t_token_type type, const char *value)
 		return (NULL);
 	token->type = type;
 	token->value = ft_strdup(value);
-	token->single_quotes = 0;
-	token->double_quotes = 0;
+	token->quote_type = NO_QUOTE;
 	token->next = NULL;
 	return (token);
 }

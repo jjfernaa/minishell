@@ -45,9 +45,9 @@ static void	handle_quotes(t_token **list, const char *input, int *i)
 	word = ft_substr(input, start, len);
 	token = add_token(list, T_WORD, word);
 	if (quote == '\'')
-		token->single_quotes = 1;
+		token->quote_type = SINGLE_QUOTE;
 	else if (quote == '"')
-		token->double_quotes = 1;
+		token->quote_type = DOUBLE_QUOTE;
 	free(word);
 	(*i)++;
 }

@@ -17,12 +17,18 @@ typedef enum e_token_type
 	T_HEREDOC		// <<
 } t_token_type;
 
+typedef enum e_quote_type
+{
+	NO_QUOTE,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+} t_quote_type;
+
 typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
-	int				single_quotes;
-	int				double_quotes;
+	t_quote_type	quote_type;
 	struct s_token	*next;
 } t_token;
 
