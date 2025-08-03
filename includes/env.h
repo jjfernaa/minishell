@@ -24,4 +24,7 @@ void	add_env_var(t_env **env_list, char *key, char *value);
 // Operations
 void	remove_env_var(t_env **env_list, char *key);
 
+// Use just before execve to recompose environment variables
+char	**env_to_array(t_env *env);
+
 #endif
