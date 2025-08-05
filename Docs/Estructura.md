@@ -1,8 +1,8 @@
 ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 
-# 🎯 CREACION COPIA DE VARIABLES ENTORNO (📁 env)
+# 🎯 VARIABLES ENTORNO (📁 env)
 
-📋 Creamos una copia en formato lista enlazada para poder modificar o eliminar las variables con los built-in "export" y "unset", respectivamente.
+📋 Creamos una copia en formato lista enlazada de las variables de entorno que recibimos en el main (char **envp) para poder modificar o eliminar las variables con los built-in "export" y "unset", respectivamente.
 
 ## 🔧 Pasos a realizar
 
@@ -83,7 +83,7 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 
 	✅ Función handle_redirection() -> Verifica que redirección es (<, <<, >, >>) y ejecuta add_token()
 
-	✅ Función handle_quotes -> maneja si tenemos un token entre comillas simples o dobles
+	❌ Función handle_quotes -> maneja si tenemos un token entre comillas simples o dobles
 		|-> No tenemos comillas de cierre -> ⛔ Error
 ⚠️ Que hacemos si no tenemos comillas de cierre?
 		|-> 🧠 Copiamos char *word con ft_substr
@@ -105,6 +105,7 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 ## ⚠️ Revisar 
 
 #### 📁 lexer_conversion.c ⚠️
+
 
 # 🎯 PARSEO (📁 parser)
 
@@ -172,6 +173,52 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 		|-> ♻️ libera outfile. Fue reservado con ft_strdup
 
 
+# 🎯 EXPANSION DE VARIABLES (📁 expander)
+
+📋 Expandimos las varialbes de entorno cuando nos encontramos un $VAR, "$VAR" o $?. Si está entre comillas simples '$VAR' no expandimos, se trata como un literal.
+
+## 🔧 Pasos a realizar
+
+### ✅ Expansión de variables de entorno (📁 expander.c)
+
+	✅ Función expand_var() -> maneja el flujo recorriendo la lista de tokens
+
+	✅ Función expand_string() -> maneja la creación del nuevo string
+		|-> 🧠 Reservamos memoria con ft_strdup("") para inicializar el nuevo string
+		|-> Recorremos el antiguo string por completo, creando el nuevo string caracter a caracter hasta encontrar un $
+		|-> verificamos si tenemos
+			|-> un '?' -> concatenamos el estatus de salida del programa
+			|-> valor alfanumérico o '_' -> concatenamos el valor de la variable de entorno
+			|-> else -> concatenamos el carácter
+
+	✅ Función append_exit_status() -> concatena el estado de salida del programa
+		|-> 🧠 Convertimos el numero a string con ft_itoa
+		|-> 🧠 Concatenamos el numero al string que ya tenía
+		|-> ♻️ liberamos el string en el que guardamos el número, ya no lo necesitamos
+		|-> ♻️ liberamos el string antiguo que recibió la función, hemos creado uno nuevo
+		|-> Actualizamos el puntero que apuntaba al antiguo string al nuevo
+		|-> Actualizamos el índice sumando +2 (signos $?)
+
+	✅ Función append_char() -> concatena un carácter
+		|-> 🧠 Reserva de memoria para el nuevo string
+		|-> Copiamos los bytes con ft_memcpy
+		|-> Añadimos el carácter
+		|-> Añadimos el nulo '\0'
+		|-> ♻️ liberamos el antiguo string tomado como parámetro de la función
+		|-> Actualizamos el puntero del antiguo string al nuevo string
+
+	❌ Función append_env_var() -> concatena el valor de la variable de entorno
+		|-> Calculamos la longitud del nombre de la variable de entorno hasta el '='
+		|-> 🧠 Copiamos el nombre de la variable de entorno con ft_substr
+		|-> Buscamos el nombre de la variable de entorno en la lista t_env
+⚠️ Revisar función get_env_value() -> No recibe la lista t_env
+		|-> ♻️ liberamos el nombre de la variable
+		|-> 🧠 Concatenamos el valor con el antiguo string con ft_strjoin
+		|-> ♻️ liberamos el antiguo string tomado como parámetro de la función
+		|-> Actualizamos el puntero del antiguo string al nuevo string
+		|-> Actualizamos el índice añadiendo la longitud calculada inicialmente
+
+
 # 🎯 LIMPIEZA (📁 utils)
 
 📋 Creación de funciones para centralizar la limpieza
@@ -190,7 +237,7 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 		|-> ♻️ libera t_env
 
 #### 📁 error_utils.c
-⚠️Pendiente de revisión
+⚠️ Pendiente de revisión
 	❌ Función exit_error_cleanup() -> Exit, imprime ⛔ error y ♻️ libera
 
 	❌ Función exit_cleanup() -> Exit y ♻️ libera
@@ -199,13 +246,16 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 	✅ Función free_array() -> ♻️ libera un char**
 
 
-✅
-⚠️
-🚨
-📋
-♻️
-🧠
+# LEYENDA EMOTICONOS 
+
+📋 Descripción
+✅ Hecho!
+❌ Pendiente
+🧠 Reserva de memoria
+♻️ Liberación de memoria
+⛔ Error
+⚠️ Revisar
+🚨 A tener en cuenta
+❓ Duda
 ❗
-⛔
-❌
 🗒️

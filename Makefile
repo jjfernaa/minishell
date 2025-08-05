@@ -15,6 +15,7 @@ EXECUTION_DIR = srcs/execution
 BUILTINS_DIR = srcs/builtins
 SIGNALS_DIR = srcs/signals
 UTILS_DIR = srcs/utils
+EXPANDER_DIR = srcs/expander
 SRC_MAIN = srcs/main.c
 SRC_TESTER_ENV = tester/main_env.c
 SRC_TESTER_PARSER = tester/main_parser.c
@@ -51,7 +52,8 @@ SRCS = \
 	$(UTILS_DIR)/string_utils.c \
 	$(UTILS_DIR)/cleanup_utils.c \
 	$(UTILS_DIR)/error_utils.c \
-	$(UTILS_DIR)/utils.c
+	$(UTILS_DIR)/utils.c \
+	$(EXPANDER_DIR)/expander.c
 
 OBJS = $(SRC_MAIN:.c=.o) $(SRCS:.c=.o)
 OBJS_TEST_ENV = $(SRC_TESTER_ENV:.c=.o) $(SRCS:.c=.o)

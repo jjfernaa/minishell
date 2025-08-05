@@ -84,5 +84,7 @@ void	free_pipes(int **pipes, int pipe_count);
 // Pipeline helpers 
 int		count_commands(t_cmd *cmds);
 void	handle_pipe_error(int **pipes, int created_count);
+// Expand environment variables
+void	expand_var(t_token *tokens, t_env *env, int exit_status);
 
 #endif

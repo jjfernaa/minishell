@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	append_exit_status(char **result, int exit_status)
+static void	append_exit_status(char **result, int exit_status, int *i)
 {
 	char	*exit_status_str;
 	char	*new_str;
@@ -17,6 +17,7 @@ static void	append_exit_status(char **result, int exit_status)
 	// Liberamos el resultado anterior y actualizamos
 	free(*result);
 	*result = new_str;
+	*i += 2;
 }
 
 static void	append_char(char **result, char c)
@@ -44,7 +45,7 @@ static void	append_env_var(char **result, const char *str, t_env *env, int *i)
 	char	*var_name;
 	char	*value;
 
-	// Leer nombre de variable
+	// Leer nombre de variable hasta el =
 	len = 0;
 	while (ft_isalnum(str[len]) || str[len] == '_')
 		len++;
@@ -53,7 +54,7 @@ static void	append_env_var(char **result, const char *str, t_env *env, int *i)
 	if (!var_name)
 		return ;
 	// Buscar valor en env
-	value = get_env_value(env, var_name);
+	value = get_env_value(var_name, env); // !!!!!!!Está mal get_env_value()
 	free(var_name);
 	// Si no se encuentra, no añadimos nada
 	if (!value)
@@ -84,9 +85,9 @@ static char	*expand_string(const char *str, t_env *env, int exit_status)
 		if (str[i] == '$')
 		{
 			if (str[i + 1] == '?')
-				append_exit_status(&result, exit_status);
+				append_exit_status(&result, exit_status, &i);
 			else if (ft_isalpha(str[i + 1]) || str[i + 1] == '_')
-				append_env_var(&result, str + i + 1, env, i);
+				append_env_var(&result, str + i + 1, env, &i);
 			else
 				append_char(&result, str[i++]);
 		}
@@ -103,6 +104,6 @@ void	expand_var(t_token *tokens, t_env *env, int exit_status)
 		if(tokens->type == T_WORD
 			&& tokens->quote_type != SINGLE_QUOTE)
 			tokens->value = expand_string(tokens->value, env, exit_status);
-	}
-	tokens = tokens->next;
+		tokens = tokens->next;
+	}	
 }
