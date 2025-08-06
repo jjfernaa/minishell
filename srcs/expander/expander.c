@@ -53,13 +53,13 @@ static void	append_env_var(char **result, const char *str, t_env *env, int *i)
 	var_name = ft_substr(str, 0, len);
 	if (!var_name)
 		return ;
-	// Buscar valor en env
-	value = get_env_value(var_name, env); // !!!!!!!Está mal get_env_value()
+	// Buscar valor en t_env
+	value = get_env_value_list(env, var_name); // !!!!!!!Está mal get_env_value()
 	free(var_name);
 	// Si no se encuentra, no añadimos nada
 	if (!value)
 	{
-		*i += len;
+		*i += len + 1; // +1 por el '$'
 		return ;
 	}
 	// Concatenar al resultado actual
@@ -68,7 +68,7 @@ static void	append_env_var(char **result, const char *str, t_env *env, int *i)
 		return ;
 	free(*result);
 	*result = new_string;
-	*i += len;
+	*i += len + 1; // +1 por el '$'
 }
 
 static char	*expand_string(const char *str, t_env *env, int exit_status)
@@ -93,17 +93,36 @@ static char	*expand_string(const char *str, t_env *env, int exit_status)
 		}
 		else
 			append_char(&result, str[i++]);
+		if (!result)
+			return (NULL);
 	}
 	return (result);
 }
 
-void	expand_var(t_token *tokens, t_env *env, int exit_status)
+void	expand_var(t_shell *shell)
 {
-	while (tokens)
+	t_token	*current;
+	char	*old_value;
+	char	*new_value;
+
+	current = shell->tokens;
+	if (!current)
+		return ;
+	while (current)
 	{
-		if(tokens->type == T_WORD
-			&& tokens->quote_type != SINGLE_QUOTE)
-			tokens->value = expand_string(tokens->value, env, exit_status);
-		tokens = tokens->next;
-	}	
+		if (current->type == T_WORD && current->quote_type != SINGLE_QUOTE)
+		{
+			old_value = current->value;
+			new_value = expand_string(
+				current->value,
+				shell->env,
+				shell->exit_status);
+			if (new_value)
+			{
+				current->value = new_value;
+				free(old_value);
+			}
+		}
+		current = current->next;
+	}
 }

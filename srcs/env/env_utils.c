@@ -59,4 +59,13 @@ void	add_env_var(t_env **env_list, char *key, char *value)
 	*env_list = new_node;
 }
 
-
+char	*get_env_value_list(t_env *env, const char *var_name)
+{
+	while (env)
+	{
+		if (ft_strcmp(env->key, var_name) == 0)
+			return (env->value);
+		env = env->next;
+	}
+	return (NULL);
+}

@@ -53,7 +53,8 @@ SRCS = \
 	$(UTILS_DIR)/cleanup_utils.c \
 	$(UTILS_DIR)/error_utils.c \
 	$(UTILS_DIR)/utils.c \
-	$(EXPANDER_DIR)/expander.c
+	$(EXPANDER_DIR)/expander.c \
+	$(UTILS_DIR)/testeo.c
 
 OBJS = $(SRC_MAIN:.c=.o) $(SRCS:.c=.o)
 OBJS_TEST_ENV = $(SRC_TESTER_ENV:.c=.o) $(SRCS:.c=.o)

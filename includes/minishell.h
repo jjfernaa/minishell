@@ -85,6 +85,12 @@ void	free_pipes(int **pipes, int pipe_count);
 int		count_commands(t_cmd *cmds);
 void	handle_pipe_error(int **pipes, int created_count);
 // Expand environment variables
-void	expand_var(t_token *tokens, t_env *env, int exit_status);
+void	expand_var(t_shell *shell);
+
+//Testeo
+void 	print_token_type(t_token_type type);
+void 	print_tokens(t_token *tokens);
+void	print_cmds(t_cmd *cmds);
+void 	print_env(t_env *env);
 
 #endif
