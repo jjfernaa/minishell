@@ -114,9 +114,9 @@ void	expand_var(t_shell *shell)
 		{
 			old_value = current->value;
 			new_value = expand_string(
-				current->value,
-				shell->env,
-				shell->exit_status);
+					current->value,
+					shell->env,
+					shell->exit_status);
 			if (new_value)
 			{
 				current->value = new_value;

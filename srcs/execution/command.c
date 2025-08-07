@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/06 20:27:59 by dponce-g         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:55:55 by dponce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static void	execute_parser_command(t_token *tokens, t_shell *shell)
 	if (has_pipes_or_redirects(tokens))
 	{
 		cmds = parse_tokens(tokens);
-		printf("==== COMANDOS PARSEADOS ====\n");
-		print_cmds(cmds);
 		execute_pipeline(cmds, shell);
 		free_cmds(cmds);
 	}
@@ -59,6 +57,23 @@ static void	execute_parser_command(t_token *tokens, t_shell *shell)
 
 void	process_command(char *input, t_shell *shell)
 {
+	t_token	*tokens;
+
+	tokens = lexer(input);
+	if (!tokens)
+		return ;
+	expand_var(tokens);
+	if (!validate_tokens(tokens))
+	{
+		free_tokens(tokens);
+		return ;
+	}
+	execute_parser_command(tokens, shell);
+	free_tokens(tokens);
+}
+
+/* void	process_command(char *input, t_shell *shell)
+{
 	shell->tokens = lexer(input);
 	if (!shell->tokens)
 		return ;
@@ -75,26 +90,5 @@ void	process_command(char *input, t_shell *shell)
 	printf("\n==== TOKENS EXPANDIDOS tras Validacion ====\n");
 	print_tokens(shell->tokens);
 	execute_parser_command(shell->tokens, shell);
-	//free_tokens(tokens);
-}
-
-/* void	process_command(char *input, t_shell *shell)
-{
-	t_token	*tokens;
-
-	tokens = lexer(input);
-	if (!tokens)
-		return ;
-	printf("==== TOKENS ====\n");
-	print_tokens(tokens);
-	expand_var(shell);
-	printf("==== TOKENS EXPANDIDOS====\n");
-	print_tokens(tokens);
-	if (!validate_tokens(tokens))
-	{
-		free_tokens(tokens);
-		return ;
-	}
-	execute_parser_command(tokens, shell);
-	free_tokens(tokens);
+	free_tokens(shell->tokens);
 } */
