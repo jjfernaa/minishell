@@ -45,6 +45,26 @@ git fetch origin       # Actualizar referencias sin fusionar
 
 ---
 
+## 📋 CHECKLIST DIARIO
+
+### 🔲 Al empezar:
+- [ ] `git checkout main`        # Ir a main primero
+- [ ] `git pull origin main`     # Actualizar main local
+- [ ] `git checkout tu_rama`     # Ir a tu rama
+- [ ] `git merge main`           # Traer cambios limpios
+
+### 🔲 Durante trabajo:
+- [ ] Commits frecuentes
+- [ ] `git push` regularmente
+- [ ] Probar que compila
+
+### 🔲 Al terminar:
+- [ ] `git add .`
+- [ ] `git commit -m "mensaje"`
+- [ ] `git push`
+
+---
+
 ## ⚙️ CONFIGURACIÓN INICIAL (SOLO UNA VEZ)
 
 ### 🔧 Paso a paso:
@@ -78,15 +98,6 @@ git branch -a
 ```
 
 ---
-
-## 📅 WORKFLOW DIARIO
-
-### 🌅 AL EMPEZAR EL DÍA:
-```bash
-git checkout signals        # Ir a tu rama
-git pull origin main        # ¿Hay cambios nuevos en main?
-git merge main              # Traer cambios a tu rama
-```
 
 ### 💻 DURANTE EL TRABAJO:
 ```bash
@@ -127,65 +138,6 @@ git merge main
 # 2. git add archivos_resueltos
 # 3. git commit -m "merge: resolve conflicts with main"
 # 4. git push
-```
-
----
-
-## 🏗️ ESTRUCTURA DE PROYECTO RECOMENDADA
-
-### 📁 Organización de carpetas:
-```
-minishell/
-├── srcs/
-│   ├── signals/           ← Responsabilidad de signals
-│   ├── lexer/             ← Responsabilidad de lexer  
-│   ├── builtins/          ← Completado
-│   ├── execution/         ← Compartido
-│   └── parsing/           ← Colaborativo
-├── includes/
-│   ├── minishell.h        ← Header principal (compartido)
-│   ├── signals.h          ← Header específico de signals
-│   └── lexer.h            ← Header específico de lexer
-├── docs/
-│   └── git-workflow-guide.md ← Esta guía
-```
-
-### 🤝 Interfaces compartidas:
-```c
-// En includes/minishell.h
-typedef struct s_shell
-{
-    char    **envp;
-    int     exit_status;
-    // TODO: Agregar estructuras del lexer
-    // TODO: Agregar variables de signal handling
-} t_shell;
-```
-
----
-
-## 🎯 COMANDOS ESENCIALES DE USO DIARIO
-
-### ⚡ Comandos más usados:
-```bash
-# Cambios de rama (SÚPER RÁPIDO):
-git checkout signals
-git checkout main
-git checkout lexer
-
-# Workflow básico:
-git add .
-git commit -m "descripción"
-git push
-
-# Sincronización:
-git pull origin main
-git merge main
-
-# Estado/información:
-git status
-git branch -a
-git log --oneline
 ```
 
 ---
@@ -276,82 +228,3 @@ git reset --hard origin/main  # Volver exactamente a main remoto
 ```
 
 ---
-
-<!-- Cambiar estas líneas en el documento: -->
-
-## 📋 CHECKLIST DIARIO
-
-### 🔲 Al empezar:
-- [ ] `git checkout main`        # Ir a main primero
-- [ ] `git pull origin main`     # Actualizar main local
-- [ ] `git checkout signals`     # Ir a tu rama
-- [ ] `git merge main`           # Traer cambios limpios
-
-### 🔲 Durante trabajo:
-- [ ] Commits frecuentes
-- [ ] `git push` regularmente
-- [ ] Probar que compila
-
-### 🔲 Al terminar:
-- [ ] `git add .`
-- [ ] `git commit -m "mensaje"`
-- [ ] `git push`
-
----
-
-## 🎯 COMANDOS SEGÚN SITUACIÓN
-
-### 🆕 Primera vez configurando:
-```bash
-git checkout main
-git pull origin main
-git checkout -b tu-rama
-git push -u origin tu-rama
-```
-
-### 📅 Inicio de día normal:
-```bash
-git checkout tu-rama
-git pull origin main
-git merge main
-```
-
-### 💾 Guardar trabajo:
-```bash
-git add .
-git commit -m "feat: nueva funcionalidad"
-git push
-```
-
-### 🔄 Ver trabajo del compañero:
-```bash
-git fetch origin
-git checkout rama-del-compañero
-git checkout tu-rama  # volver a tu trabajo
-```
-
----
-
-## 📌 ESTADO ACTUAL DEL PROYECTO
-
-### ✅ COMPLETADO:
-- **Builtins básicos**: `pwd`, `echo`, `env`, `cd`, `exit`
-- **Validación**: `export`, `unset` (falta implementación de entorno)
-- **Estructura base**: main.c, parsing básico
-- **Makefile**: Configurado y funcionando
-
-### 🚧 EN DESARROLLO:
-- **Señales**: SIGINT, SIGQUIT (rama: `signals`)
-- **Lexer**: Tokenización avanzada (rama: `lexer`)
-
-### 📋 PENDIENTE:
-- **Comandos externos**: `ls`, `cat`, etc.
-- **Variables de entorno**: Expansión de `$VAR`
-- **Pipes**: `|` 
-- **Redirections**: `>`, `<`, `>>`
-- **Quotes**: `"..."`, `'...'`
-
----
-
-**Última actualización: Julio 2025**
-**Proyecto: minishell (Rank 03 - 42 School)**

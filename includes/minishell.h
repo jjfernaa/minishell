@@ -68,4 +68,21 @@ void	exit_error_cleanup(t_shell *shell, char *message, int code);
 void	cleanup_loop(t_shell *shell);
 void	cleanup_shell(t_shell *shell);
 
+// Pipeline functions
+void	execute_pipeline_real(t_cmd *cmds, t_shell *shell);
+int		**create_pipes(int pipe_count);
+void	setup_child_pipes(int **pipes, int cmd_index, int cmd_count);
+void	execute_single_cmd(t_cmd *cmd, t_shell *shell);
+void	cleanup_pipeline(int **pipes, pid_t *pids, int cmd_count, t_shell *shell);
+
+// Pipeline utilities
+void	close_all_pipes_in_child(int **pipes, int pipe_count);
+void	close_all_pipes(int **pipes, int pipe_count);
+void	wait_for_children(pid_t *pids, int cmd_count, t_shell *shell);
+void	free_pipes(int **pipes, int pipe_count);
+
+// Pipeline helpers 
+int		count_commands(t_cmd *cmds);
+void	handle_pipe_error(int **pipes, int created_count);
+
 #endif
