@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+//Testeo
+
 void print_token_type(t_token_type type)
 {
     if (type == T_WORD)
@@ -59,57 +61,12 @@ void	print_cmds(t_cmd *cmds)
 	}
 }
 
-/* void	free_cmds(t_cmd *cmds)
+void print_env(t_env *env)
 {
-	int	i;
-
-	while (cmds)
+	printf("\n==== LISTA VARIABLES ENTORNO ====\n\n");
+	while (env)
 	{
-		t_cmd *tmp = cmds;
-		i = 0;
-		if (cmds->argv)
-		{
-			while (cmds->argv[i])
-			{
-				free(cmds->argv[i]);
-				i++;
-			}
-			free(cmds->argv);
-		}
-		if (cmds->infile)
-			free(cmds->infile);
-		if (cmds->outfile)
-			free(cmds->outfile);
-		cmds = cmds->next;
-		free(tmp);
+		printf("%s=%s\n", env->key, env->value);
+		env = env->next;
 	}
-} */
-
-int main(void)
-{
-	const char	*input = "cat < input.txt | grep hola >> salida.txt";
-	t_token 	*tokens = lexer(input);
-	t_cmd 		*cmds;
-
-	if (!tokens)
-	{
-		printf("Error: lexer failed\n");
-		return (1);
-	}
-	cmds = parse_tokens(tokens);
-	if (!cmds)
-	{
-		printf("Error: parser failed\n");
-		free_tokens(tokens);
-		return (1);
-	}
-	printf("==== TOKENS ====\n");
-	print_tokens(tokens);
-
-	printf("==== COMANDOS PARSEADOS ====\n");
-	print_cmds(cmds);
-
-	free_tokens(tokens);
-	free_cmds(cmds);
-	return (0);
 }

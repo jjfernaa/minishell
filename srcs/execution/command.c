@@ -6,7 +6,7 @@
 /*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/03 20:23:12 by dponce           ###   ########.fr       */
+/*   Updated: 2025/08/08 22:34:40 by dponce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	process_command(char *input, t_shell *shell)
 	tokens = lexer(input);
 	if (!tokens)
 		return ;
+	expand_var(shell, tokens);
 	if (!validate_tokens(tokens))
 	{
 		free_tokens(tokens);
@@ -70,3 +71,24 @@ void	process_command(char *input, t_shell *shell)
 	execute_parser_command(tokens, shell);
 	free_tokens(tokens);
 }
+
+/* void	process_command(char *input, t_shell *shell)
+{
+	shell->tokens = lexer(input);
+	if (!shell->tokens)
+		return ;
+	printf("\n==== TOKENS ====\n");
+	print_tokens(shell->tokens);
+	expand_var(shell);
+	printf("\n==== TOKENS EXPANDIDOS ====\n");
+	print_tokens(shell->tokens);
+	if (!validate_tokens(shell->tokens))
+	{
+		free_tokens(shell->tokens);
+		return ;
+	}
+	printf("\n==== TOKENS EXPANDIDOS tras Validacion ====\n");
+	print_tokens(shell->tokens);
+	execute_parser_command(shell->tokens, shell);
+	free_tokens(shell->tokens);
+} */
