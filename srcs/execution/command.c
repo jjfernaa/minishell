@@ -6,7 +6,7 @@
 /*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/07 11:55:55 by dponce           ###   ########.fr       */
+/*   Updated: 2025/08/08 22:34:40 by dponce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	process_command(char *input, t_shell *shell)
 	tokens = lexer(input);
 	if (!tokens)
 		return ;
-	expand_var(tokens);
+	expand_var(shell, tokens);
 	if (!validate_tokens(tokens))
 	{
 		free_tokens(tokens);

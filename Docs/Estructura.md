@@ -10,7 +10,7 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 	Ejemplo ->	key = USER
 				value = dponce-g
 
-###	✅ Creación de la copia de las variables entorno 
+###	✅ Creación copia variables entorno (📁 env.c)
 	✅ Función init_env() -> manejo del flujo
 		✅ ♻️ free de todo si falla creación de nuevo nodo (free_env)
 
@@ -29,7 +29,7 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 
 ### 🚨 Este estructura hay que volver a transformarla a un char** para pasarla como parámetro a la función execve()
 
-###	✅ Creación de char** para pasarlo a execve
+###	✅ Creación char** para execve (📁 env_to_array.c)
 
 📋 La función del sistema execve sólo toma como parámetro un char**, no una estructura o lista, por tanto debemos transformar t_env a un char** justo antes de llamar a execve, y liberar si execve falla. No necesitamos guardar este char**, se generará cada vez que se llame a execve para reflejar cualquier modificación que se haga en las variables de entorno.
 
@@ -44,6 +44,10 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 		|-> 🧠 Unimos "KEY" con "=" con ft_strjoin. Resultado "KEY="
 		|-> 🧠 Unimos lo anterior con "VALUE" con ft_strjoin. Resultado "KEY=VALUE"
 		|-> ♻️ liberamos el primer ft_strjoin, ya no lo necesitamos
+
+#### 📁 env_utils.c
+
+	✅ Función get_env_value_list() -> Recorre t_env para obtener el valor de una variable de entorno
 
 
 # 🎯 TOKENIZACION (📁 lexer)
@@ -182,6 +186,8 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 ### ✅ Expansión de variables de entorno (📁 expander.c)
 
 	✅ Función expand_var() -> maneja el flujo recorriendo la lista de tokens
+		|-> Trabajamos con una copia del puntero para no avanzar el original
+		|-> ♻️ liberamos el valor antiguo de tokens->value al actualizarlo por el nuevo string
 
 	✅ Función expand_string() -> maneja la creación del nuevo string
 		|-> 🧠 Reservamos memoria con ft_strdup("") para inicializar el nuevo string
@@ -216,7 +222,7 @@ ESTRUCTURA Y EXPLICACIÓN DEL PROYECTO MINISHELL
 		|-> 🧠 Concatenamos el valor con el antiguo string con ft_strjoin
 		|-> ♻️ liberamos el antiguo string tomado como parámetro de la función
 		|-> Actualizamos el puntero del antiguo string al nuevo string
-		|-> Actualizamos el índice añadiendo la longitud calculada inicialmente
+		|-> Actualizamos el índice añadiendo la longitud calculada inicialmente + 1 por el '$'
 
 
 # 🎯 LIMPIEZA (📁 utils)
