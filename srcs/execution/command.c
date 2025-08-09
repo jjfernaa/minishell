@@ -6,7 +6,7 @@
 /*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/08 22:34:40 by dponce           ###   ########.fr       */
+/*   Updated: 2025/08/09 11:49:16 by dponce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execute_builtin(char **args, t_shell *shell)
 	else if (ft_strcmp(args[0], "echo") == 0)
 		return (builtin_echo(args));
 	else if (ft_strcmp(args[0], "env") == 0)
-		return (builtin_env(shell));
+		return (builtin_env(args, shell));
 	else if (ft_strcmp(args[0], "cd") == 0)
 		return (builtin_cd(args));
 	else if (ft_strcmp(args[0], "export") == 0)

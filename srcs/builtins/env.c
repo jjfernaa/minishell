@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 01:26:09 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/03 01:49:11 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/09 11:50:53 by dponce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-int	builtin_env(t_shell *shell)
+/* int	builtin_env(t_shell *shell)
 {
 	int	i;
 
@@ -23,6 +23,22 @@ int	builtin_env(t_shell *shell)
 	{
 		printf("%s\n", shell->envp[i]);
 		i++;
+	}
+	return (0);
+} */
+
+int	builtin_env(char **args, t_shell *shell)
+{
+	t_env	*current;
+
+	if (!shell || !shell->env)
+		return (1);
+	current = shell->env;
+	while (current)
+	{
+		if (current->value)
+			printf("%s=%s\n", current->key, current->value);
+		current = current->next;
 	}
 	return (0);
 }

@@ -22,7 +22,11 @@ pero debemos gestionarlo de otra forma, imprimiendo el error y limpiando todo.
 	BUILTINS
 ---------------
 
-1. El builtin env debe utilizar t_env, no el char** que es copia de envp y no actualizamos.
+1. El builtin env debe utilizar t_env, no el char** que es copia de envp y no actualizamos. **HECHO**
+2. buitltin env -> manejar error cuando le pasamos un argumento ej. env hola
+Salida bash ->
+dponce@PC-dponce:~$ env hola
+env: ‘hola’: No such file or directory
 
 ---------------
 	GENERAL
