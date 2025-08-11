@@ -38,7 +38,7 @@ static void	handle_quotes(t_token **list, const char *input, int *i)
 		(*i)++;
 	if (input[*i] != quote)
 	{
-		write(STDOUT_FILENO, "Syntax error: missing closing quote\n", 36);
+		write(STDERR_FILENO, "Syntax error: missing closing quote\n", 36);
 		return ;
 	}
 	len = *i - start;

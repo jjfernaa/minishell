@@ -22,8 +22,12 @@ void	handle_pipe_error(int **pipes, int created_count)
 	i = 0;
 	while (i < created_count)
 	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
 		free(pipes[i]);
 		i++;
 	}
+	if (pipes &&pipes[created_count])
+		free(pipes[created_count]);
 	free(pipes);
 }

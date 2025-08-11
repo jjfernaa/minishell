@@ -2,24 +2,24 @@
 
 static void	print_syntax_error(t_token *token)
 {
-	write(STDOUT_FILENO, "minishell: syntax error near unexpected token `", 47);
+	write(STDERR_FILENO, "minishell: syntax error near unexpected token `", 47);
 	if (!token)
-		write(STDOUT_FILENO, "newline", 7);
+		write(STDERR_FILENO, "newline", 7);
 	else if (token->type == T_PIPE)
-		write(STDOUT_FILENO, "|", 1);
+		write(STDERR_FILENO, "|", 1);
 	else if (token->type == T_REDIR_IN)
-		write(STDOUT_FILENO, "<", 1);
+		write(STDERR_FILENO, "<", 1);
 	else if (token->type == T_REDIR_OUT)
-		write(STDOUT_FILENO, ">", 1);
+		write(STDERR_FILENO, ">", 1);
 	else if (token->type == T_HEREDOC)
-		write(STDOUT_FILENO, "<<", 2);
+		write(STDERR_FILENO, "<<", 2);
 	else if (token->type == T_APPEND)
-		write(STDOUT_FILENO, ">>", 2);
+		write(STDERR_FILENO, ">>", 2);
 	else if (token->value)
-		write(STDOUT_FILENO, token->value, ft_strlen(token->value));
+		write(STDERR_FILENO, token->value, ft_strlen(token->value));
 	else
-		write(STDOUT_FILENO, "?", 1);
-	write(STDOUT_FILENO, "'\n", 2);
+		write(STDERR_FILENO, "?", 1);
+	write(STDERR_FILENO, "'\n", 2);
 }
 
 static int	is_pipe_first_token(t_token *token)

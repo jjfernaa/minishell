@@ -41,6 +41,5 @@ void	free_tokens(t_token *tokens);
 
 // Conversion
 char	**tokens_to_args(t_token *tokens);
-void	free_args(char **args);
 
 #endif

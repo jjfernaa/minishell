@@ -20,7 +20,6 @@ void	execute_pipeline_real(t_cmd *cmds, t_shell *shell)
 		{
 			setup_child_pipes(pipes, i, cmd_count);
 			execute_single_cmd(current, shell);
-			exit(127);
 		}
 		current = current->next;
 		i++;
@@ -34,6 +33,8 @@ int	**create_pipes(int	pipe_count)
 	int	**pipes;
 	int	i;
 
+	if (pipe_count <= 0)
+		return (NULL);
 	pipes = malloc(sizeof(int *) * pipe_count);
 	if (!pipes)
 		return (NULL);
@@ -41,7 +42,7 @@ int	**create_pipes(int	pipe_count)
 	while (i < pipe_count)
 	{
 		pipes[i] = malloc(sizeof(int) * 2);
-		if (pipe(pipes[i]) == -1)
+		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
 			handle_pipe_error(pipes, i);
 			return (NULL);
@@ -53,6 +54,8 @@ int	**create_pipes(int	pipe_count)
 
 void	setup_child_pipes(int **pipes, int cmd_index, int cmd_count)
 {
+	if (cmd_count < 2)
+		return ;
 	// Primer comando: solo stdout -> pipe[0][1]
 	if (cmd_index == 0)
 	{
@@ -81,21 +84,25 @@ void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 
 	if (!cmd->argv || !cmd->argv[0])
 		exit(0);
-	//intentar builtin primero
 	builtin_result = execute_builtin(cmd->argv, shell);
 	if (builtin_result != -1)
 		exit(builtin_result);
+	envp = env_to_array(shell->env);
+	if (!envp)
+		exit(1);
 	// Si no es builtin, ejecutar comando externo
-	path = find_executable(cmd->argv[0], shell->envp);
+	path = find_executable(cmd->argv[0], envp);
 	if (!path)
 	{
-		printf("minishell: %s: command not found\n", cmd->argv[0]);
+		print_cmd_not_found(cmd->argv[0]);
+		free_array(envp);
 		exit(127);
 	}
 	// Generar envp desde t_env para execve
-	envp = env_to_array(shell->env);
 	execve(path, cmd->argv, envp);
 	perror("execve");
+	free(path);
+	free_array(envp);
 	exit(126);
 }
 

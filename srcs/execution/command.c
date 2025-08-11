@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/09 11:49:16 by dponce           ###   ########.fr       */
+/*   Updated: 2025/08/11 03:46:24 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,14 @@ void	process_command(char *input, t_shell *shell)
 
 	tokens = lexer(input);
 	if (!tokens)
+	{
+		shell->exit_status = 2;
 		return ;
+	}
 	expand_var(shell, tokens);
 	if (!validate_tokens(tokens))
 	{
+		shell->exit_status = 2;
 		free_tokens(tokens);
 		return ;
 	}

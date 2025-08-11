@@ -41,6 +41,8 @@ t_token	*add_token(t_token **list, t_token_type type, const char *value)
 	t_token	*new;
 
 	new = new_token(type, value);
+	if (!new)
+		return (NULL);
 	token_add_back(list, new);
 	return (new);
 }

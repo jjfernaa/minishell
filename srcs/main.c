@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 		cleanup_loop(&shell);
 	}
-	rl_clear_history();
+	//rl_clear_history();
 	cleanup_shell(&shell);
 	return (shell.exit_status);
 }

@@ -39,6 +39,8 @@ void	wait_for_children(pid_t *pids, int cmd_count, t_shell *shell)
 		{
 			if (WIFEXITED(status))
 				shell->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				shell->exit_status = 128 + WTERMSIG(status);
 		}
 		i++;
 	}

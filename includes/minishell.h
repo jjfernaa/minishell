@@ -64,6 +64,7 @@ int		has_pipes_or_redirects(t_token *tokens);
 void	execute_pipeline(t_cmd *cmds, t_shell *shell);
 
 // Error and clean functions
+void	print_cmd_not_found(const char *cmd);
 void	exit_error_cleanup(t_shell *shell, char *message, int code);
 void	cleanup_loop(t_shell *shell);
 void	cleanup_shell(t_shell *shell);
