@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/11 03:46:24 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/12 05:52:58 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	execute_builtin(char **args, t_shell *shell)
 	else if (ft_strcmp(args[0], "env") == 0)
 		return (builtin_env(args, shell));
 	else if (ft_strcmp(args[0], "cd") == 0)
-		return (builtin_cd(args));
+		return (builtin_cd(args, shell));
 	else if (ft_strcmp(args[0], "export") == 0)
 		return (builtin_export(args, shell));
 	else if (ft_strcmp(args[0], "unset") == 0)
