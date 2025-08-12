@@ -34,7 +34,7 @@ void	process_command(char *input, t_shell *shell);
 
 // Builtin functions
 int		builtin_pwd(void);
-int		builtin_echo(char **args);
+int		builtin_echo(char **args, t_shell *shell);
 int		builtin_env(char **args, t_shell *shell);
 int		builtin_cd(char **args, t_shell *shell);
 int		builtin_exit(char **args, t_shell *shell);

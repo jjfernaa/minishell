@@ -6,21 +6,24 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 01:22:48 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/02 01:39:26 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/12 21:43:24 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	builtin_echo(char **args)
+int	builtin_echo(char **args, t_shell *shell)
 {
 	int	i;
-
+	int	newline;
+	
+	(void)shell;
 	i = 1;
-	if (!args[1])
+	newline = 1;
+	if (args[1] && ft_strcmp(args[1], "-n") == 0)
 	{
-		printf("\n");
-		return (0);
+		newline = 0;
+		i = 2;
 	}
 	while (args[i])
 	{
@@ -29,6 +32,7 @@ int	builtin_echo(char **args)
 			printf(" ");
 		i++;
 	}
-	printf("\n");
+	if (newline)
+		printf("\n");
 	return (0);
 }
