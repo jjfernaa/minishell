@@ -10,6 +10,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 # include "libft.h"
 # include "lexer.h"
 # include "env.h"
@@ -74,6 +75,7 @@ void	execute_pipeline_real(t_cmd *cmds, t_shell *shell);
 int		**create_pipes(int pipe_count);
 void	setup_child_pipes(int **pipes, int cmd_index, int cmd_count);
 void	execute_single_cmd(t_cmd *cmd, t_shell *shell);
+void	apply_redirections(t_cmd *cmd);
 void	cleanup_pipeline(int **pipes, pid_t *pids, int cmd_count, t_shell *shell);
 
 // Pipeline utilities

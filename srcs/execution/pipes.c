@@ -84,6 +84,7 @@ void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 
 	if (!cmd->argv || !cmd->argv[0])
 		exit(0);
+	apply_redirections(cmd);
 	builtin_result = execute_builtin(cmd->argv, shell);
 	if (builtin_result != -1)
 		exit(builtin_result);
