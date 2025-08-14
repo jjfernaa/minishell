@@ -43,7 +43,7 @@ static void	append_env_var(char **result, const char *str, t_env *env, int *i)
 	int		len;
 	char	*new_string;
 	char	*var_name;
-	char	*value;
+	t_env	*env_node;
 
 	// Leer nombre de variable hasta el =
 	len = 0;
@@ -54,16 +54,16 @@ static void	append_env_var(char **result, const char *str, t_env *env, int *i)
 	if (!var_name)
 		return ;
 	// Buscar valor en t_env
-	value = get_env_value_list(env, var_name); // !!!!!!!Está mal get_env_value()
+	env_node = find_env_var(env, var_name);
 	free(var_name);
 	// Si no se encuentra, no añadimos nada
-	if (!value)
+	if (!env_node || !env_node->value)
 	{
 		*i += len + 1; // +1 por el '$'
 		return ;
 	}
 	// Concatenar al resultado actual
-	new_string = ft_strjoin(*result, value);
+	new_string = ft_strjoin(*result, env_node->value);
 	if (!new_string)
 		return ;
 	free(*result);

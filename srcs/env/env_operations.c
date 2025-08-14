@@ -1,41 +1,28 @@
-#include "../../includes/minishell.h"
+#include "env.h"
 
-static void	remove_first_env_node(t_env **env_list)
-{
-	t_env	*current;
-
-	current = *env_list;
-	*env_list = (*env_list)->next;
-	free(current->key);
-	free(current->value);
-	free(current);
-}
-
-void	remove_env_var(t_env **env_list, char *key)
+void	remove_env_var(t_env **env_list, const char *key)
 {
 	t_env	*current;
 	t_env	*prev;
 
-	if (!*env_list)
+	if (!env_list || !*env_list || !key)
 		return ;
-	if (ft_strcmp((*env_list)->key, key) == 0)
+	current = *env_list;
+	if (current->key && ft_strcmp(current->key, key) == 0)
 	{
-		remove_first_env_node(env_list);
+		*env_list = current->next;
+		free_env_node(current);
 		return ;
 	}
-	prev = *env_list;
-	current = (*env_list)->next;
-	while (current)
+	while (current->next)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (current->next->key && ft_strcmp(current->key, key) == 0)
 		{
-			prev->next = current->next;
-			free(current->key);
-			free(current->value);
-			free(current);
+			prev = current->next;
+			current->next = current->next->next;
+			free_env_node(prev);
 			return ;
 		}
-		prev = current;
 		current = current->next;
 	}
 }

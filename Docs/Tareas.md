@@ -28,6 +28,14 @@ Salida bash ->
 dponce@PC-dponce:~$ env hola
 env: ‘hola’: No such file or directory
 
+3. **exit** debe limpiar el historial al salir -> rl_clear_history() *Memory leak*
+
+---------------
+	SIGNALS
+---------------
+
+1. **Ctrl + D** limpiar el historial al salir -> rl_clear_history() *Memory leak*
+
 ---------------
 	GENERAL
 ---------------

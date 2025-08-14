@@ -67,6 +67,7 @@ void	execute_pipeline(t_cmd *cmds, t_shell *shell);
 void	exit_error_cleanup(t_shell *shell, char *message, int code);
 void	cleanup_loop(t_shell *shell);
 void	cleanup_shell(t_shell *shell);
+void	cleanup_exit(t_shell *shell, int exit_code);
 
 // Pipeline functions
 void	execute_pipeline_real(t_cmd *cmds, t_shell *shell);
@@ -90,9 +91,9 @@ void	expand_var(t_shell *shell, t_token *tokens);
 //void	expand_var(t_shell *shell);
 
 //Testeo
-void 	print_token_type(t_token_type type);
-void 	print_tokens(t_token *tokens);
+void	print_token_type(t_token_type type);
+void	print_tokens(t_token *tokens);
 void	print_cmds(t_cmd *cmds);
-void 	print_env(t_env *env);
+void	print_env(t_env *env);
 
 #endif

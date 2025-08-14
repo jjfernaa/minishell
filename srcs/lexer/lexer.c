@@ -80,6 +80,8 @@ t_token	*lexer(const char *input)
 	t_token	*tokens;
 	int		i;
 
+	if (!input)
+		return (NULL);
 	tokens = NULL;
 	i = 0;
 	while (input[i])

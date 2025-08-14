@@ -1,27 +1,37 @@
-#include "../../includes/minishell.h"
+#include "env.h"
 
-t_env	*find_env_var(t_env *env_list, char *key)
+t_env	*find_env_var(t_env *env_list, const char *key)
 {
+	if (!key)
+		return (NULL);
 	while (env_list)
 	{
-		if (ft_strcmp(env_list->key, key) == 0)
+		if (env_list->key && ft_strcmp(env_list->key, key) == 0)
 			return (env_list);
 		env_list = env_list->next;
 	}
 	return (NULL);
 }
 
-void	update_env_var(t_env *env_var, char *new_value)
+void	update_env_var(t_env *env_var, const char *value)
 {
-	if (!env_var || !new_value)
+	char	*new_value;
+
+	if (!env_var || !value)
+		return ;
+	new_value = ft_strdup(value);
+	if (!new_value)
 		return ;
 	free (env_var->value);
-	env_var->value = ft_strdup(new_value);
+	env_var->value = new_value;
 }
-t_env	*create_env_node(char *key, char *value)
+
+t_env	*create_env_node(const char *key, const char *value)
 {
 	t_env	*new_node;
 
+	if (!key)
+		return (NULL);
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
@@ -33,9 +43,7 @@ t_env	*create_env_node(char *key, char *value)
 	new_node->next = NULL;
 	if (!new_node->key || !new_node->value)
 	{
-		free(new_node->key);
-		free(new_node->value);
-		free(new_node);
+		free_env_node(new_node);
 		return (NULL);
 	}
 	return (new_node);
@@ -46,6 +54,8 @@ void	add_env_var(t_env **env_list, char *key, char *value)
 	t_env	*existing;
 	t_env	*new_node;
 
+	if (!env_list || !key)
+		return ;
 	existing = find_env_var(*env_list, key);
 	if (existing)
 	{
@@ -59,7 +69,8 @@ void	add_env_var(t_env **env_list, char *key, char *value)
 	*env_list = new_node;
 }
 
-char	*get_env_value_list(t_env *env, const char *var_name)
+// Utilizamos find_env_var en lugar de ésta
+/* char	*get_env_value_list(t_env *env, const char *var_name)
 {
 	while (env)
 	{
@@ -68,4 +79,4 @@ char	*get_env_value_list(t_env *env, const char *var_name)
 		env = env->next;
 	}
 	return (NULL);
-}
+} */

@@ -228,3 +228,10 @@ git reset --hard origin/main  # Volver exactamente a main remoto
 ```
 
 ---
+
+git fetch origin
+git log HEAD..origin/main --oneline       # commits que te faltan
+git log origin/main..HEAD --oneline       # commits que solo tienes tú
+git rev-list --left-right --count origin/main...HEAD
+git diff origin/main
+git log --oneline --graph --decorate --all

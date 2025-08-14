@@ -6,6 +6,8 @@ static t_env	*new_env_node(const char *env_input)
 	char	*equal_pos;
 	size_t	key_len;
 
+	if (!env_input)
+		return (NULL);
 	node = malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
@@ -21,9 +23,7 @@ static t_env	*new_env_node(const char *env_input)
 	node->next = NULL;
 	if (!node->key || !node->value)
 	{
-		free(node->key);
-		free(node->value);
-		free(node);
+		free_env_node(node);
 		return (NULL);
 	}
 	return (node);
@@ -46,6 +46,16 @@ static void	env_add_back(t_env **list, t_env *new_node)
 	tmp->next = new_node;
 }
 
+void	free_env_node(t_env *node)
+{
+	if (node)
+	{
+		free(node->key);
+		free(node->value);
+		free(node);
+	}
+}
+
 void	free_env(t_env *env)
 {
 	t_env	*tmp;
@@ -54,9 +64,7 @@ void	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
+		free_env_node(tmp);
 	}
 }
 
@@ -66,6 +74,8 @@ t_env	*init_env(char **envp)
 	t_env	*new_node;
 	int		i;
 
+	if (!envp)
+		return (NULL);
 	env = NULL;
 	i = 0;
 	while (envp[i])
@@ -90,6 +100,8 @@ t_env	*init_env(char **envp)
 	t_env	*new_node;
 	int		i;
 
+	if (!envp)
+		return (NULL);
 	env = NULL;
 	last = NULL;
 	i = 0;
@@ -101,11 +113,11 @@ t_env	*init_env(char **envp)
 			free_env(env);
 			return (NULL);
 		}
-		if (!new_node)
+		if (!env)
 			env = new_node; // primer nodo (head de la lista)
 		else
 			last->next = new_node; // si hay head, hacemos que el ultimo nodo apunte al nuevo, que sería el último.
-		last = new; //Actualizamos last para que el nuevo nodo sea el ultimo.
+		last = new_node; //Actualizamos last para que el nuevo nodo sea el ultimo.
 		i++;
 	}
 	return (env);

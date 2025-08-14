@@ -27,3 +27,9 @@ void	cleanup_shell(t_shell *shell)
 	if (data->pipe_fd[1] >= 0)
 		close(data->pipe_fd[1]); */
 }
+
+void	cleanup_exit(t_shell *shell, int exit_code)
+{
+	cleanup_shell(shell);
+	exit(exit_code);
+}

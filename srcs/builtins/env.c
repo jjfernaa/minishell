@@ -6,7 +6,7 @@
 /*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 01:26:09 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/09 11:50:53 by dponce           ###   ########.fr       */
+/*   Updated: 2025/08/12 18:36:15 by dponce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	builtin_env(char **args, t_shell *shell)
 
 	if (!shell || !shell->env)
 		return (1);
+	if (args && args[1])
+	{
+		printf("env: too many arguments\n");
+		return (1);
+	}
 	current = shell->env;
 	while (current)
 	{

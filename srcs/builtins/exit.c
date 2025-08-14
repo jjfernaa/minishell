@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: dponce <dponce@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 01:06:11 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/07/05 01:57:41 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/12 21:47:54 by dponce           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
-int	builtin_exit(char **args, t_shell *shell)
+/* int	builtin_exit(char **args, t_shell *shell)
 {
 	printf("exit\n");
-	if (!args[1])
+	if (!shell || !args || !args[1])
 	{
 		exit(shell->exit_status);
 	}
@@ -49,4 +49,23 @@ int	builtin_exit(char **args, t_shell *shell)
 		return (1);
 	}
 	exit(ft_atoi(args[1]));
+} */
+
+int	builtin_exit(char **args, t_shell *shell)
+{
+	printf("exit\n");
+	if (!shell || !args || !args[1])
+		exit_error_cleanup(shell, NULL, shell->exit_status);
+	if (!is_numeric(args[1]))
+	{
+		printf("minishell: exit: %s: numeric argument required\n", args[1]);
+		exit_error_cleanup(shell, NULL, 2);
+	}
+	if (args[2])
+	{
+		printf("minishell: exit: too many arguments\n");
+		return (1);
+	}
+	exit_error_cleanup(shell, NULL, ft_atoi(args[1]));
+	return (0);
 }

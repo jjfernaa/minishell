@@ -14,26 +14,30 @@ static int	env_size(t_env *env)
 	return (count);
 }
 
-static char	*create_envp_line(t_env *env, char **envp)
+static char	*create_envp_line(const char *key, const char *value)
 {
 	char	*joined_key_equal;
 	char	*envp_line;
 
-	joined_key_equal = ft_strjoin(env->key, "=");
+	joined_key_equal = ft_strjoin(key, "=");
 	if (!joined_key_equal)
-	{
-		free_array(envp);
 		return (NULL);
-	}
-	envp_line = ft_strjoin(joined_key_equal, env->value);
-	if (!envp_line)
-	{
-		free(joined_key_equal);
-		free_array(envp);
-		return (NULL);
-	}
+	envp_line = ft_strjoin(joined_key_equal, value);
 	free(joined_key_equal);
 	return (envp_line);
+}
+
+static void	free_envp_error(char **envp, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
 }
 
 char	**env_to_array(t_env *env)
@@ -47,13 +51,16 @@ char	**env_to_array(t_env *env)
 	if (!envp)
 		return (NULL);
 	i = 0;
-	while (env)
+	while (env && i < size)
 	{
 		if (env->key && env->value)
 		{
-			envp[i] = create_envp_line(env, envp);
+			envp[i] = create_envp_line(env->key, env->value);
 			if (!envp[i])
-				return NULL;
+			{
+				free_envp_error(envp, i);
+				return (NULL);
+			}
 			i++;
 		}
 		env = env->next;

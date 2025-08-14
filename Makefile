@@ -49,7 +49,6 @@ SRCS = \
 	$(BUILTINS_DIR)/unset.c \
 	$(SIGNALS_DIR)/signals.c \
 	$(SIGNALS_DIR)/signal_handlers.c \
-	$(UTILS_DIR)/string_utils.c \
 	$(UTILS_DIR)/cleanup_utils.c \
 	$(UTILS_DIR)/error_utils.c \
 	$(UTILS_DIR)/utils.c \
