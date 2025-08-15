@@ -1,5 +1,31 @@
 #include "../../includes/minishell.h"
 
+static int	create_heredoc_pipe(char *delimiter)
+{
+	int	pipefd[2];
+	char	*line;
+
+	if (pipe(pipefd) == -1)
+	{
+		perror("pipe");
+		return (-1);
+	}
+	while (1)
+	{
+		line = readline("> ");
+		if (!line || ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(pipefd[1], line, ft_strlen(line));
+		write(pipefd[1], "\n", 1);
+		free(line);
+	}
+	close(pipefd[1]);
+	return (pipefd[0]);
+}
+
 static void	apply_input_redirections(t_cmd *cmd)
 {
 	int	fd;
@@ -9,7 +35,11 @@ static void	apply_input_redirections(t_cmd *cmd)
 	// Imput redirecciones (< file 0 << heredoc)
 	if (cmd->heredoc)
 	{
-		// TODO: implementar heredoc despues
+		fd = create_heredoc_pipe(cmd->infile);
+		if (fd < 0)
+			exit(1);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
 		return ;
 	}
 	fd = open(cmd->infile, O_RDONLY);
