@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 01:22:48 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/12 21:43:24 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/15 05:06:55 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	builtin_echo(char **args, t_shell *shell)
 {
 	int	i;
 	int	newline;
-	
+
 	(void)shell;
 	i = 1;
 	newline = 1;

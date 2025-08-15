@@ -73,7 +73,7 @@ int	validate_tokens(t_token *token)
 		else if (is_redir(token))
 		{
 			if (is_redir_error(token))
-			return (0);
+				return (0);
 		}
 		token = token->next;
 	}

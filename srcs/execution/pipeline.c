@@ -20,14 +20,14 @@ void	execute_pipeline(t_cmd *cmds, t_shell *shell)
 {
 	t_cmd	*current;
 	int		cmd_count;
-	int		builtin_result;//duda de inicializacion
+	int		builtin_result;
 
 	cmd_count = count_commands(cmds);
 	current = cmds;
 	if (has_redirections(current) || cmd_count > 1)
 	{
 		execute_pipeline_real(cmds, shell);
-		return;
+		return ;
 	}
 	if (current->argv && current->argv[0])
 	{
@@ -36,6 +36,5 @@ void	execute_pipeline(t_cmd *cmds, t_shell *shell)
 			shell->exit_status = execute_external(current->argv, shell);
 		else
 			shell->exit_status = builtin_result;
-		}
+	}
 }
-

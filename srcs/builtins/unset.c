@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 01:59:12 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/01 02:42:43 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/15 05:08:26 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_unset(char **args, t_shell *shell)
 {
 	int	i;
 	int	error_status;
-	
+
 	if (!args[1])
 		return (0);
 	i = 1;
@@ -56,4 +56,3 @@ int	builtin_unset(char **args, t_shell *shell)
 	}
 	return (error_status);
 }
-

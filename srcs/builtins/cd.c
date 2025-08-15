@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 00:07:19 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/12 05:57:29 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/15 05:06:29 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*get_target_dir(char **args, t_shell *shell)
 {
 	char	*oldpwd;
-	
+
 	if (!args[1] || ft_strcmp(args[1], "~") == 0)
 	{
 		oldpwd = get_env_value_list(shell->env, "HOME");
@@ -30,8 +30,8 @@ static char	*get_target_dir(char **args, t_shell *shell)
 		{
 			write(STDERR_FILENO, "minishell: cd: OLDPWD not set\n", 30);
 			return (NULL);
-		}	
-		printf("%s\n", oldpwd); // cd - muestra el directorio
+		}
+		printf("%s\n", oldpwd);
 		return (oldpwd);
 	}
 	return (args[1]);
@@ -49,6 +49,7 @@ static void	update_pwd_vars(t_shell *shell, char *old_pwd)
 		free(new_pwd);
 	}
 }
+
 int	builtin_cd(char **args, t_shell *shell)
 {
 	char	*target_dir;
@@ -68,4 +69,3 @@ int	builtin_cd(char **args, t_shell *shell)
 	free(old_pwd);
 	return (0);
 }
-

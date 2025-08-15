@@ -18,6 +18,7 @@ void	update_env_var(t_env *env_var, char *new_value)
 	free (env_var->value);
 	env_var->value = ft_strdup(new_value);
 }
+
 t_env	*create_env_node(char *key, char *value)
 {
 	t_env	*new_node;

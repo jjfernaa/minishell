@@ -27,7 +27,7 @@ void	handle_pipe_error(int **pipes, int created_count)
 		free(pipes[i]);
 		i++;
 	}
-	if (pipes &&pipes[created_count])
+	if (pipes && pipes[created_count])
 		free(pipes[created_count]);
 	free(pipes);
 }

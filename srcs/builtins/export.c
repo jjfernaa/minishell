@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 03:15:48 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/01 02:31:56 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/15 05:07:38 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	process_export_arg(char *arg, t_shell *shell)
 	char	*key;
 	char	*value;
 	char	*equal_pos;
-	
+
 	if (!is_valid_identifier(arg))
 	{
 		ft_putstr_fd("minishell: export: '", 2);
@@ -89,4 +89,3 @@ int	builtin_export(char **args, t_shell *shell)
 	}
 	return (error_status);
 }
-

@@ -2,36 +2,38 @@
 
 //Testeo
 
-void print_token_type(t_token_type type)
+void	print_token_type(t_token_type type)
 {
-    if (type == T_WORD)
-        printf("WORD");
-    else if (type == T_PIPE)
-        printf("PIPE");
-    else if (type == T_REDIR_IN)
-        printf("REDIR_IN");
-    else if (type == T_REDIR_OUT)
-        printf("REDIR_OUT");
-    else if (type == T_APPEND)
-        printf("APPEND");
-    else if (type == T_HEREDOC)
-        printf("HEREDOC");
-    else
-        printf("UNKNOWN");
+	if (type == T_WORD)
+		printf("WORD");
+	else if (type == T_PIPE)
+		printf("PIPE");
+	else if (type == T_REDIR_IN)
+		printf("REDIR_IN");
+	else if (type == T_REDIR_OUT)
+		printf("REDIR_OUT");
+	else if (type == T_APPEND)
+		printf("APPEND");
+	else if (type == T_HEREDOC)
+		printf("HEREDOC");
+	else
+		printf("UNKNOWN");
 }
 
-void print_tokens(t_token *tokens)
+void	print_tokens(t_token *tokens)
 {
-    int i = 0;
-    while (tokens)
-    {
-        printf("Token %d:\n", i++);
-        printf("  Type: ");
-        print_token_type(tokens->type);
-        printf("\n  Value: \"%s\"\n", tokens->value);
-        printf("  quotes_type: %u\n", tokens->quote_type);
-        tokens = tokens->next;
-    }
+	int	i;
+
+	i = 0;
+	while (tokens)
+	{
+		printf("Token %d:\n", i++);
+		printf("  Type: ");
+		print_token_type(tokens->type);
+		printf("\n  Value: \"%s\"\n", tokens->value);
+		printf("  quotes_type: %u\n", tokens->quote_type);
+		tokens = tokens->next;
+	}
 }
 
 void	print_cmds(t_cmd *cmds)
@@ -61,7 +63,7 @@ void	print_cmds(t_cmd *cmds)
 	}
 }
 
-void print_env(t_env *env)
+void	print_env(t_env *env)
 {
 	printf("\n==== LISTA VARIABLES ENTORNO ====\n\n");
 	while (env)

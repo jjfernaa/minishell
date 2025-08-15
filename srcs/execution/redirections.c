@@ -3,7 +3,7 @@
 static void	apply_input_redirections(t_cmd *cmd)
 {
 	int	fd;
-	
+
 	if (!cmd->infile)
 		return ;
 	// Imput redirecciones (< file 0 << heredoc)
@@ -51,5 +51,3 @@ void	apply_redirections(t_cmd *cmd)
 	apply_input_redirections(cmd);
 	apply_output_redirection(cmd);
 }
-
-

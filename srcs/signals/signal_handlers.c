@@ -1,7 +1,5 @@
 #include "../../includes/minishell.h"
 
-//extern volatile sig_atomic_t	g_signal_received;
-
 void	handle_sigint(int sig)
 {
 	(void)sig;

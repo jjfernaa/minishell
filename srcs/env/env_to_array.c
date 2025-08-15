@@ -53,7 +53,7 @@ char	**env_to_array(t_env *env)
 		{
 			envp[i] = create_envp_line(env, envp);
 			if (!envp[i])
-				return NULL;
+				return (NULL);
 			i++;
 		}
 		env = env->next;

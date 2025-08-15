@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void print_env(t_env *env)
+void	print_env(t_env *env)
 {
 	printf("\n==== LISTA VARIABLES ENTORNO ====\n\n");
 	while (env)
@@ -10,10 +10,11 @@ void print_env(t_env *env)
 	}
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_env *env = init_env(envp);
+	t_env	*env;
 
+	env = init_env(envp);
 	(void)argc;
 	(void)argv;
 	if (!env)

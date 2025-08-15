@@ -55,5 +55,3 @@ int	execute_external(char **args, t_shell *shell)
 	free_array(envp);
 	return (1);
 }
-
-

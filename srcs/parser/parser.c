@@ -23,7 +23,7 @@ static void	cmd_add_back(t_cmd **cmd_list, t_cmd *new_node)
 	if (!*cmd_list)
 	{
 		*cmd_list = new_node;
-		return;
+		return ;
 	}
 	tmp = *cmd_list;
 	while (tmp->next)

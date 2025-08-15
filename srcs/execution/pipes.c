@@ -28,7 +28,7 @@ void	execute_pipeline_real(t_cmd *cmds, t_shell *shell)
 	free(pids);
 }
 
-int	**create_pipes(int	pipe_count)
+int	**create_pipes(int pipe_count)
 {
 	int	**pipes;
 	int	i;
@@ -107,12 +107,10 @@ void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 	exit(126);
 }
 
-void	cleanup_pipeline(int **pipes, pid_t *pids, int cmd_count, t_shell *shell)
+void	cleanup_pipeline(int **pipes, pid_t *pids,
+			int cmd_count, t_shell *shell)
 {
 	close_all_pipes(pipes, cmd_count - 1);
 	wait_for_children(pids, cmd_count, shell);
 	free_pipes(pipes, cmd_count - 1);
 }
-
-
-

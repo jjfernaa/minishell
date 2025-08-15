@@ -76,7 +76,8 @@ int		**create_pipes(int pipe_count);
 void	setup_child_pipes(int **pipes, int cmd_index, int cmd_count);
 void	execute_single_cmd(t_cmd *cmd, t_shell *shell);
 void	apply_redirections(t_cmd *cmd);
-void	cleanup_pipeline(int **pipes, pid_t *pids, int cmd_count, t_shell *shell);
+void	cleanup_pipeline(int **pipes, pid_t *pids,
+			int cmd_count, t_shell *shell);
 
 // Pipeline utilities
 void	close_all_pipes_in_child(int **pipes, int pipe_count);
@@ -93,9 +94,9 @@ void	expand_var(t_shell *shell, t_token *tokens);
 //void	expand_var(t_shell *shell);
 
 //Testeo
-void 	print_token_type(t_token_type type);
-void 	print_tokens(t_token *tokens);
+void	print_token_type(t_token_type type);
+void	print_tokens(t_token *tokens);
 void	print_cmds(t_cmd *cmds);
-void 	print_env(t_env *env);
+void	print_env(t_env *env);
 
 #endif
