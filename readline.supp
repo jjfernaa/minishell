@@ -1,0 +1,134 @@
+{
+  readline_still_reachable_keymaps
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  fun:malloc
+  fun:xmalloc
+  fun:rl_make_bare_keymap
+  fun:rl_generic_bind
+  fun:rl_parse_and_bind
+  ...
+  fun:rl_initialize
+  fun:readline
+}
+
+{
+  readline_still_reachable_generic
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  fun:malloc
+  fun:xmalloc
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+  ...
+  fun:readline
+}
+
+{
+  readline_tinfo_reachable
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  fun:calloc
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+  fun:_nc_find_type_entry
+  fun:tgetstr_sp
+  ...
+  fun:_rl_init_terminal_io
+  fun:rl_initialize
+  fun:readline
+}
+
+{
+  readline_tinfo_setupterm_specific
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+  fun:_nc_setupterm
+  fun:tgetent_sp
+  ...
+  fun:_rl_init_terminal_io
+  fun:rl_initialize
+  fun:readline
+}
+
+{
+  readline_tinfo_setupterm_generic
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+  ...
+  fun:readline
+}
+
+{
+  readline_funmap_reachable_specific
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  fun:realloc
+  fun:xrealloc
+  fun:rl_add_funmap_entry
+  fun:rl_initialize_funmap
+  ...
+  fun:rl_initialize
+  fun:readline
+}
+
+{
+  readline_funmap_reachable_generic
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  fun:realloc
+  fun:xrealloc
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+  ...
+  fun:readline
+}
+
+{
+  readline_redisplay_reachable_specific
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  fun:malloc
+  fun:xrealloc
+  ...
+  fun:rl_redisplay
+  fun:readline_internal_setup
+  ...
+  fun:readline
+}
+
+{
+  readline_redisplay_reachable_generic
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  fun:malloc
+  fun:xrealloc
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+  ...
+  fun:readline
+}
+
+{
+  readline_rl_initialize_tail
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  ...
+  fun:malloc
+  ...
+  fun:rl_initialize
+  fun:readline
+}
