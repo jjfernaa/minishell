@@ -90,7 +90,7 @@ t_cmd	*parse_tokens(t_token *tokens)
 		else if (is_redir(tokens))
 		{
 			handle_redirection(tokens, current_cmd);
-			tokens = tokens->next; // Avanzo dos veces, para no añadir infile o outfile a argv.
+			tokens = tokens->next;
 		}
 		tokens = tokens->next;
 	}

@@ -21,7 +21,6 @@
 typedef struct s_shell
 {
 	char	*input;
-	char	**envp;
 	t_env	*env;
 	t_token	*tokens;
 	t_cmd	*cmd;
@@ -45,6 +44,7 @@ int		builtin_unset(char **args, t_shell *shell);
 // Signals functions
 extern volatile sig_atomic_t	g_signal_received;
 void	setup_signals(void);
+void	setup_signals_child(void);
 void	handle_sigint(int sig);
 
 // Execution functions

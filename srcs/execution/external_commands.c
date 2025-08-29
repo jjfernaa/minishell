@@ -10,6 +10,7 @@ static int	execute_command_child(char *path, char **args, char **envp)
 
 static int	handle_child_process(char **args, char **envp, char *path)
 {
+	setup_signals_child();
 	return (execute_command_child(path, args, envp));
 }
 

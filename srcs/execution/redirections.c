@@ -2,7 +2,7 @@
 
 static int	create_heredoc_pipe(char *delimiter)
 {
-	int	pipefd[2];
+	int		pipefd[2];
 	char	*line;
 
 	if (pipe(pipefd) == -1)
@@ -32,7 +32,6 @@ static void	apply_input_redirections(t_cmd *cmd)
 
 	if (!cmd->infile)
 		return ;
-	// Imput redirecciones (< file 0 << heredoc)
 	if (cmd->heredoc)
 	{
 		fd = create_heredoc_pipe(cmd->infile);

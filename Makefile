@@ -1,6 +1,4 @@
 NAME = minishell
-TEST_ENV = test_env
-TEST_PARSER = test_parser
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
@@ -17,8 +15,6 @@ SIGNALS_DIR = srcs/signals
 UTILS_DIR = srcs/utils
 EXPANDER_DIR = srcs/expander
 SRC_MAIN = srcs/main.c
-SRC_TESTER_ENV = tester/main_env.c
-SRC_TESTER_PARSER = tester/main_parser.c
 
 SRCS = \
 	$(LEXER_DIR)/lexer.c \
@@ -49,17 +45,13 @@ SRCS = \
 	$(BUILTINS_DIR)/export.c \
 	$(BUILTINS_DIR)/unset.c \
 	$(SIGNALS_DIR)/signals.c \
-	$(SIGNALS_DIR)/signal_handlers.c \
 	$(UTILS_DIR)/string_utils.c \
 	$(UTILS_DIR)/cleanup_utils.c \
 	$(UTILS_DIR)/error_utils.c \
 	$(UTILS_DIR)/utils.c \
 	$(EXPANDER_DIR)/expander.c \
-	$(UTILS_DIR)/testeo.c
-
+	
 OBJS = $(SRC_MAIN:.c=.o) $(SRCS:.c=.o)
-OBJS_TEST_ENV = $(SRC_TESTER_ENV:.c=.o) $(SRCS:.c=.o)
-OBJS_TEST_PARSER = $(SRC_TESTER_PARSER:.c=.o) $(SRCS:.c=.o)
 
 all: $(NAME)
 
@@ -69,33 +61,17 @@ $(LIBFT):
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
-$(TEST_ENV): $(OBJS_TEST_ENV) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS_TEST_ENV) $(LIBFT) -lreadline -o $(TEST_ENV)
-
-$(TEST_PARSER): $(OBJS_TEST_PARSER) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS_TEST_PARSER) $(LIBFT) -lreadline -o $(TEST_PARSER)
-
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-testenv: $(TEST_ENV)
-	./$(TEST_ENV)
-
-testparser: $(TEST_PARSER)
-	./$(TEST_PARSER)
-
 clean:
 	rm -f $(OBJS)
-	rm -f $(OBJS_TEST_ENV)
-	rm -f $(OBJS_TEST_PARSER)
 	make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(TEST_ENV)
-	rm -f $(TEST_PARSER)
 	make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re testenv testparser
+.PHONY: all clean fclean re

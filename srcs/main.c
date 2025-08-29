@@ -6,7 +6,6 @@ void	init_shell(t_shell *shell, char **envp)
 	if (!shell->env)
 		exit_error_cleanup(shell, "minishell: error initializing environment\n",
 			EXIT_FAILURE);
-	shell->envp = envp; // Inicializar a NULL y reconstruir el array a partir de env
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmd = NULL;
@@ -38,7 +37,6 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 		cleanup_loop(&shell);
 	}
-	//rl_clear_history();
 	cleanup_shell(&shell);
 	return (shell.exit_status);
 }

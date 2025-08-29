@@ -9,7 +9,7 @@ static t_env	*new_env_node(const char *env_input)
 	node = malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
-	equal_pos = ft_strchr(env_input, '='); //Buscamos la posicion del signo '='
+	equal_pos = ft_strchr(env_input, '=');
 	if (!equal_pos)
 	{
 		free(node);
@@ -17,7 +17,7 @@ static t_env	*new_env_node(const char *env_input)
 	}
 	key_len = equal_pos - env_input;
 	node->key = ft_substr(env_input, 0, key_len);
-	node->value = ft_strdup(equal_pos + 1); //Esto copia desde la posicion del '=' + 1
+	node->value = ft_strdup(equal_pos + 1);
 	node->next = NULL;
 	if (!node->key || !node->value)
 	{
@@ -81,32 +81,3 @@ t_env	*init_env(char **envp)
 	}
 	return (env);
 }
-// Opción 2 para init_env(), donde la complejidad en tiempo es O(1)
-// al no tener que iterar por toda la lista cada vez que añadimos un nodo.
-/* t_env	*init_env(char **envp)
-{
-	t_env	*env;
-	t_env	*last;
-	t_env	*new_node;
-	int		i;
-
-	env = NULL;
-	last = NULL;
-	i = 0;
-	while (envp[i])
-	{
-		new_node = new_env_node(envp[i]);
-		if (!new_node)
-		{
-			free_env(env);
-			return (NULL);
-		}
-		if (!new_node)
-			env = new_node; // primer nodo (head de la lista)
-		else
-			last->next = new_node; // si hay head, hacemos que el ultimo nodo apunte al nuevo, que sería el último.
-		last = new; //Actualizamos last para que el nuevo nodo sea el ultimo.
-		i++;
-	}
-	return (env);
-} */

@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/12 21:42:00 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/08/29 18:54:06 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,24 +75,3 @@ void	process_command(char *input, t_shell *shell)
 	execute_parser_command(tokens, shell);
 	free_tokens(tokens);
 }
-
-/* void	process_command(char *input, t_shell *shell)
-{
-	shell->tokens = lexer(input);
-	if (!shell->tokens)
-		return ;
-	printf("\n==== TOKENS ====\n");
-	print_tokens(shell->tokens);
-	expand_var(shell);
-	printf("\n==== TOKENS EXPANDIDOS ====\n");
-	print_tokens(shell->tokens);
-	if (!validate_tokens(shell->tokens))
-	{
-		free_tokens(shell->tokens);
-		return ;
-	}
-	printf("\n==== TOKENS EXPANDIDOS tras Validacion ====\n");
-	print_tokens(shell->tokens);
-	execute_parser_command(shell->tokens, shell);
-	free_tokens(shell->tokens);
-} */
