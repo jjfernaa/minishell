@@ -46,6 +46,7 @@ extern volatile sig_atomic_t	g_signal_received;
 void	setup_signals(void);
 void	setup_signals_child(void);
 void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
 
 // Execution functions
 int		execute_builtin(char **args, t_shell *shell);
@@ -90,8 +91,7 @@ int		count_commands(t_cmd *cmds);
 void	handle_pipe_error(int **pipes, int created_count);
 
 // Expand environment variables
-void	expand_var(t_shell *shell, t_token *tokens);
-//void	expand_var(t_shell *shell);
+void	expand_var(t_shell *shell);
 
 //Testeo
 void	print_token_type(t_token_type type);

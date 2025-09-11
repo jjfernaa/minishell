@@ -14,6 +14,11 @@ void	handle_sigint(int sig)
 		rl_redisplay();
 	}
 }
+void	handle_sigquit(int sig)
+{
+	(void)sig;
+	g_signal_received = SIGQUIT;
+}
 
 void	setup_signals_child(void)
 {
@@ -24,5 +29,5 @@ void	setup_signals_child(void)
 void	setup_signals(void)
 {
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, handle_sigquit);
 }

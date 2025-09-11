@@ -91,13 +91,13 @@ static char	*expand_string(const char *str, t_env *env, int exit_status)
 	return (result);
 }
 
-void	expand_var(t_shell *shell, t_token *tokens)
+void	expand_var(t_shell *shell)
 {
 	t_token	*current;
 	char	*old_value;
 	char	*new_value;
 
-	current = tokens;
+	current = shell->tokens;
 	if (!current)
 		return ;
 	while (current)
