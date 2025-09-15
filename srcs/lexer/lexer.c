@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-static void	handle_redirection(t_token **list, const char *input, int *i)
+/* static void	handle_redirection(t_token **list, const char *input, int *i)
 {
 	if (input[*i] == '>' && input[*i + 1] == '>')
 	{
@@ -95,6 +95,115 @@ t_token	*lexer(const char *input)
 			handle_redirection(&tokens, input, &i);
 		else if (input[i] == '\'' || input[i] == '\"')
 			handle_quotes(&tokens, input, &i);
+		else
+			handle_word(&tokens, input, &i);
+	}
+	return (tokens);
+}
+ */
+#include "lexer.h"
+
+static void	handle_redirection(t_token **list, const char *input, int *i)
+{
+	if (input[*i] == '>' && input[*i + 1] == '>')
+	{
+		add_token(list, T_APPEND, ">>");
+		*i += 2;
+	}
+	else if (input[*i] == '<' && input[*i + 1] == '<')
+	{
+		add_token(list, T_HEREDOC, "<<");
+		*i += 2;
+	}
+	else if (input[*i] == '>')
+	{
+		add_token(list, T_REDIR_OUT, ">");
+		(*i)++;
+	}
+	else if (input[*i] == '<')
+	{
+		add_token(list, T_REDIR_IN, "<");
+		(*i)++;
+	}
+}
+
+static char	*read_quoted_string(const char *input, int *i)
+{
+	char	quote;
+	char	*word;
+	int		start;
+	int		len;
+
+	quote = input[*i];
+	start = ++(*i);
+	while (input[*i] && input[*i] != quote)
+		(*i)++;
+	if (input[*i] != quote)
+	{
+		write(STDERR_FILENO, "Error: missing closing quote\n", 29);
+		return (ft_strdup(""));
+	}
+	len = *i - start;
+	word = ft_substr(input, start, len);
+	(*i)++;
+	return (word);
+}
+
+static char	*read_word_part(const char *input, int *i)
+{
+	char	*result;
+	char	*temp;
+	char	*part;
+	int		start;
+
+	result = ft_strdup("");
+	while (input[*i] && !ft_isspace(input[*i]) && !is_symbol(input[*i]))
+	{
+		if (input[*i] == '\'' || input[*i] == '"')
+			part = read_quoted_string(input, i);
+		else
+		{
+			start = *i;
+			while (input[*i] && !ft_isspace(input[*i]) && !is_symbol(input[*i])
+				&& input[*i] != '\'' && input[*i] != '"')
+				(*i)++;
+			part = ft_substr(input, start, *i - start);
+		}
+		temp = ft_strjoin(result, part);
+		free(result);
+		free(part);
+		result = temp;
+	}
+	return (result);
+}
+
+static void	handle_word(t_token **list, const char *input, int *i)
+{
+	char	*word;
+
+	word = read_word_part(input, i);
+	add_token(list, T_WORD, word);
+	free(word);
+}
+
+t_token	*lexer(const char *input)
+{
+	t_token	*tokens;
+	int		i;
+
+	tokens = NULL;
+	i = 0;
+	while (input[i])
+	{
+		if (ft_isspace(input[i]))
+			i++;
+		else if (input[i] == '|')
+		{
+			add_token(&tokens, T_PIPE, "|");
+			i++;
+		}
+		else if (input[i] == '<' || input[i] == '>')
+			handle_redirection(&tokens, input, &i);
 		else
 			handle_word(&tokens, input, &i);
 	}
