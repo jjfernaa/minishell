@@ -49,6 +49,7 @@ SRCS = \
 	$(UTILS_DIR)/cleanup_utils.c \
 	$(UTILS_DIR)/error_utils.c \
 	$(UTILS_DIR)/utils.c \
+	$(UTILS_DIR)/sort_utils.c \
 	$(EXPANDER_DIR)/expander.c \
 	
 OBJS = $(SRC_MAIN:.c=.o) $(SRCS:.c=.o)

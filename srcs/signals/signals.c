@@ -14,6 +14,7 @@ void	handle_sigint(int sig)
 		rl_redisplay();
 	}
 }
+
 void	handle_sigquit(int sig)
 {
 	(void)sig;

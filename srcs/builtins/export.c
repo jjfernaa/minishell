@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 03:15:48 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/15 05:07:38 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/09/16 20:26:40 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,50 @@ static int	is_valid_identifier(char *str)
 	return (1);
 }
 
-static void	print_exported_vars_from_env(t_env *env_list)
+static char	**create_keys_array(t_env *env_list)
 {
+	char	**keys;
 	t_env	*current;
+	int		size;
+	int		i;
 
+	size = 0;
+	current = env_list;
+	while (current && ++size)
+		current = current->next;
+	keys = malloc(sizeof(char *) * (size + 1));
+	if (!keys)
+		return (NULL);
+	i = 0;
 	current = env_list;
 	while (current)
 	{
-		printf("declare -x %s=\"%s\"\n", current->key, current->value);
+		keys[i++] = current->key;
 		current = current->next;
 	}
+	keys[i] = NULL;
+	return (keys);
+}
+
+static void	print_exported_vars_from_env(t_env *env_list)
+{
+	char	**keys;
+	t_env	*found;
+	int		i;
+
+	keys = create_keys_array(env_list);
+	if (!keys)
+		return ;
+	sort_string_array(keys);
+	i = 0;
+	while (keys[i])
+	{
+		found = find_env_var(env_list, keys[i]);
+		if (found)
+			printf("declare -x %s=\"%s\"\n", found->key, found->value);
+		i++;
+	}
+	free(keys);
 }
 
 static int	process_export_arg(char *arg, t_shell *shell)

@@ -60,6 +60,7 @@ int		is_builtin(char *command);
 
 // Utils functions
 int		ft_strcmp(const char *s1, const char *s2);
+void	sort_string_array(char **array);
 
 // Pipeline functions
 int		has_pipes_or_redirects(t_token *tokens);
