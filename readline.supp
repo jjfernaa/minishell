@@ -132,3 +132,25 @@
   fun:rl_initialize
   fun:readline
 }
+
+{
+  readline_add_history_reachable
+  Memcheck:Leak
+  match-leak-kinds: reachable
+  fun:malloc
+  fun:xmalloc
+  fun:add_history
+  ...
+}
+
+{
+  readline_insert_text_leak
+  Memcheck:Leak
+  match-leak-kinds: definite
+  fun:malloc
+  fun:xmalloc
+  fun:rl_add_undo
+  fun:rl_insert_text
+  fun:rl_bracketed_paste_begin
+  ...
+}

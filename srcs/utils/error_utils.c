@@ -2,7 +2,7 @@
 
 void	print_cmd_not_found(const char *cmd)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
+	//write(STDERR_FILENO, "minishell: ", 11);
 	if (cmd)
 		write(STDERR_FILENO, cmd, ft_strlen(cmd));
 	write(STDERR_FILENO, ": command not found\n", 21);

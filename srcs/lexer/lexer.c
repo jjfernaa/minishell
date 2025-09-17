@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-/* static void	handle_redirection(t_token **list, const char *input, int *i)
+static void	handle_redirection(t_token **list, const char *input, int *i)
 {
 	if (input[*i] == '>' && input[*i + 1] == '>')
 	{
@@ -38,7 +38,7 @@ static void	handle_quotes(t_token **list, const char *input, int *i)
 		(*i)++;
 	if (input[*i] != quote)
 	{
-		write(STDERR_FILENO, "Syntax error: missing closing quote\n", 36);
+		write(STDERR_FILENO, "Syntax error: missing closing quote", 36);
 		return ;
 	}
 	len = *i - start;
@@ -100,10 +100,8 @@ t_token	*lexer(const char *input)
 	}
 	return (tokens);
 }
- */
-#include "lexer.h"
 
-static void	handle_redirection(t_token **list, const char *input, int *i)
+/* static void	handle_redirection(t_token **list, const char *input, int *i)
 {
 	if (input[*i] == '>' && input[*i + 1] == '>')
 	{
@@ -208,4 +206,4 @@ t_token	*lexer(const char *input)
 			handle_word(&tokens, input, &i);
 	}
 	return (tokens);
-}
+} */
