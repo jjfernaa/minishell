@@ -50,7 +50,8 @@ SRCS = \
 	$(UTILS_DIR)/utils.c \
 	$(EXPANDER_DIR)/expander.c \
 	
-OBJS = $(SRC_MAIN:.c=.o) $(SRCS:.c=.o)
+OBJS_DIR = obj
+OBJS = $(addprefix $(OBJS_DIR)/,$(SRC_MAIN:.c=.o)) $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
 
 all: $(NAME)
 
@@ -60,11 +61,13 @@ $(LIBFT):
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
-%.o: %.c
+$(OBJS_DIR)/%.o: %.c
+	@mkdir -p $(dir $@) #Crea las subcarpetas necesarias
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
+	rm -rf $(OBJS_DIR)
 	make clean -C $(LIBFT_DIR)
 
 fclean: clean

@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 00:38:17 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/11 19:51:48 by juan-jof         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	execute_builtin(char **args, t_shell *shell)
 {
-	if (ft_strcmp(args[0], "pwd") == 0)
+ 	if (ft_strcmp(args[0], "pwd") == 0)
 		return (builtin_pwd());
 	else if (ft_strcmp(args[0], "echo") == 0)
 		return (builtin_echo(args, shell));

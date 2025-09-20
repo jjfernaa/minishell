@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/05 00:07:19 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/17 20:11:07 by dponce-g         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static char	*get_target_dir(char **args, t_shell *shell)
@@ -54,14 +42,23 @@ int	builtin_cd(char **args, t_shell *shell)
 {
 	char	*target_dir;
 	char	*old_pwd;
+	int		arg_count;
 
+	arg_count = 0;
+	while (args[arg_count])
+		arg_count++;
+	if (arg_count > 2)
+	{
+		write(STDERR_FILENO, "minishell: cd: too many arguments\n", 34);
+		return (1);
+	}
 	target_dir = get_target_dir(args, shell);
 	if (!target_dir)
 		return (1);
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(target_dir) != 0)
 	{
-		perror("minishell: cd: ");
+		perror("minishell: cd");
 		free(old_pwd);
 		return (1);
 	}

@@ -36,7 +36,7 @@ $HOME "$LESS pa xterm-256color na" $USER
 minishell$ $LESS
 execve: Permission denied
 
---
+-- **Solcuionado**
 export a
 sustitye la existente por una vacía cuando en bash no hace nada
 
@@ -48,42 +48,35 @@ bash:
 declare -x a="b"
 declare -x a="b"
 
---
+-- **Es ok**
 minishell$ export !a=ma
 minishell: !a=ma: not a valid identifier
 
 dponce-g@c3r8s1:~$ export !a=ma
 bash: !a=ma: event not found
 
---
-minishell$ export $USER=la
-minishell: dponce-g=la: not a valid identifier
-
-dponce-g@c3r8s1:~$ export $USER=la
-bash: export: `dponce-g=la': not a valid identifier
-
---
+-- **Solcuionado**
 minishell$ cd - = $OLDPWD
 /home/dponce-g
 
 dponce-g@c3r8s1:~$ cd - = $OLDPWD
 bash: cd: too many arguments
 
---
+-- **Solcuionado**
 minishell$ cd ~ = $HOME
 minishell$ 
 
 dponce-g@c3r8s1:~$ cd ~ = $HOME
 bash: cd: too many arguments
 
---
+-- **Es ok**
 minishell$ cd prueba/
 minishell: cd: : Permission denied
 
 dponce-g@c3r8s1:~/sgoinfre$ cd prueba/
 bash: cd: prueba/: Permission denied
 
---
+-- ***Depende del cd***
 minishell$ pwd
 /sgoinfre/students/dponce-g
 minishell$ ls
@@ -95,7 +88,7 @@ dponce-g@c3r8s1:~/sgoinfre$ pwd
 dponce-g@c3r8s1:~/sgoinfre$ ls
 downloads  minishell_gitHub  prueba  subjects
 
---
+-- **Solcuionado**
 minishell$ exit 42
 exit
 zsh: segmentation fault (core dumped)  ./minishell
@@ -105,7 +98,7 @@ exit
 ~% echo $?
 42
 
---
+-- **Solcuionado**
 minishell$ ls || wc
 minishell: syntax error near unexpected token `|'
 
@@ -113,7 +106,7 @@ dponce-g@c3r8s1:~/sgoinfre/minishell_gitHub$ ls || wc
 Docs	  libft     minishell	   README.md
 includes  Makefile  readline.supp  srcs
 
---
+-- **Solcuionado**
 minishell$ ls | wc |
 zsh: segmentation fault (core dumped)  ./minishell
 

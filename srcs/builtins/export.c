@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/06 03:15:48 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/17 19:48:32 by dponce-g         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	is_valid_identifier(char *str)
 {
@@ -84,9 +72,7 @@ static int	process_export_arg(char *arg, t_shell *shell)
 
 	if (!is_valid_identifier(arg))
 	{
-		ft_putstr_fd("minishell: export: '", 2);
-		ft_putstr_fd(arg, 2);
-		ft_putstr_fd("': not a valid identifier\n", 2);
+		printf("minishell: export: '%s': not a valid identifier\n", arg);
 		return (1);
 	}
 	equal_pos = ft_strchr(arg, '=');
@@ -98,7 +84,7 @@ static int	process_export_arg(char *arg, t_shell *shell)
 		free(key);
 		free(value);
 	}
-	else
+	else if (!find_env_var(shell->env, arg))
 		add_env_var(&shell->env, arg, "");
 	return (0);
 }
