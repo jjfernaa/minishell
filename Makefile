@@ -49,6 +49,9 @@ SRCS = \
 	$(UTILS_DIR)/error_utils.c \
 	$(UTILS_DIR)/utils.c \
 	$(EXPANDER_DIR)/expander.c \
+	$(EXPANDER_DIR)/expander_segments.c \
+	$(LEXER_DIR)/lexer_segments.c \
+	$(LEXER_DIR)/lexer_concatenation.c
 	
 OBJS_DIR = obj
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRC_MAIN:.c=.o)) $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
