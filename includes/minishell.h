@@ -29,6 +29,8 @@ typedef struct s_shell
 	int		exit_status;
 }	t_shell;
 
+
+
 // Main functions
 void	process_command(char *input, t_shell *shell);
 
@@ -99,5 +101,10 @@ void	print_token_type(t_token_type type);
 void	print_tokens(t_token *tokens);
 void	print_cmds(t_cmd *cmds);
 void	print_env(t_env *env);
+
+// Nueva función pública:
+char	*expand_token_with_segments(t_token *token, t_env *env, int exit_status);
+char	*expand_string(const char *str, t_env *env, int exit_status);
+
 
 #endif

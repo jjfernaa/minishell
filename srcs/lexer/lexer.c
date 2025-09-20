@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-static void	handle_redirection(t_token **list, const char *input, int *i)
+/* static void	handle_redirection(t_token **list, const char *input, int *i)
 {
 	if (input[*i] == '>' && input[*i + 1] == '>')
 	{
@@ -99,7 +99,7 @@ t_token	*lexer(const char *input)
 			handle_word(&tokens, input, &i);
 	}
 	return (tokens);
-}
+} */
 
 /* static void	handle_redirection(t_token **list, const char *input, int *i)
 {
@@ -207,3 +207,197 @@ t_token	*lexer(const char *input)
 	}
 	return (tokens);
 } */
+#include "lexer.h"
+/* #include "lexer.h"
+
+static void	handle_redirection(t_token **list, const char *input, int *i)
+{
+    if (input[*i] == '>' && input[*i + 1] == '>')
+    {
+        add_token(list, T_APPEND, ">>");
+        *i += 2;
+    }
+    else if (input[*i] == '<' && input[*i + 1] == '<')
+    {
+        add_token(list, T_HEREDOC, "<<");
+        *i += 2;
+    }
+    else if (input[*i] == '>')
+    {
+        add_token(list, T_REDIR_OUT, ">");
+        (*i)++;
+    }
+    else if (input[*i] == '<')
+    {
+        add_token(list, T_REDIR_IN, "<");
+        (*i)++;
+    }
+}
+
+static void	add_segment_to_token(t_token *token, const char *content, t_quote_type quote_type)
+{
+    t_token_segment	*new_segment;
+    t_token_segment	*current;
+
+    new_segment = malloc(sizeof(t_token_segment));
+    if (!new_segment)
+        return ;
+    new_segment->content = ft_strdup(content);
+    new_segment->quote_type = quote_type;
+    new_segment->next = NULL;
+    if (!token->segments)
+        token->segments = new_segment;
+    else
+    {
+        current = token->segments;
+        while (current->next)
+            current = current->next;
+        current->next = new_segment;
+    }
+}
+
+static void	handle_word_with_concatenation(t_token **list, const char *input, int *i)
+{
+    char			*result;
+    char			*temp;
+    char			*part;
+    t_quote_type	quote_type;
+    t_quote_type	part_quote_type;
+    int				first_token;
+    t_token			*token;
+
+    quote_type = NO_QUOTE;
+    first_token = 1;
+    result = ft_strdup("");
+    token = add_token(list, T_WORD, "");
+    while (input[*i] && !ft_isspace(input[*i]) && !is_symbol(input[*i]))
+    {
+        part_quote_type = NO_QUOTE;
+        if (input[*i] == '\'' || input[*i] == '"')
+        {
+            char	quote = input[*i];
+            int		start = ++(*i);
+            int		len;
+
+            while (input[*i] && input[*i] != quote)
+                (*i)++;
+            if (input[*i] != quote)
+            {
+                write(STDERR_FILENO, "Error: missing closing quote\n", 29);
+                free(result);
+                return ;
+            }
+            len = *i - start;
+            part = ft_substr(input, start, len);
+            (*i)++;
+            if (quote == '\'')
+                part_quote_type = SINGLE_QUOTE;
+            else if (quote == '"')
+                part_quote_type = DOUBLE_QUOTE;
+        }
+        else
+        {
+            int	start = *i;
+
+            while (input[*i] && !ft_isspace(input[*i]) && !is_symbol(input[*i])
+                && input[*i] != '\'' && input[*i] != '"')
+                (*i)++;
+            part = ft_substr(input, start, *i - start);
+            part_quote_type = NO_QUOTE;
+        }
+        add_segment_to_token(token, part, part_quote_type);
+        if (first_token)
+        {
+            quote_type = part_quote_type;
+            first_token = 0;
+        }
+        temp = ft_strjoin(result, part);
+        free(result);
+        free(part);
+        result = temp;
+        if (!result)
+            return ;
+    }
+    if (token)
+    {
+        free(token->value);
+        token->value = result;
+        token->quote_type = quote_type;
+    }
+    else
+        free(result);
+}
+
+t_token	*lexer(const char *input)
+{
+    t_token	*tokens;
+    int		i;
+
+    tokens = NULL;
+    i = 0;
+    while (input[i])
+    {
+        if (ft_isspace(input[i]))
+            i++;
+        else if (input[i] == '|')
+        {
+            add_token(&tokens, T_PIPE, "|");
+            i++;
+        }
+        else if (input[i] == '<' || input[i] == '>')
+            handle_redirection(&tokens, input, &i);
+        else
+            handle_word_with_concatenation(&tokens, input, &i);
+    }
+    return (tokens);
+}
+ */
+#include "lexer.h"
+
+static void	handle_redirection(t_token **list, const char *input, int *i)
+{
+    if (input[*i] == '>' && input[*i + 1] == '>')
+    {
+        add_token(list, T_APPEND, ">>");
+        *i += 2;
+    }
+    else if (input[*i] == '<' && input[*i + 1] == '<')
+    {
+        add_token(list, T_HEREDOC, "<<");
+        *i += 2;
+    }
+    else if (input[*i] == '>')
+    {
+        add_token(list, T_REDIR_OUT, ">");
+        (*i)++;
+    }
+    else if (input[*i] == '<')
+    {
+        add_token(list, T_REDIR_IN, "<");
+        (*i)++;
+    }
+}
+
+t_token	*lexer(const char *input)
+{
+    t_token	*tokens;
+    int		i;
+
+    tokens = NULL;
+    i = 0;
+    while (input[i])
+    {
+        if (ft_isspace(input[i]))
+            i++;
+        else if (input[i] == '|')
+        {
+            add_token(&tokens, T_PIPE, "|");
+            i++;
+        }
+        else if (input[i] == '<' || input[i] == '>')
+            handle_redirection(&tokens, input, &i);
+        else
+            handle_word_with_concatenation(&tokens, input, &i);
+    }
+    return (tokens);
+}

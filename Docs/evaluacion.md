@@ -5,7 +5,7 @@ nosotros salimos con error 2
 0hcudshfuewrf ew wr 4ew
 
 --
-minishell$ echo "ho   $USER"  'la   $LESS'   $USER$TERM
+minishell$ e 'la   $LESS'   $USER$cho "ho   $USER" TERM
 ho   dponce-g la    dponce-gxterm-256color
 
 dponce-g@c3r8s1:~$ echo "ho   $USER"  'la   $LESS'   $USER$TERM
