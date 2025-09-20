@@ -25,6 +25,13 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
+void	print_cmd_not_found(const char *cmd)
+{
+	if (cmd)
+		write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, ": command not found\n", 21);
+}
+
 void	sort_string_array(char **array)
 {
 	int		i;

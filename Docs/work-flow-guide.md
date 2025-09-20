@@ -2,6 +2,8 @@
 
 ## 🎯 RESUMEN EJECUTIVO
 
+-fsanitize=address **flag para segfault**
+
 **Estrategia de trabajo en equipo:**
 - **Cada desarrollador** trabaja en su **propia rama**
 - **Sincronización regular** con la rama principal (`main`)

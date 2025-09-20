@@ -114,7 +114,7 @@
 
 # general
     - enter en input -> vacio
-    - solo espacios
+    - solo espaciostoken->value = result;
     - comillas sin cerrar
     - echo $?
     - unset $PATH -> ls -> /bin/ls

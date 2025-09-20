@@ -27,7 +27,6 @@ SRCS = \
 	$(ENV_DIR)/env_operations.c \
 	$(ENV_DIR)/env_utils.c \
 	$(ENV_DIR)/env_to_array.c \
-	$(EXECUTION_DIR)/command.c \
 	$(EXECUTION_DIR)/execute.c \
 	$(EXECUTION_DIR)/external_commands.c \
 	$(EXECUTION_DIR)/path_utils.c \
@@ -46,7 +45,6 @@ SRCS = \
 	$(BUILTINS_DIR)/unset.c \
 	$(SIGNALS_DIR)/signals.c \
 	$(UTILS_DIR)/cleanup_utils.c \
-	$(UTILS_DIR)/error_utils.c \
 	$(UTILS_DIR)/utils.c \
 	$(EXPANDER_DIR)/expander.c \
 	$(EXPANDER_DIR)/expander_segments.c \
