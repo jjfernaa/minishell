@@ -10,6 +10,7 @@ static int	execute_command_child(char *path, char **args, char **envp)
 
 static int	handle_child_process(char **args, char **envp, char *path)
 {
+	setup_signals_child();
 	return (execute_command_child(path, args, envp));
 }
 
@@ -23,7 +24,11 @@ static int	handle_parent_process(pid_t pid, char *path, char **envp)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			write(STDERR_FILENO, "Quit (core dumped)\n", 19);
 		return (128 + WTERMSIG(status));
+	}
 	return (1);
 }
 

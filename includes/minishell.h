@@ -21,7 +21,6 @@
 typedef struct s_shell
 {
 	char	*input;
-	char	**envp;
 	t_env	*env;
 	t_token	*tokens;
 	t_cmd	*cmd;
@@ -31,7 +30,7 @@ typedef struct s_shell
 }	t_shell;
 
 // Main functions
-void	process_command(char *input, t_shell *shell);
+void	process_command(t_shell *shell);
 
 // Builtin functions
 int		builtin_pwd(void);
@@ -45,28 +44,23 @@ int		builtin_unset(char **args, t_shell *shell);
 // Signals functions
 extern volatile sig_atomic_t	g_signal_received;
 void	setup_signals(void);
+void	setup_signals_child(void);
 void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
 
 // Execution functions
 int		execute_builtin(char **args, t_shell *shell);
-int		execute_command(char **args, t_shell *shell);
 char	*find_executable(char *command, char **envp);
 char	*get_env_value(char *key, char **envp);
 char	*check_direct_path(char *command);
 char	*search_in_dirs(char **dirs, char *command);
 int		execute_external(char **args, t_shell *shell);
-int		is_builtin(char *command);
-
-// Utils functions
-int		ft_strcmp(const char *s1, const char *s2);
 
 // Pipeline functions
 int		has_pipes_or_redirects(t_token *tokens);
 void	execute_pipeline(t_cmd *cmds, t_shell *shell);
 
 // Error and clean functions
-void	print_cmd_not_found(const char *cmd);
-void	exit_error_cleanup(t_shell *shell, char *message, int code);
 void	cleanup_loop(t_shell *shell);
 void	cleanup_shell(t_shell *shell);
 
@@ -90,13 +84,11 @@ int		count_commands(t_cmd *cmds);
 void	handle_pipe_error(int **pipes, int created_count);
 
 // Expand environment variables
-void	expand_var(t_shell *shell, t_token *tokens);
-//void	expand_var(t_shell *shell);
+void	expand_var(t_shell *shell);
 
-//Testeo
-void	print_token_type(t_token_type type);
-void	print_tokens(t_token *tokens);
-void	print_cmds(t_cmd *cmds);
-void	print_env(t_env *env);
+// Nueva función pública
+char	*expand_token_with_segments(t_token *token, t_env *env, int exit_status);
+char	*expand_string(const char *str, t_env *env, int exit_status);
+
 
 #endif

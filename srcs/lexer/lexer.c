@@ -24,57 +24,6 @@ static void	handle_redirection(t_token **list, const char *input, int *i)
 	}
 }
 
-static void	handle_quotes(t_token **list, const char *input, int *i)
-{
-	char	quote;
-	char	*word;
-	int		start;
-	int		len;
-	t_token	*token;
-
-	quote = input[*i];
-	start = ++(*i);
-	while (input[*i] && input[*i] != quote)
-		(*i)++;
-	if (input[*i] != quote)
-	{
-		write(STDERR_FILENO, "Syntax error: missing closing quote\n", 36);
-		return ;
-	}
-	len = *i - start;
-	word = ft_substr(input, start, len);
-	token = add_token(list, T_WORD, word);
-	if (quote == '\'')
-		token->quote_type = SINGLE_QUOTE;
-	else if (quote == '"')
-		token->quote_type = DOUBLE_QUOTE;
-	free(word);
-	(*i)++;
-}
-
-static char	*read_word(const char *input, int *i)
-{
-	char	*word;
-	int		start;
-	int		len;
-
-	start = *i;
-	while (input[*i] && !ft_isspace(input[*i]) && !is_symbol(input[*i]))
-		(*i)++;
-	len = *i - start;
-	word = ft_substr(input, start, len);
-	return (word);
-}
-
-static void	handle_word(t_token **list, const char *input, int *i)
-{
-	char	*word;
-
-	word = read_word(input, i);
-	add_token(list, T_WORD, word);
-	free(word);
-}
-
 t_token	*lexer(const char *input)
 {
 	t_token	*tokens;
@@ -93,10 +42,8 @@ t_token	*lexer(const char *input)
 		}
 		else if (input[i] == '<' || input[i] == '>')
 			handle_redirection(&tokens, input, &i);
-		else if (input[i] == '\'' || input[i] == '\"')
-			handle_quotes(&tokens, input, &i);
 		else
-			handle_word(&tokens, input, &i);
+			handle_word_with_concatenation(&tokens, input, &i);
 	}
 	return (tokens);
 }

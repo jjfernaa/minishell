@@ -4,9 +4,11 @@ void	init_shell(t_shell *shell, char **envp)
 {
 	shell->env = init_env(envp);
 	if (!shell->env)
-		exit_error_cleanup(shell, "minishell: error initializing environment\n",
-			EXIT_FAILURE);
-	shell->envp = envp; // Inicializar a NULL y reconstruir el array a partir de env
+	{
+		write(2, "minishell: error initializing environment\n", 42);
+		cleanup_shell(shell);
+		exit(EXIT_FAILURE);
+	}
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmd = NULL;
@@ -17,7 +19,6 @@ void	init_shell(t_shell *shell, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
 	t_shell	shell;
 
 	(void)argc;
@@ -26,19 +27,17 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	while (1)
 	{
-		input = readline("minishell$ ");
-		if (!input)
+		shell.input = readline("minishell$ ");
+		if (!shell.input)
 		{
 			printf("exit\n");
 			break ;
 		}
-		if (*input)
-			add_history(input);
-		process_command(input, &shell);
-		free(input);
+		if (*shell.input)
+			add_history(shell.input);
+		process_command(&shell);
 		cleanup_loop(&shell);
 	}
-	//rl_clear_history();
 	cleanup_shell(&shell);
 	return (shell.exit_status);
 }

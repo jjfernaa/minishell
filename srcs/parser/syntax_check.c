@@ -34,14 +34,27 @@ static int	is_pipe_first_token(t_token *token)
 
 static int	is_pipe_error(t_token *token)
 {
-	if (token->next->type == T_PIPE)
-	{
-		print_syntax_error(token);
-		return (1);
-	}
-	else if (!token->next || token->next->type != T_WORD)
+	if (!token->next)
 	{
 		print_syntax_error(NULL);
+		return (1);
+	}
+	if (token->next->type == T_PIPE)
+	{
+		print_syntax_error(token->next);
+		return (1);
+	}
+	if (is_redir(token->next))
+	{
+		if (!token->next->next || token->next->next->type != T_WORD)
+			print_syntax_error(NULL);
+		else
+        	print_syntax_error(token->next);
+        return (1);
+	}
+	else if (token->next->type != T_WORD)
+	{
+		print_syntax_error(token->next);
 		return (1);
 	}
 	return (0);
@@ -51,7 +64,7 @@ static int	is_redir_error(t_token *token)
 {
 	if (!token->next || token->next->type != T_WORD)
 	{
-		print_syntax_error(token);
+		print_syntax_error(token->next);
 		return (1);
 	}
 	return (0);

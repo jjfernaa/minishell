@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 01:06:11 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/08/13 03:09:54 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/09/20 19:49:29 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	builtin_exit(char **args, t_shell *shell)
 	printf("exit\n");
 	if (!args[1])
 	{
+		free_array(args);
+		cleanup_shell(shell);
 		exit(shell->exit_status);
 	}
 	if (!is_numeric(args[1]))
@@ -49,5 +51,8 @@ int	builtin_exit(char **args, t_shell *shell)
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		return (1);
 	}
-	exit(ft_atoi(args[1]));
+	shell->exit_status = ft_atoi(args[1]);
+	free_array(args);
+	cleanup_shell(shell);
+	exit(shell->exit_status);
 }

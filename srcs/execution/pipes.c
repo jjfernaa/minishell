@@ -56,23 +56,19 @@ void	setup_child_pipes(int **pipes, int cmd_index, int cmd_count)
 {
 	if (cmd_count < 2)
 		return ;
-	// Primer comando: solo stdout -> pipe[0][1]
 	if (cmd_index == 0)
 	{
 		dup2(pipes[0][1], STDOUT_FILENO);
 	}
-	// Ultimo comando: solo stdin <- pipe[cmd_count-2][0]
 	else if (cmd_index == cmd_count - 1)
 	{
 		dup2(pipes[cmd_index - 1][0], STDIN_FILENO);
 	}
-	// Comandos intermedios: stdin <- pipe[i - 1][0], stdout -> pipe[i][1]
 	else
 	{
 		dup2(pipes[cmd_index - 1][0], STDIN_FILENO);
 		dup2(pipes[cmd_index][1], STDOUT_FILENO);
 	}
-	// Cerrar todos los pipes en el hijo  (ya duplicados)
 	close_all_pipes_in_child(pipes, cmd_count - 1);
 }
 
@@ -91,7 +87,6 @@ void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 	envp = env_to_array(shell->env);
 	if (!envp)
 		exit(1);
-	// Si no es builtin, ejecutar comando externo
 	path = find_executable(cmd->argv[0], envp);
 	if (!path)
 	{
@@ -99,7 +94,6 @@ void	execute_single_cmd(t_cmd *cmd, t_shell *shell)
 		free_array(envp);
 		exit(127);
 	}
-	// Generar envp desde t_env para execve
 	execve(path, cmd->argv, envp);
 	perror("execve");
 	free(path);
