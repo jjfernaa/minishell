@@ -2,6 +2,8 @@
 
 ## 🎯 RESUMEN EJECUTIVO
 
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./minishell
+
 -fsanitize=address **flag para segfault**
 
 **Estrategia de trabajo en equipo:**

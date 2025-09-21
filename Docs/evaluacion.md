@@ -114,3 +114,30 @@ dponce-g@c3r8s1:~/sgoinfre/minishell_gitHub$ ls | wc |
 > 
 
 --
+echo hola > file > file2 > file3
+
+minishell - solo creamos el file3
+
+bash - Crea los tres files y solo escribe en file3
+
+--
+echo hola > file > file2 > file3 | ls
+
+Igual que el anterior. Ejecuta correctamente el comando 2
+
+--
+echo hola > file << EOF
+
+minishell - no corta el proceso con el ctrl+c en el heredoc
+
+--
+<< EOF
+Deberíamos abrir el heredoc como bash??
+
+--
+cat << EOF | ls
+
+no espera al heredoc y ejecuta el ls
+minishell muere
+
+--
