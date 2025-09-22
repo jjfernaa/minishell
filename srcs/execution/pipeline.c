@@ -2,7 +2,7 @@
 
 static int	has_redirections(t_cmd *cmd)
 {
-	return (cmd->infile || cmd->outfile || cmd->heredoc);
+	return (cmd->input_redirs || cmd->output_redirs || cmd->heredoc);
 }
 
 int	has_pipes_or_redirects(t_token *tokens)

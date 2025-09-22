@@ -8,9 +8,8 @@ static t_cmd	*new_cmd(void)
 	if (!cmd)
 		return (NULL);
 	cmd->argv = NULL;
-	cmd->infile = NULL;
-	cmd->outfile = NULL;
-	cmd->append = 0;
+	cmd->input_redirs = NULL;
+	cmd->output_redirs = NULL;
 	cmd->heredoc = 0;
 	cmd->next = NULL;
 	return (cmd);
@@ -57,18 +56,17 @@ static char	**add_to_argv(char **argv, char *word)
 
 static void	handle_redirection(t_token *tokens, t_cmd *current)
 {
-	if (tokens->type == T_REDIR_IN || tokens->type == T_HEREDOC)
+	if (tokens->type == T_REDIR_IN)
+		add_redir(&current->input_redirs, tokens->next->value, T_REDIR_IN);
+	else if (tokens->type == T_HEREDOC)
 	{
-		current->infile = ft_strdup(tokens->next->value);
-		if (tokens->type == T_HEREDOC)
-			current->heredoc = 1;
+		add_redir(&current->input_redirs, tokens->next->value, T_HEREDOC);
+		current->heredoc = 1;
 	}
-	else if (tokens->type == T_REDIR_OUT || tokens->type == T_APPEND)
-	{
-		current->outfile = ft_strdup(tokens->next->value);
-		if (tokens->type == T_APPEND)
-			current->append = 1;
-	}
+	else if (tokens->type == T_REDIR_OUT)
+		add_redir(&current->output_redirs, tokens->next->value, T_REDIR_OUT);
+	else if (tokens->type == T_APPEND)
+		add_redir(&current->output_redirs, tokens->next->value, T_APPEND);
 }
 
 t_cmd	*parse_tokens(t_token *tokens)

@@ -49,8 +49,8 @@ static int	is_pipe_error(t_token *token)
 		if (!token->next->next || token->next->next->type != T_WORD)
 			print_syntax_error(NULL);
 		else
-        	print_syntax_error(token->next);
-        return (1);
+			print_syntax_error(token->next);
+		return (1);
 	}
 	else if (token->next->type != T_WORD)
 	{

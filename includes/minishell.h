@@ -59,6 +59,7 @@ int		execute_external(char **args, t_shell *shell);
 // Pipeline functions
 int		has_pipes_or_redirects(t_token *tokens);
 void	execute_pipeline(t_cmd *cmds, t_shell *shell);
+int		handle_redirection_error(int final_fd, char *filename);
 
 // Error and clean functions
 void	cleanup_loop(t_shell *shell);
@@ -87,8 +88,8 @@ void	handle_pipe_error(int **pipes, int created_count);
 void	expand_var(t_shell *shell);
 
 // Nueva función pública
-char	*expand_token_with_segments(t_token *token, t_env *env, int exit_status);
+char	*expand_token_with_segments(t_token *token,
+			t_env *env, int exit_status);
 char	*expand_string(const char *str, t_env *env, int exit_status);
-
 
 #endif

@@ -52,7 +52,7 @@ void	expand_var(t_shell *shell)
 		{
 			old_value = current->value;
 			new_value = expand_token_with_segments(current, shell->env, shell->exit_status);
-			if (new_value)
+			if (new_value && new_value != old_value)
 			{
 				current->value = new_value;
 				free(old_value);

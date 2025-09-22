@@ -26,57 +26,91 @@ static int	create_heredoc_pipe(char *delimiter)
 	return (pipefd[0]);
 }
 
-static void	apply_input_redirections(t_cmd *cmd)
+static int	open_redirection_file(t_redir *redir)
 {
-	int	fd;
-
-	if (!cmd->infile)
-		return ;
-	if (cmd->heredoc)
-	{
-		fd = create_heredoc_pipe(cmd->infile);
-		if (fd < 0)
-			exit(1);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-		return ;
-	}
-	fd = open(cmd->infile, O_RDONLY);
-	if (fd < 0)
-	{
-		perror(cmd->infile);
-		exit(1);
-	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-}
-
-static void	apply_output_redirection(t_cmd *cmd)
-{
-	int	fd;
 	int	flags;
 
-	if (!cmd->outfile)
-		return ;
-	flags = O_CREAT | O_WRONLY;
-	if (cmd->append)
-		flags |= O_APPEND;
+	if (redir->type == T_HEREDOC)
+		return (create_heredoc_pipe(redir->filename));
+	else if (redir->type == T_REDIR_IN)
+		return (open(redir->filename, O_RDONLY));
 	else
-		flags |= O_TRUNC;
-	fd = open(cmd->outfile, flags, 0644);
-	if (fd < 0)
 	{
-		perror(cmd->outfile);
-		exit(1);
+		flags = O_CREAT | O_WRONLY;
+		if (redir->type == T_APPEND)
+			flags |= O_APPEND;
+		else
+			flags |= O_TRUNC;
+		return (open(redir->filename, flags, 0644));
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+}
+
+static int	process_input_redirections(t_redir *input_redirs)
+{
+	t_redir	*current;
+	int		fd;
+	int		final_fd;
+
+	current = input_redirs;
+	final_fd = -1;
+	while (current)
+	{
+		fd = open_redirection_file(current);
+		if (fd < 0)
+			return (handle_redirection_error(final_fd, current->filename));
+		if (final_fd != -1)
+			close(final_fd);
+		final_fd = fd;
+		current = current->next;
+	}
+	if (final_fd != -1)
+	{
+		dup2(final_fd, STDIN_FILENO);
+		close(final_fd);
+	}
+	return (0);
+}
+
+static int	process_output_redirection(t_redir *output_redirs)
+{
+	t_redir	*current;
+	int		fd;
+	int		final_fd;
+
+	current = output_redirs;
+	final_fd = -1;
+	while (current)
+	{
+		fd = open_redirection_file(current);
+		if (fd < 0)
+			return (handle_redirection_error(final_fd, current->filename));
+		if (current->next)
+			close(fd);
+		else
+			final_fd = fd;
+		current = current->next;
+	}
+	if (final_fd != -1)
+	{
+		dup2(final_fd, STDOUT_FILENO);
+		close(final_fd);
+	}
+	return (0);
 }
 
 void	apply_redirections(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
-	apply_input_redirections(cmd);
-	apply_output_redirection(cmd);
+	if (cmd->input_redirs)
+	{
+		if (process_input_redirections(cmd->input_redirs) != 0)
+			exit(1);
+	}
+	if (cmd->output_redirs)
+	{
+		if (process_output_redirection(cmd->output_redirs) != 0)
+			exit(1);
+	}
 }
+

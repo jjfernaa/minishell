@@ -2,7 +2,7 @@
 
 int	execute_builtin(char **args, t_shell *shell)
 {
- 	if (ft_strcmp(args[0], "pwd") == 0)
+	if (ft_strcmp(args[0], "pwd") == 0)
 		return (builtin_pwd());
 	else if (ft_strcmp(args[0], "echo") == 0)
 		return (builtin_echo(args, shell));
@@ -22,7 +22,7 @@ int	execute_builtin(char **args, t_shell *shell)
 static void	execute_parser_command(t_shell *shell)
 {
 	t_cmd	*cmds;
-	t_token *tokens;
+	t_token	*tokens;
 	char	**args;
 	int		builtin_result;
 
