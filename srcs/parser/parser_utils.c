@@ -19,6 +19,7 @@ t_redir	*new_redir(char *filename, int type)
 		return (NULL);
 	redir->filename = ft_strdup(filename);
 	redir->type = type;
+	redir->heredoc_fd = -1;
 	redir->next = NULL;
 	return (redir);
 }

@@ -59,7 +59,11 @@ int		execute_external(char **args, t_shell *shell);
 // Pipeline functions
 int		has_pipes_or_redirects(t_token *tokens);
 void	execute_pipeline(t_cmd *cmds, t_shell *shell);
-int		handle_redirection_error(int final_fd, char *filename);
+int		handle_redirection_error(int final_fd, char *filename,
+			t_token_type type);
+int		handle_heredoc_input(int *pipefd, char *delimiter);
+int		preprocess_heredocs(t_cmd *cmds);
+int		create_heredoc_pipe(char *delimiter);
 
 // Error and clean functions
 void	cleanup_loop(t_shell *shell);

@@ -22,6 +22,11 @@ void	execute_pipeline(t_cmd *cmds, t_shell *shell)
 	int		cmd_count;
 	int		builtin_result;
 
+	if (preprocess_heredocs(cmds) == -1)
+	{
+		shell->exit_status = 130;
+		return;
+	}
 	cmd_count = count_commands(cmds);
 	current = cmds;
 	if (has_redirections(current) || cmd_count > 1)

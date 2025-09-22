@@ -7,6 +7,7 @@ typedef struct s_redir
 {
 	char			*filename;
 	int				type;
+	int				heredoc_fd;
 	struct s_redir	*next;
 }	t_redir;
 
