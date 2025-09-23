@@ -33,7 +33,7 @@ static int	handle_word(t_token **list, const char *input, int *i)
 	token = add_token(list, T_WORD);
 	if (!token)
 		return (0);
-	while (input[*i] && !ft_isspace(input[*i]) && !is_symbol(input[*i]))
+	while (input[*i] && !ft_isspace((unsigned char)input[*i]) && !is_symbol(input[*i]))
 	{
 		result = NULL;
 		if (!read_segment(input, i, &result, &quote_type))
@@ -60,7 +60,7 @@ t_token	*lexer(const char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (ft_isspace(input[i]))
+		if (ft_isspace((unsigned char)input[i]))
 			i++;
 		else if (input[i] == '|')
 		{

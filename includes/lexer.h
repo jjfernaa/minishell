@@ -33,18 +33,20 @@ typedef struct s_token_segment
 typedef struct s_token
 {
 	t_token_type	type;
+	char			*value;
+	t_quote_type	quote_type;
 	t_token_segment	*segments;
 	struct s_token	*next;
 }	t_token;
 
 t_token	*lexer(const char *input);
-char	*read_segment(const char *input, int *i, char **text, t_quote_type *quote_type);
+int	read_segment(const char *input, int *i, char **text, t_quote_type *quote_type);
 
 // Utils
 int		is_symbol(char c);
 t_token	*add_token(t_token **list, t_token_type type);
 void	free_tokens(t_token *tokens);
-int		*add_segment_to_token(t_token *token, const char *value, t_quote_type quote_type);
+int		add_segment_to_token(t_token *token, const char *value, t_quote_type quote_type);
 void	free_segments(t_token_segment *segments);
 
 // Conversion

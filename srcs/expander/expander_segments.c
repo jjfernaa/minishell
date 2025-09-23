@@ -3,11 +3,11 @@
 static char	*expand_single_segment(t_token_segment *segment, t_env *env, int exit_status)
 {
 	if (segment->quote_type == SINGLE_QUOTE)
-		return (ft_strdup(segment->content));
+		return (ft_strdup(segment->text));
 	else if (segment->quote_type == DOUBLE_QUOTE || segment->quote_type == NO_QUOTE)
-		return (expand_string(segment->content, env, exit_status));
+		return (expand_string(segment->text, env, exit_status));
 	else
-		return (ft_strdup(segment->content));
+		return (ft_strdup(segment->text));
 }
 
 static char	*join_expanded_segments(char *result, char *expanded_segment)
@@ -52,7 +52,7 @@ void	expand_var(t_shell *shell)
 		{
 			old_value = current->value;
 			new_value = expand_token_with_segments(current, shell->env, shell->exit_status);
-			if (new_value)
+			if (new_value && new_value != old_value)
 			{
 				current->value = new_value;
 				free(old_value);

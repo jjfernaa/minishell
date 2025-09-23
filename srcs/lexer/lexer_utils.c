@@ -55,7 +55,10 @@ void	free_tokens(t_token *tokens)
 		tmp = tokens;
 		tokens = tokens->next;
 		if (tmp->segments)
+		{
 			free_segments(tmp->segments);
+			tmp->segments = NULL;
+		}
 		free(tmp);
 	}
 }

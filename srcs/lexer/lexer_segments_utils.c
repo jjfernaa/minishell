@@ -38,7 +38,7 @@ static void	segment_add_back(t_token_segment **list, t_token_segment *new)
 	tmp->next = new;	
 }
 
-int	*add_segment_to_token(t_token *token, const char *value, t_quote_type quote_type)
+int	add_segment_to_token(t_token *token, const char *value, t_quote_type quote_type)
 {
 	t_token_segment	*new;
 
@@ -51,16 +51,14 @@ int	*add_segment_to_token(t_token *token, const char *value, t_quote_type quote_
 
 void	free_segments(t_token_segment *segments)
 {
-	t_token_segment	*current;
-	t_token_segment	*next;
+	t_token_segment	*tmp;
 
-	current = segments;
-	while (current)
+	while (segments)
 	{
-		next = current->next;
-		if (current->text)
-			free(current->text);
-		free(current);
-		current = next;
+		tmp = segments;
+		segments = segments->next;
+		if (tmp->text)
+			free(tmp->text);
+		free(tmp);
 	}
 }

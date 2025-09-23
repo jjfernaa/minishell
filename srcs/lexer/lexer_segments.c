@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-static int	*read_quoted_segment(const char *input, int *i, char **text, t_quote_type *quote_type)
+static int	read_quoted_segment(const char *input, int *i, char **text, t_quote_type *quote_type)
 {
 	char	quote;
 	int		start;
@@ -28,12 +28,12 @@ static int	*read_quoted_segment(const char *input, int *i, char **text, t_quote_
 	return (1);
 }
 
-static int	*read_noquoted_segment(const char *input, int *i, char **text)
+static int	read_noquoted_segment(const char *input, int *i, char **text)
 {
 	int	start;
 
 	start = *i;
-	while (input[*i] && !ft_isspace(input[*i]) && !is_symbol(input[*i])
+	while (input[*i] && !ft_isspace((unsigned char)input[*i]) && !is_symbol(input[*i])
 		&& input[*i] != '\'' && input[*i] != '"')
 		(*i)++;
 	*text = ft_substr(input, start, *i - start);
@@ -42,7 +42,7 @@ static int	*read_noquoted_segment(const char *input, int *i, char **text)
 	return (1);
 }
 
-int	*read_segment(const char *input, int *i, char **text, t_quote_type *quote_type)
+int	read_segment(const char *input, int *i, char **text, t_quote_type *quote_type)
 {
 	*text = NULL;
 
