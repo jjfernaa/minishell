@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 20:26:32 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/24 20:26:33 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/09/24 20:46:49 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	handle_redirection(t_token **list, const char *input, int *i)
 {
-	if (input[*i] == '>' && input[*i + 1] == '>' && input[*i + 1] != '\0')
+	if (input[*i] == '>' && input[*i + 1] == '>')
 	{
 		add_token(list, T_APPEND);
 		*i += 2;
 	}
-	else if (input[*i] == '<' && input[*i + 1] == '<' && input[*i + 1] != '\0')
+	else if (input[*i] == '<' && input[*i + 1] == '<')
 	{
 		add_token(list, T_HEREDOC);
 		*i += 2;

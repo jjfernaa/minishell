@@ -6,7 +6,7 @@
 /*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 20:25:28 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/24 20:25:29 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/09/24 20:44:56 by juan-jof         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	apply_redirections(t_cmd *cmd)
 	{
 		result = process_input_redirections(cmd->input_redirs);
 		if (result == -2)
-			exit (130);
+			exit(130);
 		else if (result != 0)
 			exit(1);
 	}
