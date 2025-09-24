@@ -81,8 +81,6 @@ char	*expand_string(const char *str, t_env *env, int exit_status)
 	char	*result;
 	int		i;
 
-	if (!str)
-		return (ft_strdup(""));
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
@@ -96,16 +94,10 @@ char	*expand_string(const char *str, t_env *env, int exit_status)
 			else if (str[i + 1] && (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
 				append_env_var(&result, str + i + 1, env, &i);
 			else
-			{
-				append_char(&result, '$');
-				i++;
-			}
+				append_char(&result, str[i++]);
 		}
 		else
-		{
-			append_char(&result, str[i]);
-			i++;
-		}
+			append_char(&result, str[i++]);
 		if (!result)
 			return (NULL);
 	}
