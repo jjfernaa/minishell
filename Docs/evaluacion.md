@@ -113,31 +113,32 @@ zsh: segmentation fault (core dumped)  ./minishell
 dponce-g@c3r8s1:~/sgoinfre/minishell_gitHub$ ls | wc |
 > 
 
---
-echo hola > file > file2 > file3
+# Sin solucionar
 
-minishell - solo creamos el file3
+	- echo hola > file > file2 > file3
 
-bash - Crea los tres files y solo escribe en file3
+	- minishell - solo creamos el file3
 
---
-echo hola > file > file2 > file3 | ls
+	- bash - Crea los tres files y solo escribe en file3
 
-Igual que el anterior. Ejecuta correctamente el comando 2
+---
+	- echo hola > file > file2 > file3 | ls
 
---
-echo hola > file << EOF
+	- Igual que el anterior. Ejecuta correctamente el comando 2
 
-minishell - no corta el proceso con el ctrl+c en el heredoc
+---
+	- echo hola > file << EOF
 
---
-<< EOF
-Deberíamos abrir el heredoc como bash??
+	- minishell - no corta el proceso con el ctrl+c en el heredoc
 
---
-cat << EOF | ls
+---
+	- << EOF
+	- Deberíamos abrir el heredoc como bash??
 
-no espera al heredoc y ejecuta el ls
-minishell muere
+---
+	- cat << EOF | ls
 
---
+	- no espera al heredoc y ejecuta el ls
+	minishell muere
+
+---

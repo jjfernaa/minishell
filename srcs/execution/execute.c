@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:24:18 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:24:19 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	execute_builtin(char **args, t_shell *shell)
 {
- 	if (ft_strcmp(args[0], "pwd") == 0)
+	if (ft_strcmp(args[0], "pwd") == 0)
 		return (builtin_pwd());
 	else if (ft_strcmp(args[0], "echo") == 0)
 		return (builtin_echo(args, shell));
@@ -22,7 +34,7 @@ int	execute_builtin(char **args, t_shell *shell)
 static void	execute_parser_command(t_shell *shell)
 {
 	t_cmd	*cmds;
-	t_token *tokens;
+	t_token	*tokens;
 	char	**args;
 	int		builtin_result;
 

@@ -1,113 +1,96 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:25:42 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:25:43 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void	append_exit_status(char **result, int exit_status, int *i)
+static char	*expand_single_segment(t_token_segment *segment,
+		t_env *env, int exit_status)
 {
-	char	*exit_status_str;
-	char	*new_str;
-
-	exit_status_str = ft_itoa(exit_status);
-	if (!exit_status_str)
-		return ;
-	new_str = ft_strjoin(*result, exit_status_str);
-	free(exit_status_str);
-	if (!new_str)
-		return ;
-	free(*result);
-	*result = new_str;
-	*i += 2;
+	if (!segment || !segment->text)
+		return (ft_strdup(""));
+	if (segment->quote_type == SINGLE_QUOTE)
+		return (ft_strdup(segment->text));
+	else if (segment->quote_type == DOUBLE_QUOTE
+		|| segment->quote_type == NO_QUOTE)
+		return (expand_string(segment->text, env, exit_status));
+	else
+		return (ft_strdup(segment->text));
 }
 
-static void	append_string(char **result, const char *str)
+static char	*join_expanded_segments(char *result, char *expanded_segment)
 {
-	char	*new_str;
+	char	*temp;
 
-	if (!str || !result || !*result)
-		return ;
-	new_str = ft_strjoin(*result, str);
-	if (!new_str)
-		return ;
-	free(*result);
-	*result = new_str;
+	if (!result && !expanded_segment)
+		return (ft_strdup(""));
+	if (!result)
+		return (expanded_segment);
+	if (!expanded_segment)
+		return (result);
+	temp = ft_strjoin(result, expanded_segment);
+	if (!temp)
+		return (NULL);
+	free(result);
+	free(expanded_segment);
+	return (temp);
 }
 
-static void	append_char(char **result, char c)
+char	*expand_token_with_segments(t_token *token, t_env *env, int exit_status)
 {
-	char	*new_str;
-	size_t	len;
+	char			*result;
+	char			*expanded_segment;
+	t_token_segment	*current;
 
-	if (!result || !*result)
-		return ;
-	len = ft_strlen(*result);
-	new_str = malloc(len + 2);
-	if (!new_str)
-		return ;
-	ft_memcpy(new_str, *result, len);
-	new_str[len] = c;
-	new_str[len + 1] = '\0';
-	free(*result);
-	*result = new_str;
-}
-
-static void	append_env_var(char **result, const char *str, t_env *env, int *i)
-{
-	int		len;
-	char	*var_name;
-	char	*value;
-
-	len = 0;
-	while (str[len] && (ft_isalnum(str[len]) || str[len] == '_'))
-		len++;
-	if (len == 0)
-	{
-		append_char(result, '$');
-		(*i)++;
-		return ;
-	}
-	var_name = ft_substr(str, 0, len);
-	if (!var_name)
-	{
-		*i += len + 1;
-		return ;
-	}
-	value = get_env_value_list(env, var_name);
-	if (value)
-		append_string(result, value);
-	free(var_name);
-	*i += len + 1;
-}
-
-char	*expand_string(const char *str, t_env *env, int exit_status)
-{
-	char	*result;
-	int		i;
-
-	if (!str)
+	if (!token || !token->segments)
 		return (ft_strdup(""));
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
-	i = 0;
-	while (str[i])
+	current = token->segments;
+	while (current)
 	{
-		if (str[i] == '$')
+		expanded_segment = expand_single_segment(current, env, exit_status);
+		if (!expanded_segment)
 		{
-			if (str[i + 1] == '?')
-				append_exit_status(&result, exit_status, &i);
-			else if (str[i + 1] && (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
-				append_env_var(&result, str + i + 1, env, &i);
-			else
-			{
-				append_char(&result, '$');
-				i++;
-			}
+			free(result);
+			return (NULL);
 		}
-		else
-		{
-			append_char(&result, str[i]);
-			i++;
-		}
+		result = join_expanded_segments(result, expanded_segment);
 		if (!result)
 			return (NULL);
+		current = current->next;
 	}
 	return (result);
+}
+
+void	expand_var(t_shell *shell)
+{
+	t_token	*current;
+	char	*new_value;
+
+	current = shell->tokens;
+	while (current)
+	{
+		if (current->type == T_WORD)
+		{
+			new_value = expand_token_with_segments(current, shell->env,
+					shell->exit_status);
+			if (current->value)
+				free(current->value);
+			if (new_value)
+				current->value = new_value;
+			else
+				current->value = ft_strdup("");
+		}
+		current = current->next;
+	}
 }

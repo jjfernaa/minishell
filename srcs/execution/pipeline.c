@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:24:49 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:24:50 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static int	has_redirections(t_cmd *cmd)
 {
-	return (cmd->infile || cmd->outfile || cmd->heredoc);
+	return (cmd->input_redirs || cmd->output_redirs || cmd->heredoc);
 }
 
 int	has_pipes_or_redirects(t_token *tokens)
@@ -22,6 +34,11 @@ void	execute_pipeline(t_cmd *cmds, t_shell *shell)
 	int		cmd_count;
 	int		builtin_result;
 
+	if (preprocess_heredocs(cmds) == -1)
+	{
+		shell->exit_status = 130;
+		return ;
+	}
 	cmd_count = count_commands(cmds);
 	current = cmds;
 	if (has_redirections(current) || cmd_count > 1)

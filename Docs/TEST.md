@@ -106,10 +106,10 @@
     - cat colors.txt | wc
     - echo hola > file << EOF
     - cat << EOF > file
-    - << EOF
-    - cat << hola << que << tal
+    - << EOF (se comporta diferente, no hace nada)
+    - cat << hola << que << tal (el nuestro cierra con la ultima palabra)
     - cat << hola << que << tal -> aplicarle señales a heredoc
-    - cat << EOF | ls
+    - cat << EOF | ls (ejecuta el ls mientas que tiene que esperar)
     - echo hola | cat | cat | cat | cat | cat | cat | cat
 
 # general

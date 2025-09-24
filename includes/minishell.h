@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:22:50 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:22:52 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -59,6 +71,11 @@ int		execute_external(char **args, t_shell *shell);
 // Pipeline functions
 int		has_pipes_or_redirects(t_token *tokens);
 void	execute_pipeline(t_cmd *cmds, t_shell *shell);
+int		handle_redirection_error(int final_fd, char *filename,
+			t_token_type type);
+int		handle_heredoc_input(int *pipefd, char *delimiter);
+int		preprocess_heredocs(t_cmd *cmds);
+int		create_heredoc_pipe(char *delimiter);
 
 // Error and clean functions
 void	cleanup_loop(t_shell *shell);
@@ -87,8 +104,8 @@ void	handle_pipe_error(int **pipes, int created_count);
 void	expand_var(t_shell *shell);
 
 // Nueva función pública
-char	*expand_token_with_segments(t_token *token, t_env *env, int exit_status);
+char	*expand_token_with_segments(t_token *token,
+			t_env *env, int exit_status);
 char	*expand_string(const char *str, t_env *env, int exit_status);
-
 
 #endif
