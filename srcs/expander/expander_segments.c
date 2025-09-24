@@ -1,10 +1,12 @@
 #include "../../includes/minishell.h"
 
-static char	*expand_single_segment(t_token_segment *segment, t_env *env, int exit_status)
+static char	*expand_single_segment(t_token_segment *segment,
+		t_env *env, int exit_status)
 {
 	if (segment->quote_type == SINGLE_QUOTE)
 		return (ft_strdup(segment->content));
-	else if (segment->quote_type == DOUBLE_QUOTE || segment->quote_type == NO_QUOTE)
+	else if (segment->quote_type == DOUBLE_QUOTE
+		|| segment->quote_type == NO_QUOTE)
 		return (expand_string(segment->content, env, exit_status));
 	else
 		return (ft_strdup(segment->content));
@@ -51,7 +53,8 @@ void	expand_var(t_shell *shell)
 		if (current->type == T_WORD)
 		{
 			old_value = current->value;
-			new_value = expand_token_with_segments(current, shell->env, shell->exit_status);
+			new_value = expand_token_with_segments(current, shell->env,
+					shell->exit_status);
 			if (new_value && new_value != old_value)
 			{
 				current->value = new_value;

@@ -37,6 +37,7 @@ SRCS = \
 	$(EXECUTION_DIR)/pipes_helpers.c \
 	$(EXECUTION_DIR)/redirections.c \
 	$(EXECUTION_DIR)/redirections_utils.c \
+	$(EXECUTION_DIR)/heredoc_pipe.c \
 	$(BUILTINS_DIR)/pwd.c \
 	$(BUILTINS_DIR)/echo.c \
 	$(BUILTINS_DIR)/env.c \

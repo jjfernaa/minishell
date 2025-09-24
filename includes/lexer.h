@@ -39,6 +39,12 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_segment_data
+{
+	char			*result;
+	int				first_token;
+}	t_segment_data;
+
 t_token	*lexer(const char *input);
 
 // Utils

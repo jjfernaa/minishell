@@ -1,12 +1,5 @@
 #include "lexer.h"
 
-int	is_symbol(char c)
-{
-	if (c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
-}
-
 static t_token	*new_token(t_token_type type, const char *value)
 {
 	t_token	*token;
@@ -17,7 +10,7 @@ static t_token	*new_token(t_token_type type, const char *value)
 	token->type = type;
 	token->value = ft_strdup(value);
 	token->quote_type = NO_QUOTE;
-	token->segments = NULL;  // ✅ NUEVO: Inicializar segments
+	token->segments = NULL;// ✅ NUEVO: Inicializar segments
 	token->next = NULL;
 	return (token);
 }
@@ -74,7 +67,7 @@ void	free_tokens(t_token *tokens)
 		tokens = tokens->next;
 		if (tmp->value)
 			free(tmp->value);
-		free_segments(tmp->segments);  // ✅ NUEVO: Liberar segments
+		free_segments(tmp->segments);// ✅ NUEVO: Liberar segments
 		free(tmp);
 	}
 }

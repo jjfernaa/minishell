@@ -1,6 +1,7 @@
 #include "lexer.h"
 
-void	add_segment_to_token(t_token *token, const char *content, t_quote_type quote_type)
+void	add_segment_to_token(t_token *token, const char *content,
+		t_quote_type quote_type)
 {
 	t_token_segment	*new_segment;
 	t_token_segment	*current;
@@ -22,7 +23,8 @@ void	add_segment_to_token(t_token *token, const char *content, t_quote_type quot
 	}
 }
 
-static char	*read_quoted_segment(const char *input, int *i, t_quote_type *quote_type)
+static char	*read_quoted_segment(const char *input, int *i,
+		t_quote_type *quote_type)
 {
 	char	quote;
 	char	*part;

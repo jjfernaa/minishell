@@ -1,5 +1,12 @@
 #include "utils.h"
 
+int	is_symbol(char c)
+{
+	if (c == '|' || c == '<' || c == '>')
+		return (1);
+	return (0);
+}
+
 void	free_array(char **array)
 {
 	int	i;

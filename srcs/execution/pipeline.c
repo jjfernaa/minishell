@@ -25,7 +25,7 @@ void	execute_pipeline(t_cmd *cmds, t_shell *shell)
 	if (preprocess_heredocs(cmds) == -1)
 	{
 		shell->exit_status = 130;
-		return;
+		return ;
 	}
 	cmd_count = count_commands(cmds);
 	current = cmds;

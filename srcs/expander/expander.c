@@ -87,27 +87,18 @@ char	*expand_string(const char *str, t_env *env, int exit_status)
 	if (!result)
 		return (NULL);
 	i = 0;
-	while (str[i])
+	while (str[i] && result)
 	{
-		if (str[i] == '$')
-		{
-			if (str[i + 1] == '?')
-				append_exit_status(&result, exit_status, &i);
-			else if (str[i + 1] && (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
-				append_env_var(&result, str + i + 1, env, &i);
-			else
-			{
-				append_char(&result, '$');
-				i++;
-			}
-		}
+		if (str[i] == '$' && str[i + 1] == '?')
+			append_exit_status(&result, exit_status, &i);
+		else if (str[i] == '$' && str[i + 1] && (ft_isalpha(str[i + 1])
+				|| str[i + 1] == '_'))
+			append_env_var(&result, str, env, &i);
 		else
 		{
 			append_char(&result, str[i]);
 			i++;
 		}
-		if (!result)
-			return (NULL);
 	}
 	return (result);
 }
