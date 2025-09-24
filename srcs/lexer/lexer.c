@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:26:32 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:26:33 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 static void	handle_redirection(t_token **list, const char *input, int *i)
@@ -33,7 +45,8 @@ static int	handle_word(t_token **list, const char *input, int *i)
 	token = add_token(list, T_WORD);
 	if (!token)
 		return (0);
-	while (input[*i] && !ft_isspace((unsigned char)input[*i]) && !is_symbol(input[*i]))
+	while (input[*i] && !ft_isspace((unsigned char)input[*i])
+		&& !is_symbol(input[*i]))
 	{
 		result = NULL;
 		if (!read_segment(input, i, &result, &quote_type))

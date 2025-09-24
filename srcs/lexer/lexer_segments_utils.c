@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_segments_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:26:15 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:26:16 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 static t_token_segment	*new_segment(const char *value, t_quote_type quote_type)
 {
 	t_token_segment	*segment;
-	
+
 	segment = malloc(sizeof(t_token_segment));
 	if (!segment)
 		return (NULL);
@@ -35,10 +47,11 @@ static void	segment_add_back(t_token_segment **list, t_token_segment *new)
 	tmp = *list;
 	while (tmp->next)
 		tmp = tmp->next;
-	tmp->next = new;	
+	tmp->next = new;
 }
 
-int	add_segment_to_token(t_token *token, const char *value, t_quote_type quote_type)
+int	add_segment_to_token(t_token *token, const char *value,
+		t_quote_type quote_type)
 {
 	t_token_segment	*new;
 

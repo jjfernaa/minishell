@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_segments.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:26:22 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:26:23 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
-static int	read_quoted_segment(const char *input, int *i, char **text, t_quote_type *quote_type)
+static int	read_quoted_segment(const char *input, int *i, char **text,
+		t_quote_type *quote_type)
 {
 	char	quote;
 	int		start;
@@ -33,7 +46,8 @@ static int	read_noquoted_segment(const char *input, int *i, char **text)
 	int	start;
 
 	start = *i;
-	while (input[*i] && !ft_isspace((unsigned char)input[*i]) && !is_symbol(input[*i])
+	while (input[*i] && !ft_isspace((unsigned char)input[*i])
+		&& !is_symbol(input[*i])
 		&& input[*i] != '\'' && input[*i] != '"')
 		(*i)++;
 	*text = ft_substr(input, start, *i - start);
@@ -42,10 +56,10 @@ static int	read_noquoted_segment(const char *input, int *i, char **text)
 	return (1);
 }
 
-int	read_segment(const char *input, int *i, char **text, t_quote_type *quote_type)
+int	read_segment(const char *input, int *i, char **text,
+		t_quote_type *quote_type)
 {
 	*text = NULL;
-
 	if (input[*i] == '\'' || input[*i] == '"')
 	{
 		if (!read_quoted_segment(input, i, text, quote_type))

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:22:38 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:22:41 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LEXER_H
 # define LEXER_H
 
@@ -25,10 +37,10 @@ typedef enum e_quote_type
 
 typedef struct s_token_segment
 {
-    char                    *text;
-    t_quote_type           quote_type;
-    struct s_token_segment *next;
-} t_token_segment;
+	char					*text;
+	t_quote_type			quote_type;
+	struct s_token_segment	*next;
+}	t_token_segment;
 
 typedef struct s_token
 {
@@ -40,12 +52,14 @@ typedef struct s_token
 }	t_token;
 
 t_token	*lexer(const char *input);
-int	read_segment(const char *input, int *i, char **text, t_quote_type *quote_type);
+int		read_segment(const char *input, int *i, char **text,
+			t_quote_type *quote_type);
 
 // Utils
 t_token	*add_token(t_token **list, t_token_type type);
 void	free_tokens(t_token *tokens);
-int		add_segment_to_token(t_token *token, const char *value, t_quote_type quote_type);
+int		add_segment_to_token(t_token *token, const char *value,
+			t_quote_type quote_type);
 void	free_segments(t_token_segment *segments);
 
 // Conversion

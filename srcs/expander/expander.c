@@ -1,12 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:25:42 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:25:43 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static char	*expand_single_segment(t_token_segment *segment, t_env *env, int exit_status)
+static char	*expand_single_segment(t_token_segment *segment,
+		t_env *env, int exit_status)
 {
 	if (!segment || !segment->text)
 		return (ft_strdup(""));
 	if (segment->quote_type == SINGLE_QUOTE)
 		return (ft_strdup(segment->text));
-	else if (segment->quote_type == DOUBLE_QUOTE || segment->quote_type == NO_QUOTE)
+	else if (segment->quote_type == DOUBLE_QUOTE
+		|| segment->quote_type == NO_QUOTE)
 		return (expand_string(segment->text, env, exit_status));
 	else
 		return (ft_strdup(segment->text));
@@ -68,7 +82,8 @@ void	expand_var(t_shell *shell)
 	{
 		if (current->type == T_WORD)
 		{
-			new_value = expand_token_with_segments(current, shell->env, shell->exit_status);
+			new_value = expand_token_with_segments(current, shell->env,
+					shell->exit_status);
 			if (current->value)
 				free(current->value);
 			if (new_value)

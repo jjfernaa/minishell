@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:25:23 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:25:24 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	handle_redirection_error(int final_fd, char *filename, t_token_type type)
@@ -26,10 +38,9 @@ int	preprocess_heredocs(t_cmd *cmds)
 			{
 				fd = create_heredoc_pipe(redir->filename);
 				if (fd == -1)
-					return (-1);// Heredoc cancelado
-				// Guardar el fd para usar después
+					return (-1);
 				redir->heredoc_fd = fd;
-				redir->type = T_REDIR_IN;// Cambiar a redirección normal
+				redir->type = T_REDIR_IN;
 			}
 			redir = redir->next;
 		}
@@ -38,7 +49,6 @@ int	preprocess_heredocs(t_cmd *cmds)
 	return (0);
 }
 
-/* función que lee línea por línea hasta el delimiter */
 int	handle_heredoc_input(int *pipefd, char *delimiter)
 {
 	char	*line;

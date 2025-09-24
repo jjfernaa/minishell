@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/24 20:25:37 by juan-jof          #+#    #+#             */
+/*   Updated: 2025/09/24 20:25:38 by juan-jof         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	append_exit_status(char **result, int exit_status, int *i)
@@ -91,7 +103,8 @@ char	*expand_string(const char *str, t_env *env, int exit_status)
 		{
 			if (str[i + 1] == '?')
 				append_exit_status(&result, exit_status, &i);
-			else if (str[i + 1] && (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
+			else if (str[i + 1] && (ft_isalpha(str[i + 1])
+					|| str[i + 1] == '_'))
 				append_env_var(&result, str + i + 1, env, &i);
 			else
 				append_char(&result, str[i++]);
