@@ -25,10 +25,10 @@ typedef enum e_quote_type
 
 typedef struct s_token_segment
 {
-	char					*content;
-	t_quote_type			quote_type;
-	struct s_token_segment	*next;
-}	t_token_segment;
+    char                    *text;
+    t_quote_type           quote_type;
+    struct s_token_segment *next;
+} t_token_segment;
 
 typedef struct s_token
 {
@@ -39,27 +39,16 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_segment_data
-{
-	char			*result;
-	int				first_token;
-}	t_segment_data;
-
 t_token	*lexer(const char *input);
+int	read_segment(const char *input, int *i, char **text, t_quote_type *quote_type);
 
 // Utils
-int		is_symbol(char c);
-t_token	*add_token(t_token **list, t_token_type type, const char *value);
+t_token	*add_token(t_token **list, t_token_type type);
 void	free_tokens(t_token *tokens);
+int		add_segment_to_token(t_token *token, const char *value, t_quote_type quote_type);
+void	free_segments(t_token_segment *segments);
 
 // Conversion
 char	**tokens_to_args(t_token *tokens);
-
-// Nuevas funciones públicas:
-void	add_segment_to_token(t_token *token, const char *content,
-			t_quote_type quote_type);
-char	*read_segment(const char *input, int *i, t_quote_type *quote_type);
-void	handle_word_with_concatenation(t_token **list,
-			const char *input, int *i);
 
 #endif

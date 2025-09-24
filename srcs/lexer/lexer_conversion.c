@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 char	**tokens_to_args(t_token *tokens)
 {

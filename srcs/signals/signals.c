@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 volatile sig_atomic_t	g_signal_received = 0;
 
@@ -30,5 +30,5 @@ void	setup_signals_child(void)
 void	setup_signals(void)
 {
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 }

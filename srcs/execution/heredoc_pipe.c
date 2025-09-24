@@ -11,6 +11,14 @@ static int	open_pipe(int p[2])
 	return (0);
 }
 
+static void	setup_heredoc_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, SIG_DFL);
+	signal(SIGPIPE, SIG_DFL);
+}
+
 /* función que hace fork y que en el hijo lee heredoc */
 static pid_t	fork_heredoc_reader(int p[2], char *delimiter)
 {
@@ -22,7 +30,7 @@ static pid_t	fork_heredoc_reader(int p[2], char *delimiter)
 	if (pid == 0)
 	{
 		close(p[0]);
-		setup_signals_child();
+		setup_heredoc_signals();
 		handle_heredoc_input(p, delimiter);
 		close(p[1]);
 		exit(0);
@@ -42,7 +50,7 @@ static int	wait_heredoc(pid_t pid, int *read_fd)
 		return (-1);
 	}
 	return (0);
-}
+} 
 
 /* función principal de creación de pipe + fork + espera */
 int	create_heredoc_pipe(char *delimiter)
@@ -52,11 +60,13 @@ int	create_heredoc_pipe(char *delimiter)
 
 	if (open_pipe(p) < 0)
 		return (-1);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork_heredoc_reader(p, delimiter);
 	if (pid < 0)
 	{
 		close(p[0]);
 		close(p[1]);
+		setup_signals();
 		return (-1);
 	}
 	close(p[1]);
@@ -67,4 +77,4 @@ int	create_heredoc_pipe(char *delimiter)
 	}
 	setup_signals();
 	return (p[0]);
-}
+} 

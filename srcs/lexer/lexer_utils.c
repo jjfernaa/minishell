@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-static t_token	*new_token(t_token_type type, const char *value)
+static t_token	*new_token(t_token_type type)
 {
 	t_token	*token;
 
@@ -8,9 +8,9 @@ static t_token	*new_token(t_token_type type, const char *value)
 	if (!token)
 		return (NULL);
 	token->type = type;
-	token->value = ft_strdup(value);
+	token->value = NULL;
 	token->quote_type = NO_QUOTE;
-	token->segments = NULL;// ✅ NUEVO: Inicializar segments
+	token->segments = NULL;
 	token->next = NULL;
 	return (token);
 }
@@ -30,31 +30,15 @@ static void	token_add_back(t_token **list, t_token *new)
 	tmp->next = new;
 }
 
-t_token	*add_token(t_token **list, t_token_type type, const char *value)
+t_token	*add_token(t_token **list, t_token_type type)
 {
 	t_token	*new;
 
-	new = new_token(type, value);
+	new = new_token(type);
 	if (!new)
 		return (NULL);
 	token_add_back(list, new);
 	return (new);
-}
-
-static void	free_segments(t_token_segment *segments)
-{
-	t_token_segment	*current;
-	t_token_segment	*next;
-
-	current = segments;
-	while (current)
-	{
-		next = current->next;
-		if (current->content)
-			free(current->content);
-		free(current);
-		current = next;
-	}
 }
 
 void	free_tokens(t_token *tokens)
@@ -65,9 +49,10 @@ void	free_tokens(t_token *tokens)
 	{
 		tmp = tokens;
 		tokens = tokens->next;
+		if (tmp->segments)
+			free_segments(tmp->segments);
 		if (tmp->value)
 			free(tmp->value);
-		free_segments(tmp->segments);// ✅ NUEVO: Liberar segments
 		free(tmp);
 	}
 }
