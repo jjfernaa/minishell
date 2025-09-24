@@ -4,7 +4,7 @@ static t_token_segment	*new_segment(const char *value, t_quote_type quote_type)
 {
 	t_token_segment	*segment;
 	
-	segment = malloc(sizeof(segment));
+	segment = malloc(sizeof(t_token_segment));
 	if (!segment)
 		return (NULL);
 	if (value)

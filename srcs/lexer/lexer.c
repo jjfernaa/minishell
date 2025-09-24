@@ -40,7 +40,7 @@ static int	handle_word(t_token **list, const char *input, int *i)
 			return (0);
 		if (result)
 		{
-			if (add_segment_to_token(token, result, quote_type))
+			if (!add_segment_to_token(token, result, quote_type))
 			{
 				free(result);
 				return (0);

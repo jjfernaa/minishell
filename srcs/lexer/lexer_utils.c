@@ -15,6 +15,8 @@ static t_token	*new_token(t_token_type type)
 	if (!token)
 		return (NULL);
 	token->type = type;
+	token->value = NULL;
+	token->quote_type = NO_QUOTE;
 	token->segments = NULL;
 	token->next = NULL;
 	return (token);
@@ -55,10 +57,9 @@ void	free_tokens(t_token *tokens)
 		tmp = tokens;
 		tokens = tokens->next;
 		if (tmp->segments)
-		{
 			free_segments(tmp->segments);
-			tmp->segments = NULL;
-		}
+		if (tmp->value)
+			free(tmp->value);
 		free(tmp);
 	}
 }
