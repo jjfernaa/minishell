@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 20:22:50 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/24 20:22:52 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:30:24 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ typedef struct s_shell
 	t_env	*env;
 	t_token	*tokens;
 	t_cmd	*cmd;
-	int		infile_fd;
-	int		outfile_fd;
 	int		exit_status;
 }	t_shell;
 
@@ -58,7 +56,6 @@ extern volatile sig_atomic_t	g_signal_received;
 void	setup_signals(void);
 void	setup_signals_child(void);
 void	handle_sigint(int sig);
-void	handle_sigquit(int sig);
 
 // Execution functions
 int		execute_builtin(char **args, t_shell *shell);
@@ -102,8 +99,6 @@ void	handle_pipe_error(int **pipes, int created_count);
 
 // Expand environment variables
 void	expand_var(t_shell *shell);
-
-// Nueva función pública
 char	*expand_token_with_segments(t_token *token,
 			t_env *env, int exit_status);
 char	*expand_string(const char *str, t_env *env, int exit_status);

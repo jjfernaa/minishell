@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 20:22:25 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/24 20:22:31 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:23:48 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	remove_env_var(t_env **env_list, char *key);
 
 // Use just before execve to recompose environment variables
 char	**env_to_array(t_env *env);
-
 char	*get_env_value_list(t_env *env, const char *var_name);
 
 #endif

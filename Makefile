@@ -1,5 +1,4 @@
 NAME = minishell
-TEST_LEXER = test_lexer
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
@@ -16,7 +15,6 @@ SIGNALS_DIR = srcs/signals
 UTILS_DIR = srcs/utils
 EXPANDER_DIR = srcs/expander
 SRC_MAIN = srcs/main.c
-SRC_MAIN_LEXER = tester/main_test.c
 
 SRCS = \
 	$(LEXER_DIR)/lexer.c \
@@ -57,7 +55,6 @@ SRCS = \
 	
 OBJS_DIR = obj
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRC_MAIN:.c=.o)) $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
-OBJS_TEST_LEXER = $(addprefix $(OBJS_DIR)/,$(SRC_MAIN_LEXER:.c=.o)) $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
 
 all: $(NAME)
 
@@ -67,27 +64,19 @@ $(LIBFT):
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
-$(TEST_LEXER): $(OBJS_TEST_LEXER) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS_TEST_LEXER) $(LIBFT) -lreadline -o $(TEST_LEXER)
-
 $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(dir $@) #Crea las subcarpetas necesarias
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-testlexer: $(TEST_LEXER)
-	./$(TEST_LEXER)
-
 clean:
 	rm -f $(OBJS)
 	rm -rf $(OBJS_DIR)
-	rm -f $(OBJS_TEST_LEXER)
 	make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(TEST_LEXER)
 	make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re testlexer
+.PHONY: all clean fclean re

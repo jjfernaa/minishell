@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 20:27:15 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/24 20:27:16 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:30:17 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	init_shell(t_shell *shell, char **envp)
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->cmd = NULL;
-	shell->infile_fd = -1;
-	shell->outfile_fd = -1;
 	shell->exit_status = 0;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-jof <juan-jof@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: dponce-g <dponce-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 20:27:07 by juan-jof          #+#    #+#             */
-/*   Updated: 2025/09/24 20:27:08 by juan-jof         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:24:23 by dponce-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ void	handle_sigint(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-}
-
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-	g_signal_received = SIGQUIT;
 }
 
 void	setup_signals_child(void)
